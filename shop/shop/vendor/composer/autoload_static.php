@@ -10,9 +10,61 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
         '7745382c92b7799bf1294b1f43023ba2' => __DIR__ . '/..' . '/tracy/tracy/src/shortcuts.php',
         'a1d067aa2e53d6b47171c03cfc0ea5be' => __DIR__ . '/..' . '/nette/safe-stream/src/loader.php',
         'e7a6fd2e7a869bb207158e9416bdd9b0' => __DIR__ . '/..' . '/nette/application/src/compatibility.php',
+        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+    );
+
+    public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Mbstring\\' => 26,
+            'Symfony\\Component\\Translation\\' => 30,
+            'Symfony\\Component\\Filesystem\\' => 29,
+            'Symfony\\Component\\Config\\' => 25,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Symfony\\Polyfill\\Mbstring\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
+        ),
+        'Symfony\\Component\\Translation\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/translation',
+        ),
+        'Symfony\\Component\\Filesystem\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/filesystem',
+        ),
+        'Symfony\\Component\\Config\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/config',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'P' => 
+        array (
+            'Psr\\Log\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/psr/log',
+            ),
+        ),
+        'K' => 
+        array (
+            'Kdyby\\Translation' => 
+            array (
+                0 => __DIR__ . '/..' . '/kdyby/translation/src',
+            ),
+        ),
     );
 
     public static $classMap = array (
+        'Kdyby\\Translation\\Exception' => __DIR__ . '/..' . '/kdyby/translation/src/Kdyby/Translation/exceptions.php',
+        'Kdyby\\Translation\\InvalidArgumentException' => __DIR__ . '/..' . '/kdyby/translation/src/Kdyby/Translation/exceptions.php',
+        'Kdyby\\Translation\\InvalidResourceException' => __DIR__ . '/..' . '/kdyby/translation/src/Kdyby/Translation/exceptions.php',
+        'Kdyby\\Translation\\InvalidStateException' => __DIR__ . '/..' . '/kdyby/translation/src/Kdyby/Translation/exceptions.php',
+        'Kdyby\\Translation\\LoaderNotFoundException' => __DIR__ . '/..' . '/kdyby/translation/src/Kdyby/Translation/exceptions.php',
         'Latte\\CompileException' => __DIR__ . '/..' . '/latte/latte/src/Latte/exceptions.php',
         'Latte\\Compiler' => __DIR__ . '/..' . '/latte/latte/src/Latte/Compiler/Compiler.php',
         'Latte\\Engine' => __DIR__ . '/..' . '/latte/latte/src/Latte/Engine.php',
@@ -369,6 +421,9 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit091ed5d24b4127ffc48411e34be2086f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit091ed5d24b4127ffc48411e34be2086f::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit091ed5d24b4127ffc48411e34be2086f::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit091ed5d24b4127ffc48411e34be2086f::$classMap;
 
         }, null, ClassLoader::class);

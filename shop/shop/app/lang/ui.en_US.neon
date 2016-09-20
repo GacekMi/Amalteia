@@ -1,0 +1,3 @@
+title: "Shop page"
+applesCount: '{0} No apple| There is one apple|There are %count% apples'
+helloName: "Hello %name%"

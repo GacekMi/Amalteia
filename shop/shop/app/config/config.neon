@@ -11,5 +11,14 @@ session:
 	expiration: 14 days
 
 
+extensions:
+    translation: Kdyby\Translation\DI\TranslationExtension
+
+translation:
+    whitelist: [cs, en]
+    default: cs
+    fallback: [cs_CZ, cs]
+	
+
 services:
 	router: App\RouterFactory::createRouter
