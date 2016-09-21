@@ -25,7 +25,7 @@ class RouterFactory
         $router[] = new Route('index.php', 'Home:default', Route::ONE_WAY);
         $router[] = new Route('login', 'Sign:in', Route::ONE_WAY);
         $router[] = new Route('[<locale=cs cs|en>/]<presenter>/<action>[/<id>]', [
-					'presenter' => 'Homepage',
+					'presenter' => 'Gallery',
 					'action' => 'default',
 					'id' => null
 				]);

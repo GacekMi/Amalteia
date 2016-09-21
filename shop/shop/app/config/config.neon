@@ -21,4 +21,50 @@ translation:
 	
 
 services:
-	router: App\RouterFactory::createRouter
+    database: @Nette\Database\Connection
+    router: App\RouterFactory::createRouter
+    authorizator:
+        class: Nette\Security\Permission
+        setup:
+            - addRole('guest')
+            - addRole('user', 'guest')
+            - addRole('vip','user')
+            - addRole('partner','vip')
+            - addRole('office','partner')
+            - addRole('admin')
+            - addResource('Gallery')
+            - addResource('Page')
+            - addResource('Profile')
+            - addResource('Dashboard')
+            - addResource('Message')
+            - addResource('Setup')
+            - addResource('Sign')
+            - addResource('User')
+            - allow('guest', 'Gallery', 'default') 
+            - allow('guest', 'Page', 'default') 
+            - allow('user', 'Message', 'default')
+            - allow('user', 'Dashboard', 'default')
+            - allow('user', 'Profile', 'default')
+            - allow('user', 'Sign', 'out')
+            - allow('guest', 'Sign', 'reg')
+            - allow('office', 'User', 'default')
+            - allow('office', 'User', 'add')
+            - allow('office', 'User', 'edit')
+            - allow('office', 'User', 'goEdit')
+            - allow('office', 'User', 'reset')
+            - allow('office', 'User', 'data')
+            - allow('office', 'User', 'block')
+            - allow('office', 'User', 'unblock')
+            - allow('office', 'User', 'delete')
+            - allow('admin') # admin muze vse
+    authenticator: App\Model\Authenticator
+
+database:
+    dsn:        "mysql:host=wm127.wedos.net;dbname=d140658_portal"
+    user:       w140658_portal
+    password:   'fWbDK57S'
+    options:    [PDO::MYSQL_ATTR_COMPRESS = true]
+    debugger:   true        # panel v debugger baru
+    explain:    true        # explain dotazů v debugger bar
+    reflection: discovered  # nebo conventional nebo classname, výchozí je discovered
+    autowired:  true
