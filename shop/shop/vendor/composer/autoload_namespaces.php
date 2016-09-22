@@ -6,6 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Psr\\Log\\' => array($vendorDir . '/psr/log'),
+    'ReCaptchaControl' => array($vendorDir . '/uestla/recaptcha-control/src'),
     'Kdyby\\Translation' => array($vendorDir . '/kdyby/translation/src'),
 );

@@ -1,6 +1,5 @@
 parameters:
 
-
 application:
 	errorPresenter: Error
 	mapping:
@@ -13,6 +12,12 @@ session:
 
 extensions:
     translation: Kdyby\Translation\DI\TranslationExtension
+    reCaptcha: ReCaptchaControl\ReCaptchaExtension
+
+reCaptcha:
+    siteKey: '6LfzXAcUAAAAAFF0Hw44p8iEiGB47P1PT13jD2nZ'
+    secretKey: '6LfzXAcUAAAAAFF6Z5P76_XxSQ0IocRdvS8SorLq'
+    methodName: 'addReCaptcha' # optional
 
 translation:
     whitelist: [cs, en]

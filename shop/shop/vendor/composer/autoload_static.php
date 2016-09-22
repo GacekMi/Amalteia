@@ -21,6 +21,10 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
             'Symfony\\Component\\Filesystem\\' => 29,
             'Symfony\\Component\\Config\\' => 25,
         ),
+        'P' => 
+        array (
+            'Psr\\Log\\' => 8,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -40,14 +44,18 @@ class ComposerStaticInit091ed5d24b4127ffc48411e34be2086f
         array (
             0 => __DIR__ . '/..' . '/symfony/config',
         ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
     );
 
     public static $prefixesPsr0 = array (
-        'P' => 
+        'R' => 
         array (
-            'Psr\\Log\\' => 
+            'ReCaptchaControl' => 
             array (
-                0 => __DIR__ . '/..' . '/psr/log',
+                0 => __DIR__ . '/..' . '/uestla/recaptcha-control/src',
             ),
         ),
         'K' => 

@@ -1,0 +1,5 @@
+{
+    "require": {
+        "uestla/recaptcha-control": "^4.0"
+    }
+}

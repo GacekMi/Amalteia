@@ -39,8 +39,7 @@ class SignPresenter extends BasePresenter
         $form->addCheckbox('remember', 'Pamatovat příhlášení');
 
         $form->addSubmit('send', 'Přihlásit');
-//        $form->addReCaptcha('captcha')
-//                ->addRule(Form::VALID, 'Ověřte prosím svou nerobotičnost.');
+        $form->addReCaptcha('captcha', NULL, "Please prove you're not a robot.");
         $form['send']->getControlPrototype()->class('btn btn-success');
         $renderer = $form->getRenderer();
         $renderer->wrappers['controls']['container'] = 'div';
@@ -144,8 +143,7 @@ class SignPresenter extends BasePresenter
                 ->addRule($verifyRC, 'Nesprávný formát rodného čísla');
 
         $form->addSubmit('send', 'Registrovat');
-//        $form->addReCaptcha('captcha')
-//                ->addRule(Form::VALID, 'Ověřte prosím svou nerobotičnost.');
+        $form->addReCaptcha('captcha', NULL, "Please prove you're not a robot.");
         $form['send']->getControlPrototype()->class('btn btn-success');
         $renderer = $form->getRenderer();
         $renderer->wrappers['controls']['container'] = 'div';
