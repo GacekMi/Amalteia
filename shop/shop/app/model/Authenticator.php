@@ -73,6 +73,16 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
         return $this->database->table(self::TABLE_NAME)->get($key);
     }
 
+    public function getByEmail($email)
+    {
+       return $this->database->table(self::TABLE_NAME)->where(self::COLUMN_EMAIL, $email)->fetch();
+    }
+
+    public function getByPersonalId($rc)
+    {
+         return $this->database->table(self::TABLE_NAME)->where(self::COLUMN_PERSONAL_ID, $rc)->fetch();
+    }
+
     public function delete($key) {
         return $this->database->table(self::TABLE_NAME)->where('id', $key)->delete();
     }
@@ -144,28 +154,11 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
     }   
 
     public function createUser(array $values) {
-        //list($partnerId, $firstName, $lastName, $email, $phone, $birthdate, $password, $personalId) = $values;
         $values[self::COLUMN_PASSWORD_HASH] = Passwords::hash($values[self::COLUMN_PASSWORD_HASH]);
         $values[self::COLUMN_STATE] = 0;
         $values[self::COLUMN_ROLE] = 'user';
         $values[self::COLUMN_REGISTERED] = new \DateTime();
         return $this->database->table(self::TABLE_NAME)->insert($values);
-        /*$dt = 
-        return $this->database->table(self::TABLE_NAME)->insert(array(
-                    self::COLUMN_PARTNER_ID => $partnerId,
-                    self::COLUMN_FIRST_NAME => $firstName,
-                    self::COLUMN_LAST_NAME => $lastName,
-                    self::COLUMN_EMAIL => $email,
-                    self::COLUMN_PHONE => $phone,
-                    self::COLUMN_BIRTH_DATE => $birthdate,
-                    self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
-                    self::COLUMN_ROLE => $roles,
-                    self::COLUMN_STATE => $state,
-                    self::COLUMN_PERSONAL_ID => $personalId,
-                    self::COLUMN_STATE => 0,
-                    self::COLUMN_ROLE => ,
-                    self::COLUMN_REGISTERED => $dt,
-        ));*/
     }
 
 

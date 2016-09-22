@@ -74,7 +74,6 @@ class SignPresenter extends BasePresenter
      * Sign-reg form factory.
      * @return Nette\Application\UI\Form
      * $partnerId, $firstName, $lastName, $email, $phone, $birthdate, $password, $roles, $state, $personalId
-     * $, $, $, $, $, $, $, $, $, $personalId
      */
     protected function createComponentRegForm() {
         $form = new Nette\Application\UI\Form;
@@ -156,16 +155,46 @@ class SignPresenter extends BasePresenter
         $form->addProtection('Vypršel časový limit, odešlete formulář znovu');
         // call method signInFormSucceeded() on success
         $form->onSuccess[] = array($this, 'regFormSucceeded');
-https://doc.nette.org/cs/2.4/forms
-$form->onValidate[] = [$this, 'validateRegForm'];        
+        $form->onValidate[] = [$this, 'validateRegForm'];        
         return $form;
+    }
+
+    public function validateRegForm($form)
+    {
+        $values = $form->getValues();
+        $id = $values[\App\Model\Authenticator::COLUMN_PARTNER_ID];
+        if($id > 0)
+        {
+            $partnerID = $this->authenticator->get($id);
+            if ($partnerID == null)
+            {
+                $form->addError('Neplatná identifikace partnera');
+            }
+        }
+
+        $email = $values[\App\Model\Authenticator::COLUMN_EMAIL];
+        $emailIsUnique = $this->authenticator->getByEmail($email);
+            if ($emailIsUnique != null)//Amalteia.2016
+            {
+                $form->addError('Email je již registrován pod jiným uživatelem.');
+            }
+
+        
+        $personalId = $values[\App\Model\Authenticator::COLUMN_PERSONAL_ID];
+        if($personalId != null)
+        {   
+            $personalIdIsUnique = $this->authenticator->getByPersonalId($personalId);
+            if ($personalIdIsUnique != null)
+            {
+                $form->addError('Partner s tímto rodným číslem je již registrován.');
+            }    
+        }
     }
 
     public function regFormSucceeded($form, $values) {
             $values = $form->getValues(TRUE);
-$values[\App\Model\Cvs::COLUMN_BIRTH] = \DateTime::createFromFormat('d.m.yy', $values[\App\Model\Cvs::COLUMN_BIRTH]);            
+            $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = \DateTime::createFromFormat('d.m.yy', $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE]);            
             $username = $values[\App\Model\Authenticator::COLUMN_FIRST_NAME];
-            //  knicemu pouziju ->setOmitted(TRUE); unset($values['confirm_password']);
             $this->authenticator->createUser($values);
             $this->flashMessage("Uživatel $username  byl vložen.", 'success');
             $this->redirect('default');
