@@ -32,8 +32,12 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
 	/** @var Nette\Database\Context */
     private $database;
 
-    public function __construct(Nette\Database\Context $database) {
+    /** @var \Kdyby\Translation\Translator  */
+    public $translator;
+
+    public function __construct(Nette\Database\Context $database, Nette\Localization\ITranslator $translator) {
         $this->database = $database;
+        $this->translator = $translator;
     }
 
     /**

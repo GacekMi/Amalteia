@@ -3,5 +3,13 @@
 
 <div id="content">
 	<h2>{_ui.titlePages.userProfilePage}</h2>	
+	<div>
+	  <p>
+		<span style="width:200px;">{_ui.signMessage.registered}: {$userItem->registered} | </span>
+		<span style="width:200px;">{_ui.signMessage.lastLogin}: {$userItem->last_login}</span>
+	  </p>
+	</div>
+	<hr>
+	{control profileForm} 
 </div>
 
