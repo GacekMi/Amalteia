@@ -141,7 +141,9 @@ class SignPresenter extends BasePresenter
         $form->addText(\App\Model\Authenticator::COLUMN_PERSONAL_ID, Html::el('span')->setText($this->translator->translate("ui.signMessage.personalId")))
                 ->setRequired(false)
                 ->addRule($verifyRC, $this->translator->translate("ui.signMessage.personalIdIncorect"));
-
+        $form->addCheckbox(\App\Model\Authenticator::AGREE_TERM_CON, $this->translator->translate("ui.signMessage.agreeTermsCon"))
+                ->setOmitted(TRUE)
+                ->setRequired($this->translator->translate("ui.signMessage.agreeTermsConMsg"));
         $form->addSubmit('send', $this->translator->translate("ui.signMessage.registerButton"));
         $form->addReCaptcha('captcha', NULL, $this->translator->translate("ui.signMessage.reCaptchaMessage"));
         $form['send']->getControlPrototype()->class('btn btn-success');
@@ -160,6 +162,8 @@ class SignPresenter extends BasePresenter
     public function validateRegForm($form)
     {
         $values = $form->getValues();
+        //$agree = $values[\App\Model\Authenticator::AGREE_TERM_CON];
+
         $id = $values[\App\Model\Authenticator::COLUMN_PARTNER_ID];
         if($id > 0)
         {

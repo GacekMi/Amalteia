@@ -27,7 +27,8 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
 	COLUMN_STATE = 'state',
 	COLUMN_LAST_LOGIN = 'last_login',
 	COLUMN_REGISTERED = 'registered',
-	COLUMN_ROLE = 'role';
+	COLUMN_ROLE = 'role',
+    AGREE_TERM_CON = 'agree_terms_con';
 	
 	/** @var Nette\Database\Context */
     private $database;

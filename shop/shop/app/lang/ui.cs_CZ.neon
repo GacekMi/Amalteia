@@ -65,6 +65,8 @@ signMessage:
     confirmPass: "Znovu heslo"
     confirmPassMsg: "Potvrzovací heslo musí být vyplněné !"
     passNoEqual: "Hesla se musí shodovat !"
+    agreeTermsCon: "Souhlasim s obchodnimi podminkami"
+    agreeTermsConMsg: "Je potřeba souhlasit s podmínkami"
 
 
 menuItems:

@@ -74,6 +74,8 @@ signMessage:
     lastLogin: "Last login"
     tokenType: "Token type"
     token: "token"
+    agreeTermsCon: "I Agree with terms and conditions"
+    agreeTermsConMsg: "You need to agree with terms and conditions."
 
 
 menuItems:
