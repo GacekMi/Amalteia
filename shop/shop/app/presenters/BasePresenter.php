@@ -16,21 +16,21 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
     private function getMenu() {
        $html='';
-       $html.='<a href="'.$this->link('Gallery:default').'">Galerie</a>';  
-       $html.='<a href="'.$this->link('Page:default').'">Nějaká stránka</a>';
-       $html.='<a href="'.$this->link('Dashboard:default').'">*Dashboard</a>';
-       $html.='<a href="'.$this->link('Profile:default').'">*Profile</a>';
-       $html.='<a href="'.$this->link('User:default').'">*User</a>';  
+       $html.='<a href="'.$this->link('Gallery:default').'">'.$this->translator->translate("ui.menuItems.gallery").'</a>';  
+       $html.='<a href="'.$this->link('Page:default').'">'.$this->translator->translate("ui.menuItems.page").'</a>';
+       $html.='<a href="'.$this->link('Dashboard:default').'">'.$this->translator->translate("ui.menuItems.dashboard").'</a>';
+       $html.='<a href="'.$this->link('Profile:default').'">'.$this->translator->translate("ui.menuItems.profile").'</a>';
+       $html.='<a href="'.$this->link('User:default').'">'.$this->translator->translate("ui.menuItems.user").'</a>';  
        if ($this->getUser()->isLoggedIn())
         {
-            $html.='<li><a href="'.$this->link('Profile:default').'">Profil</a></li>';
+            $html.='<li><a href="'.$this->link('Profile:default').'">'.$this->translator->translate("ui.menuItems.profile").'</a></li>';
             //if($this->user->isAllowed('Cvs','default'))
-            $html.='<li><a href="'.$this->link('Dashboard:default').'">Dashboard</a></li>';
-            $html.='<li><a href="'.$this->link('Sign:out').'">Odhlásit</a></li>';
+            $html.='<li><a href="'.$this->link('Dashboard:default').'">'.$this->translator->translate("ui.menuItems.dashboard").'</a></li>';
+            $html.='<li><a href="'.$this->link('Sign:out').'">'.$this->translator->translate("ui.menuItems.logOut").'</a></li>';
         }
         else
         {
-            $html.='<a href="'.$this->link('Sign:in').'">Přihlásit</a>';    
+            $html.='<a href="'.$this->link('Sign:in').'">'.$this->translator->translate("ui.menuItems.logIn").'</a>';    
         }
         
         return $html;

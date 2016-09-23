@@ -47,9 +47,9 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
         $row = $this->database->table(self::TABLE_NAME)->where(self::COLUMN_EMAIL, $username)->fetch();
 
         if (!$row) {
-            throw new Nette\Security\AuthenticationException('Neplatné jméno nebo heslo!', self::IDENTITY_NOT_FOUND);
+            throw new Nette\Security\AuthenticationException($this->translator->translate("ui.signMessage.loginIncorect"), self::IDENTITY_NOT_FOUND);
         } elseif (!Passwords::verify($password, $row[self::COLUMN_PASSWORD_HASH])) {
-            throw new Nette\Security\AuthenticationException('Neplatné jméno nebo heslo!', self::INVALID_CREDENTIAL);
+            throw new Nette\Security\AuthenticationException($this->translator->translate("ui.signMessage.loginIncorect"), self::INVALID_CREDENTIAL);
         } elseif (Passwords::needsRehash($row[self::COLUMN_PASSWORD_HASH])) {
             $row->update(array(
                 self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
@@ -57,7 +57,7 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
         }
 
         if ($row[self::COLUMN_STATE] == 0) {
-            throw new Nette\Security\AuthenticationException('Uživatel je blokován. Kontaktujte podporu.', self::INVALID_CREDENTIAL);
+            throw new Nette\Security\AuthenticationException($this->translator->translate("ui.signMessage.userIsBlocked"), self::INVALID_CREDENTIAL);
         }
 
         $arr = $row->toArray();
@@ -131,7 +131,7 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
         if (false !== $bytes && true === $strong) {
             return $bytes;
         } else {
-            throw new \Exception("Unable to generate secure token from OpenSSL.");
+            throw new \Exception($this->translator->translate("ui.signMessage.exceptionRandom"));
         }
     }
 

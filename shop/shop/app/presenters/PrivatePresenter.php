@@ -20,7 +20,7 @@ abstract class PrivatePresenter extends BasePresenter {
         if ($this->name != 'Sign') {
             if (!$this->user->isLoggedIn()) {
                 if ($this->user->getLogoutReason() === Nette\Security\User::INACTIVITY) {
-                    $this->flashMessage('Proběhlo odhlášení z důvodů neaktivity.', 'info');
+                    $this->flashMessage($this->translator->translate("ui.signMessage.logOutNoActivity"), 'info');
                 }
                 
                 if (!$this->user->isAllowed($this->name, $this->action)) {
@@ -29,7 +29,7 @@ abstract class PrivatePresenter extends BasePresenter {
 
             } else {
                 if (!$this->user->isAllowed($this->name, $this->action)) {
-                    $this->flashMessage('Přístup zamítnut. Nemáte dostatečné oprávnění.', 'error');
+                    $this->flashMessage($this->translator->translate("ui.signMessage.accessDeniedPermi"), 'error');
                     $this->redirect('Gallery:');
                 }
             }

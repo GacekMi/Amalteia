@@ -11,8 +11,8 @@ class GalleryPresenter extends BasePresenter
     {
 
         parent::beforeRender();
-            $template = $this->template;
-            $template->name = 'Michal';
-            $template->msg = $this->translator->translate("ui.title");
+          //  $template = $this->template;
+          //  $template->name = 'Michal';
+          //  $template->msg = $this->translator->translate("ui.title");
     }
 }
