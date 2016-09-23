@@ -76,6 +76,7 @@ signMessage:
     agreeTermsConMsg: "Je potřeba souhlasit s podmínkami"
     changeButton: "Uložit změny"
     changeSaved: "Změny uloženy"
+    changeForm: "Změnový formulář"
 
 
 menuItems:

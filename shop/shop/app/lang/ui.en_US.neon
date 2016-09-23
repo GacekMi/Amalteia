@@ -78,6 +78,7 @@ signMessage:
     agreeTermsConMsg: "You need to agree with terms and conditions."
     changeButton: "Save change"
     changeSaved: "Change saved"
+    changeForm: "Change form"
 
 
 menuItems:

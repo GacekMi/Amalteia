@@ -8,12 +8,25 @@
 	    <span style="width:200px;">{_ui.signMessage.userID}: {$userItem->id}</span></br>
 		<span style="width:200px;">{_ui.signMessage.partnerId}: {$userItem->partner_id}</span>
 	</p>
+	<p>
+	    <span style="width:200px;">{$userItem->first_name}  </span>
+		<span style="width:200px;"> {$userItem->last_name} </span>
+		</p>
+	<p>
+		<span style="width:200px;">{_ui.signMessage.email}: {$userItem->email} | </span>
+		<span style="width:200px;">{_ui.signMessage.phone}: {$userItem->phone} | </span>
+		<span style="width:200px;">{_ui.signMessage.birthDay}: {$userItem->birth_date} | </span>
+		<span style="width:200px;">{_ui.signMessage.personalId}: {$userItem->personal_id} | </span>
+	</p>
 	  <p>
 		<span style="width:200px;">{_ui.signMessage.registered}: {$userItem->registered} | </span>
 		<span style="width:200px;">{_ui.signMessage.lastLogin}: {$userItem->last_login}</span>
 	  </p>
 	</div>
 	<hr>
+	<p>
+	    <b>{_ui.signMessage.changeForm}</b>
+	</p>
 	{control profileForm} 
 </div>
 
