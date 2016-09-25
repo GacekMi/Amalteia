@@ -81,6 +81,7 @@ signMessage:
 tokenMessage:
     userNotFound: "Litujeme, akci nelze provést."
     typeIsIncorect: "Litujeme, tento typ akce nelze provést."
+    userIsVerified: 'Váš účet byl aktivován pokračujte přihlášením <a href="https://shop.amalteia.cz/cs/sign/in"> zde</a>.'
 
 
 menuItems:

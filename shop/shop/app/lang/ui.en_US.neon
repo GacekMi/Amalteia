@@ -83,6 +83,7 @@ signMessage:
 tokenMessage:
     userNotFound: "Sorry, unable to perform action."
     typeIsIncorect: "Sorry, unable to perform action of this type."
+    userIsVerified: 'Your account has been activated continue logging <a href="https://shop.amalteia.cz/en/sign/in"> here</a>.'
 
 
 menuItems:

@@ -32,7 +32,7 @@ class TokenPresenter extends BasePresenter
                 $this->authenticator->setUserState($userItem[\App\Model\Authenticator::COLUMN_ID], 1);
                 $values = array(\App\Model\Authenticator::COLUMN_TOKEN => NULL, \App\Model\Authenticator::COLUMN_TOKEN_TYPE => NULL);
                 $this->authenticator->update($userItem[\App\Model\Authenticator::COLUMN_ID], $values);
-                $this->template->message = "Vas ucet byl aktivovan pokracujte zde";
+                $this->template->message = $this->translator->translate("ui.tokenMessage.userIsVerified");
             }
             else
             {
