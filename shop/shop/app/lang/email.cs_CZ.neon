@@ -1,7 +1,7 @@
 activateAccount:
-    title: "Aktivace účtu"
+    title: "Aktivace účtu na Amalteia.cz"
     hello: "Dobrý den,"
-    mess1: "Aktivaci Vámi vytvořeného účtu na stránkách"
-    mess2: "provedete kliknutím"
+    mess1: "pro aktivaci vašeho účtu na"
+    mess2: "klikněte "
     mess3: "zde"
     bye: "Děkujeme za registraci!"
