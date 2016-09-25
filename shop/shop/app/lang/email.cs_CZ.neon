@@ -1,0 +1,7 @@
+activateAccount:
+    title: "Aktivace účtu"
+    hello: "Dobrý den,"
+    mess1: "Aktivaci Vámi vytvořeného účtu na stránkách"
+    mess2: "provedete kliknutím"
+    mess3: "zde"
+    bye: "Děkujeme za registraci!"

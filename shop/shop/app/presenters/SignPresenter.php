@@ -14,7 +14,6 @@ class SignPresenter extends BasePresenter
 {
      public function beforeRender() {
         parent::beforeRender();
-        
     }
 
      /** @inject @var \App\Model\Authenticator */
@@ -198,7 +197,7 @@ class SignPresenter extends BasePresenter
             $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = \DateTime::createFromFormat('d.m.yy', $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE]);            
             $username = $values[\App\Model\Authenticator::COLUMN_FIRST_NAME];
             $template = $this->createTemplate();
-            $this->authenticator->createUser($values, $template);
+            $this->authenticator->createUser($values, $template, $this->translator->getLocale());
             $this->flashMessage($this->translator->translate("ui.signMessage.userCreated", ['name' => $username]), 'success');
             $this->redirect('default');
     }

@@ -165,19 +165,20 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
         return 0;
     }   
 
-    public function createUser(array $values, $template) {
+    public function createUser(array $values, $template, $lang) {
         $values[self::COLUMN_PASSWORD_HASH] = Passwords::hash($values[self::COLUMN_PASSWORD_HASH]);
         $values[self::COLUMN_STATE] = 0;
         $values[self::COLUMN_ROLE] = 'user';
         $values[self::COLUMN_REGISTERED] = new \DateTime();
         //Doplneni tokenu a odeslani emailu
         $values[self::COLUMN_TOKEN_TYPE] = 1;
-        $values[self::COLUMN_TOKEN] = $this->generateToken(8);
+        $values[self::COLUMN_TOKEN] = $this->generateToken(25);
         $message = new Message;
         $message->addTo($values[self::COLUMN_EMAIL])
                         ->setFrom('office@amalteia.cz');
         $template->setFile(__DIR__ . '/../presenters/templates/Token/createemail.latte');
         $template->token = $values[self::COLUMN_TOKEN];
+        $template->lang = $lang;
         $message->setHtmlBody($template);
         $mailer = new SendmailMailer;
         $mailer->send($message);
