@@ -78,6 +78,10 @@ signMessage:
     changeSaved: "Změny uloženy"
     changeForm: "Změnový formulář"
 
+tokenMessage:
+    userNotFound: "Litujeme, akci nelze provést."
+    typeIsIncorect: "Litujeme, tento typ akce nelze provést."
+
 
 menuItems:
     logIn: "Přihlásit"

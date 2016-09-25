@@ -13,12 +13,11 @@ class TokenPresenter extends BasePresenter
     {
 
         parent::beforeRender();
-        $this->template->message = "Litujeme tato volba neni platna";
     }
 
-public function renderCreateemail($id)
+    public function renderDefault()
     {
-         $this->template->token = 12356;
+        $this->redirect('Gallery:default');
     }
 
     public function renderActivate($id)
@@ -37,12 +36,12 @@ public function renderCreateemail($id)
             }
             else
             {
-               $this->template->message = "Ou neco se porouchalo"; 
+               $this->template->message = $this->translator->translate("ui.tokenMessage.typeIsIncorect"); 
             }
         }
         else
         {
-            $this->template->message = "Litujeme akci nelze provest";
+            $this->template->message = $this->translator->translate("ui.tokenMessage.userNotFound");
         } 
     }
 
@@ -56,7 +55,7 @@ public function renderCreateemail($id)
         }
         else
         {
-            $this->template->message = "Litujeme";
+             $this->template->message = $this->translator->translate("ui.tokenMessage.userNotFound");
         }
     }
 }

@@ -16,6 +16,11 @@ class SignPresenter extends BasePresenter
         parent::beforeRender();
     }
 
+    public function renderDefault()
+    {
+        $this->redirect('Gallery:default');
+    }
+    
      /** @inject @var \App\Model\Authenticator */
     public $authenticator;
 

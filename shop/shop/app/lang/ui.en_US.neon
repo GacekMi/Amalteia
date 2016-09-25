@@ -80,6 +80,10 @@ signMessage:
     changeSaved: "Change saved"
     changeForm: "Change form"
 
+tokenMessage:
+    userNotFound: "Sorry, unable to perform action."
+    typeIsIncorect: "Sorry, unable to perform action of this type."
+
 
 menuItems:
     logIn: "LogIn"
