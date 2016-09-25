@@ -197,7 +197,8 @@ class SignPresenter extends BasePresenter
             $values = $form->getValues(TRUE);
             $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = \DateTime::createFromFormat('d.m.yy', $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE]);            
             $username = $values[\App\Model\Authenticator::COLUMN_FIRST_NAME];
-            $this->authenticator->createUser($values);
+            $template = $this->createTemplate();
+            $this->authenticator->createUser($values, $template);
             $this->flashMessage($this->translator->translate("ui.signMessage.userCreated", ['name' => $username]), 'success');
             $this->redirect('default');
     }

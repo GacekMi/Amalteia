@@ -5,6 +5,8 @@ namespace App\Model;
 use Nette,
 Nette\Utils\Strings,
 Nette\Security\Passwords,
+Nette\Mail\Message,
+Nette\Mail\SendmailMailer,
 Nette\Security;
 
 /** * Users authenticator. */
@@ -140,6 +142,11 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
         }
     }
 
+    public function getUserByToken($token)
+    {
+        return $this->database->table(self::TABLE_NAME)->where(self::COLUMN_TOKEN, $token)->fetch();
+    }
+
     public function generateToken($length) {
         return substr(preg_replace("/[^a-zA-Z0-9]/", "", base64_encode($this->getRandomBytes($length + 1))), 0, $length);
     }
@@ -158,40 +165,24 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
         return 0;
     }   
 
-    public function createUser(array $values) {
+    public function createUser(array $values, $template) {
         $values[self::COLUMN_PASSWORD_HASH] = Passwords::hash($values[self::COLUMN_PASSWORD_HASH]);
         $values[self::COLUMN_STATE] = 0;
         $values[self::COLUMN_ROLE] = 'user';
         $values[self::COLUMN_REGISTERED] = new \DateTime();
+        //Doplneni tokenu a odeslani emailu
+        $values[self::COLUMN_TOKEN_TYPE] = 1;
+        $values[self::COLUMN_TOKEN] = $this->generateToken(8);
+        $message = new Message;
+        $message->addTo($values[self::COLUMN_EMAIL])
+                        ->setFrom('office@amalteia.cz');
+        $template->setFile(__DIR__ . '/../presenters/templates/Token/createemail.latte');
+        $template->token = $values[self::COLUMN_TOKEN];
+        $message->setHtmlBody($template);
+        $mailer = new SendmailMailer;
+        $mailer->send($message);
         return $this->database->table(self::TABLE_NAME)->insert($values);
-    }
-
-
-
-    //ZBYTKAC ....
-    public function edit($key, $username, $password, $roles, $email, $state) {
-        //nevim zda to pouziji jestli nebude stacit jen update
-        if (isset($password)) {
-            return $this->database->table(self::TABLE_NAME)->where('id', $key)->update(array(
-                        self::COLUMN_NAME => $username,
-                        self::COLUMN_PASSWORD_HASH => Passwords::hash($password),
-                        self::COLUMN_ROLE => $roles,
-                        self::COLUMN_EMAIL => $email,
-                        self::COLUMN_STATE => $state,
-            ));
-        } else {
-            return $this->database->table(self::TABLE_NAME)->where('id', $key)->update(array(
-                        self::COLUMN_NAME => $username,
-                        self::COLUMN_ROLE => $roles,
-                        self::COLUMN_EMAIL => $email,
-                        self::COLUMN_STATE => $state,
-            ));
-        }
-    }
-
-
-    
-	
+    }	
 }
 
 
