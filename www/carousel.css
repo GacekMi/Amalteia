@@ -109,6 +109,20 @@ body {
   font-size: 18px;
 }
 
+.btn-gold {
+    margin-top: 30px;
+    color: #6A0F3A;
+    background-color: #EDEA8D;
+    border-color: #D5B031;
+}
+
+.btn-gold:hover {
+    margin-top: 30px;
+    color: #6A0F3A;
+    background-color: #D5B031;
+    border-color: #6A0F3A;
+}
+
 /* RESPONSIVE CSS
 -------------------------------------------------- */
 
