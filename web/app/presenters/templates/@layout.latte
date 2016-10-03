@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="cz">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Amalteia">
+    <meta name="author" content="IT4All, s.r.o.">
+    <link rel="icon" href="favicon.ico">
+
+    <title>{$title} </title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{$basePath}/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{$basePath}/bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <script src="{$basePath}/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <link href="{$basePath}/css/amalteia.css" rel="stylesheet">
+  </head>
+
+
+<body>
+	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+    
+    <!-- Menu -->
+	<div class="navbar-wrapper">
+      <div class="container">
+
+        <nav class="navbar navbar-default navbar-static-top">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+			  <a class="navbar-brand" n:href="Homepage:default">
+                  <img alt="Brand" src="{$basePath}/images/logo_header.png">
+              </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                  {$menu|noescape}
+                  </ul>
+                </li>
+              </ul>
+               <button type="button" class="btn btn-default navbar-btn navbar-right btn-gallery">E-shop</button>
+            </div>
+          </div>
+        </nav>
+
+      </div>
+    </div>
+	<!-- End menu block -->
+    
+	{include content}
+
+    <div class="container">
+      <!-- FOOTER -->
+	<hr class="featurette-divider">
+      <footer>
+        <p class="pull-right"><a href="#">Zpět nahoru</a></p>
+        <p>Copyright &copy; 2016 All Rights Reserved. &middot; <a n:href="Private:default">Soukromí</a> &middot; <a n:href="Termsandconditions:default">Podmínky</a></p>
+      </footer>
+    </div>
+
+	{block scripts}
+	<script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="bootstrap/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="{$basePath}/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="{$basePath}/bootstrap/assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{$basePath}/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+	{/block}
+</body>
+</html>
