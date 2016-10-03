@@ -17,7 +17,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
        $html.= '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dokumenty <span class="caret"></span></a>';
        $html.= '<ul class="dropdown-menu">';
        $html.= '<li><a href="'.$this->template->basePath.'/docs/vypis_z_OR.pdf">Výpis z OR</a></li>';     
-       $html.= '<li '.$this->isActive("Private").'><a href="'.$this->link('Private:default').'">Soukromí</a></li>';
+       $html.= '<li '.$this->isActive("Private").'><a href="'.$this->link('Private:default').'">Ochrana soukromí</a></li>';
        $html.= '<li><a href="'.$this->template->basePath.'/docs/obchodni_podminky.pdf">Obchodní podmínky</a></li>';
        $html.= '<li role="separator" class="divider"></li>';
        $html.= '<li class="dropdown-header">Formuláře</li>';
