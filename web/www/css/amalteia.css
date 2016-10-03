@@ -123,6 +123,13 @@ body {
     border-color: #6A0F3A;
 }
 
+.faqHeader{
+  font-size: 25px;
+  font-weight: normal;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
 /* RESPONSIVE CSS
 -------------------------------------------------- */
 
