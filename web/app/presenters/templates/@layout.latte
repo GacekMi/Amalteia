@@ -69,6 +69,19 @@
       </footer>
     </div>
 
+	<div class="eu-cookies" n:if="empty($_COOKIE[eu-cookies])">
+	    <span class="text_area"> 
+			Tyto webové stránky používají k poskytování služeb a analýze návštěvnosti soubory cookie. 
+			Informace o tom, jak tyto webové stránky používáte, jsou sdíleny se společností Google. 
+			Používáním těchto webových stránek souhlasíte s použitím souborů cookie. 
+		</span>
+		<span class="button_area"> 
+			<button> | Rozumím</button>
+			<a href="https://www.google.com/policies/technologies/cookies/"> | Další informace</a>
+		</span>
+	</div>
+	<noscript><style>.eu-cookies { display:none }</style></noscript>
+
 	{block scripts}
 	<script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
 	<!-- Bootstrap core JavaScript
@@ -81,6 +94,14 @@
     <script src="{$basePath}/bootstrap/assets/js/vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{$basePath}/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+	<script> 
+		$('.eu-cookies button').click(function() {
+			var date = new Date();
+			date.setFullYear(date.getFullYear() + 10);
+			document.cookie = 'eu-cookies=1; path=/; expires=' + date.toGMTString();
+			$('.eu-cookies').hide();
+		});
+	</script>
 	{/block}
 </body>
 </html>
