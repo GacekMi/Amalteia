@@ -7,6 +7,22 @@ body {
   color: #5a5a5a;
 }
 
+footer a{
+  color: #56121B;
+}
+
+footer a:hover{
+  color: #56121B;
+}
+
+
+.dropdown-menu .active a{
+  background-color: #D53F22;
+}
+
+.dropdown-menu .active a:hover{
+  background-color: #D53F22;
+}
 
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */
