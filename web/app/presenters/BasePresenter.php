@@ -17,12 +17,12 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
        $html.= '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dokumenty <span class="caret"></span></a>';
        $html.= '<ul class="dropdown-menu">';
        $html.= '<li><a href="'.$this->template->basePath.'/docs/vypis_z_OR.pdf">Výpis z OR</a></li>';     
-       $html.= '<li '.$this->isActive("Private").'><a href="'.$this->link('Private:default').'">Ochrana soukromí</a></li>';
+      // $html.= '<li '.$this->isActive("Private").'><a href="'.$this->link('Private:default').'">Ochrana soukromí</a></li>';//je to v op
        $html.= '<li><a href="'.$this->template->basePath.'/docs/obchodni_podminky.pdf">Obchodní podmínky</a></li>';
        $html.= '<li role="separator" class="divider"></li>';
-       $html.= '<li class="dropdown-header">Formuláře</li>';
-       $html.= '<li '.$this->isActive("Order").'><a href="#">Objednávka</a></li>';
-       $html.= '<li '.$this->isActive("Registration").'><a href="#">Přihláška</a></li>'; 
+       $html.= '<li class="dropdown-header">Amalteia klub</li>';
+       $html.= '<li><a href="'.$this->template->basePath.'/docs/amalteia_klub_VOP.pdf">Amalteia klub VOP</a></li>';
+       $html.= '<li><a href="'.$this->template->basePath.'/docs/amalteia_klub_specifikace_benefitu.pdf">Amalteia klub benefity</a></li>'; 
 
         
         return $html;
