@@ -1,49 +1,155 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
+<html lang="cz">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Amalteia">
+    <meta name="author" content="IT4All, s.r.o.">
+    <link rel="icon" href="favicon.ico">
 
-	<title>{ifset title}{include title|stripHtml} | {/ifset}Nette Web</title>
-</head>
+    <title>{$title} </title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{$basePath}/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="{$basePath}/bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <script src="{$basePath}/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <link href="{$basePath}/css/amalteia.css" rel="stylesheet">
+  </head>
+
 
 <body>
-	<div id="banner">
-		<h1 n:block=title>Amalteia</h1>
+	<hr class="top_line">
+    <!-- Menu -->
+	<div class="navbar-wrapper">
+      <div class="menu">
+
+        <nav class="navbar navbar-default navbar-static-top">
+          <div class="menu">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+			  <a class="navbar-brand" n:href="Gallery:default">
+                  <img alt="Brand" src="{$basePath}/images/logo_header.png">
+              </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                  {$left_menu|noescape}
+                  </ul>
+                </li>
+              </ul>
+			  <form class="navbar-form navbar-left">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="{_ui.findString}">
+					</div>
+						<button type="submit" class="btn btn-default">{_ui.findButton}</button>
+			  </form>
+              <ul class="nav navbar-nav navbar-right">
+				<li><a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="false"></span></a></li>
+				{$right_menu|noescape}
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{$lang} <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a n:href="this, locale => cs">{_ui.czLang}</a></li>
+						<li><a n:href="this, locale => en">{_ui.engLang}</a></li>
+					</ul>
+       		     </li>
+			</ul>
+            </div>
+          </div>
+        </nav>
+
+      </div>
+    </div>
+	<!-- End menu block -->
+    <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+	<div class="include_content">
+		{include content}
 	</div>
-	<div id="menu">
-		<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
-		<a n:href="this, locale => cs">cs</a>
-		<a n:href="this, locale => en">en</a>
-		<h2>{$menu|noescape}</h2>
+
+    <div class="footer">
+      	<!-- FOOTER -->
+		<div class="container">
+	    <div class="row">
+			<div class="col-lg-4">
+				<h3>{_ui.footer.purchase}</h3>
+			    <ul>
+					<li><a n:href="Page:transport">{_ui.footer.purchaseLink1}</a></li>
+					<li><a n:href="Page:payment">{_ui.footer.purchaseLink2}</a></li>
+					<li><a n:href="Page:termsandconditions">{_ui.footer.purchaseLink3}</a></li>
+					<li><a n:href="Page:rescission">{_ui.footer.purchaseLink4}</a></li>
+					<li><a n:href="Page:services">{_ui.footer.purchaseLink5}</a></li>
+				</ul>
+			</div><!-- /.col-lg-4 -->
+			<div class="col-lg-4">
+				<h3>{_ui.footer.order}</h3>
+				<ul>
+					<li><a n:href="Page:state">{_ui.footer.orderLink1}</a></li>
+					<li><a n:href="Page:track">{_ui.footer.orderLink2}</a></li>
+					<li><a n:href="Page:reclamation">{_ui.footer.orderLink3}</a></li>
+					<li><a href="https://amalteia.cz/faq">{_ui.footer.orderLink4}</a></li>
+				</ul>
+			</div><!-- /.col-lg-4 -->
+			<div class="col-lg-4">
+				<h3>{_ui.footer.aboutUs}</h3>
+				<ul>
+					<li><a href="https://amalteia.cz">{_ui.footer.aboutUsLink1}</a></li>
+					<li><a href="https://amalteia.cz/partner">{_ui.footer.aboutUsLink2}</a></li>
+					<li><a href="https://amalteia.cz/contact">{_ui.footer.aboutUsLink3}</a></li>
+				</ul>
+			</div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+	  </div>
+	  <hr class="">
+      <footer>
+        <p class="pull-right"><a href="#">{_ui.backTop}</a></p>
+        <p>Copyright &copy; 2016 All Rights Reserved. &middot;</p>
+      </footer>
+    </div>
+
+	<div class="eu-cookies" n:if="empty($_COOKIE[eu-cookies])">
+	    <span class="text_area">
+		    {_ui.cookiesInfo} 
+		</span>
+		<span class="button_area"> 
+			<button>{_ui.cookiesAgree}</button>
+			<a href="https://www.google.com/policies/technologies/cookies/">{_ui.cookiesNextInfo}</a>
+		</span>
 	</div>
-	{include content}
+	<noscript><style>.eu-cookies { display:none }</style></noscript>
 
 	{block scripts}
 	<script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
-	<script src='https://www.google.com/recaptcha/api.js'></script>
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="bootstrap/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="{$basePath}/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="{$basePath}/bootstrap/assets/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{$basePath}/bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+	<script> 
+		$('.eu-cookies button').click(function() {
+			var date = new Date();
+			date.setFullYear(date.getFullYear() + 10);
+			document.cookie = 'eu-cookies=1; path=/; expires=' + date.toGMTString();
+			$('.eu-cookies').hide();
+		});
+	</script>
 	{/block}
 </body>
-<style>
-	html { font: normal 18px/1.3 Georgia, "New York CE", utopia, serif; color: #666; -webkit-text-stroke: 1px rgba(0,0,0,0); overflow-y: scroll; }
-	body { background: #3484d2; color: #333; margin: 2em auto; padding: 0 .5em; max-width: 1200px; min-width: 320px; }
-
-	a { color: #006aeb; padding: 3px 1px; }
-	a:hover, a:active, a:focus { background-color: #006aeb; text-decoration: none; color: white; }
-
-	#banner { border-radius: 12px 12px 0 0; background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAB5CAMAAADPursXAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAGBQTFRFD1CRDkqFDTlmDkF1D06NDT1tDTNZDk2KEFWaDTZgDkiCDTtpDT5wDkZ/DTBVEFacEFOWD1KUDTRcDTFWDkV9DkR7DkN4DkByDTVeDC9TDThjDTxrDkeADkuIDTRbDC9SbsUaggAAAEdJREFUeNqkwYURgAAQA7DH3d3335LSKyxAYpf9vWCpnYbf01qcOdFVXc14w4BznNTjkQfsscAdU3b4wIh9fDVYc4zV8xZgAAYaCMI6vPgLAAAAAElFTkSuQmCC); }
-
-	h1 { font: inherit; color: white; font-size: 50px; line-height: 121px; margin: 0; padding-left: 4%; text-shadow: 1px 1px 0 rgba(0, 0, 0, .9); }
-	@media (max-width: 1200px) {
-		h1 { background: none; font-size: 40px; }
-	}
-
-	#content { background: white; border: 1px solid #eff4f7; border-radius: 0 0 12px 12px; padding: 10px 4%; overflow: hidden; }
-
-	#menu { background: white; padding: 10px 4%; overflow: hidden; }
-
-	h2 { font: inherit; padding: 1.2em 0; margin: 0; }
-
-	img { border: none; float: right; margin: 0 0 1em 3em; }
-</style>
 </html>
+
+

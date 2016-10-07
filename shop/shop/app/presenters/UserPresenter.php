@@ -15,5 +15,6 @@ class UserPresenter extends PrivatePresenter
 
         parent::beforeRender();
         $this->template->users = $this->authenticator->getList();
+        $this->template->title = $this->translator->translate("ui.menuItems.user");
     }
 }

@@ -9,10 +9,7 @@ class GalleryPresenter extends BasePresenter
 {
     public function beforeRender()
     {
-
-        parent::beforeRender();
-          //  $template = $this->template;
-          //  $template->name = 'Michal';
-          //  $template->msg = $this->translator->translate("ui.title");
+         parent::beforeRender();
+         $this->template->title = $this->translator->translate("ui.menuItems.gallery");
     }
 }

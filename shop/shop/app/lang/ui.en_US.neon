@@ -2,7 +2,17 @@ title: "Shop page"
 applesCount: '{0} No apple| There is one apple|There are %count% apples'
 helloName: "Hello %name%"
 
+findString: "What are you looking for?"
+findButton: "Search"
+czLang: "Czech"
+engLang: "English"
+backTop: "Back top"
 
+cookiesInfo: "Tyto webové stránky používají k poskytování služeb a analýze návštěvnosti soubory cookie. Informace o tom, jak tyto webové stránky používáte, jsou sdíleny se společností Google. Používáním těchto webových stránek souhlasíte s použitím souborů cookie. "
+
+cookiesAgree: " | I Agree"
+
+cookiesNextInfo: " | Next information"
 
 titlePages:
   eshopPage: "Eshop public page"
@@ -95,3 +105,19 @@ menuItems:
     user: "Users"
     page: "Page"
    
+footer:
+    aboutUs: "ABOUT US"
+    aboutUsLink1: "Amalteia"
+    aboutUsLink2: "Partnerství"
+    aboutUsLink3: "Kontakt"
+    order: "VAŠE OBJEDNÁVKY"
+    orderLink1: "Stav"
+    orderLink2: "Sledování"
+    orderLink3: "Reklamace"
+    orderLink4: "FAQ"
+    purchase: "JAK NAKOUPIT"
+    purchaseLink1: "Cena dopravy"
+    purchaseLink2: "Platby"
+    purchaseLink3: "Obchodní podmínky"
+    purchaseLink4: "Odstoupení"
+    purchaseLink5: "Služby"

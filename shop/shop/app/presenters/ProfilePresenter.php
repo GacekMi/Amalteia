@@ -23,6 +23,7 @@ class ProfilePresenter extends PrivatePresenter
         parent::beforeRender();
         $id = $this->getUser()->getIdentity()->getData()['id'];
         $this->template->userItem = $this->authenticator->get($id);
+        $this->template->title = $this->translator->translate("ui.menuItems.profile");
     }
 
     protected function createComponentProfileForm() {

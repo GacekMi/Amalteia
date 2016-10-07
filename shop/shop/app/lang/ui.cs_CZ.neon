@@ -2,9 +2,22 @@ title: 'ěščřžýáíéĚŠČŘŽÝÁÍÉŮú'
 applesCount: '{0} Zádné jablko|{1} Jedno jablíčko |{2,3,4} %count% jablíčka| [5, +Inf[Tam je %count% jablíček'
 helloName:  "Ahoj %name%"
 
+findString: "Co hledáte? např. ...."
+findButton: "Hledat"
+czLang: "Česky"
+engLang: "Anglicky"
+backTop: "Zpět nahoru"
+
+
+cookiesInfo: "Tyto webové stránky používají k poskytování služeb a analýze návštěvnosti soubory cookie. Informace o tom, jak tyto webové stránky používáte, jsou sdíleny se společností Google. Používáním těchto webových stránek souhlasíte s použitím souborů cookie. "
+
+cookiesAgree: " | Souhlasím"
+
+cookiesNextInfo: " | Další informace"
+
 titlePages:
   eshopPage: "Veřejná stránka eshopu"
-  userDefaultPage: "Správa u6ivatelů"
+  userDefaultPage: "Správa uživatelů"
   signInPage: "Přihlášení do systému"
   signRegPage: "Registrace do systému"
   userProfilePage: "Uživatelský profil"
@@ -92,3 +105,20 @@ menuItems:
     gallery: "Galerie"
     user: "Uživatelé"
     page: "Stránka"
+
+footer:
+    aboutUs: "O NÁS"
+    aboutUsLink1: "Amalteia"
+    aboutUsLink2: "Partnerství"
+    aboutUsLink3: "Kontakt"
+    order: "VAŠE OBJEDNÁVKY"
+    orderLink1: "Stav"
+    orderLink2: "Sledování"
+    orderLink3: "Reklamace"
+    orderLink4: "FAQ"
+    purchase: "JAK NAKOUPIT"
+    purchaseLink1: "Cena dopravy"
+    purchaseLink2: "Platby"
+    purchaseLink3: "Obchodní podmínky"
+    purchaseLink4: "Odstoupení"
+    purchaseLink5: "Služby"

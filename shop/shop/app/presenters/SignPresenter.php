@@ -14,11 +14,13 @@ class SignPresenter extends BasePresenter
 {
      public function beforeRender() {
         parent::beforeRender();
+        $this->template->title = $this->translator->translate("ui.menuItems.logIn");
     }
 
     public function renderDefault()
     {
         $this->redirect('Gallery:default');
+
     }
     
      /** @inject @var \App\Model\Authenticator */
