@@ -50,6 +50,12 @@ footer{
   margin-left: 30px;
 }
 
+.content-margin-top-center{
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
  /* PAGES */
 
 .box-page{
@@ -63,6 +69,11 @@ footer{
     padding-right: 100px;
     padding-top: 30px;
     padding-bottom: 30px;
+}
+
+.amalteia-button{
+  width: 302px;
+  height: 32px;
 }
 
   /* Login page */
@@ -88,13 +99,12 @@ footer{
 .reg-page{
     margin-left: auto;
     margin-right: auto;
-    width: 500px;
     background-color: #fff;
     border: 2px solid;
     border-radius: 25px;
     border-color: #eee;
     padding-left: 97px;
-    padding-right: 0px;
+    padding-right: 97px;
     padding-top: 30px;
     padding-bottom: 30px;
 }
@@ -108,7 +118,7 @@ div.flash {
     background: #FFF9D7;
     border: 1px solid #E2C822;
     padding: 1em;
-    margin: 1em 0;
+    margin: 71px 0;
 }
 
 div.flash.success {
@@ -141,11 +151,40 @@ form .error {
     font-weight: bold;
 }
 
+/* Info boxiky*/
+
+.info-box {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+
+.info-box-danger {
+    border-left-color: #ce4844;
+}
+
+.info-box-warning {
+    border-left-color: #aa6708;
+}
+
+.info-box-info {
+    border-left-color: #1b809e;
+}
+
 /*Nastaveni pro formulare*/
 
 .form-required {
     color: #f00;
+    font-size: 15px;
 }
+
+.form-required-info {
+    color: #f00;
+    font-size: 35px;
+}
+
 
 .form-line{
     display: block;
@@ -157,12 +196,17 @@ form .error {
     margin-bottom: 0px;
 }
 
+.form-line label span{
+
+    height: 35px;
+}
+
 .form-line label p{
     margin-bottom: 0px;
 }
 
 .form-line input{
-    width: 250px;
+    width: 302px;
     height: 24px;
 }
 
@@ -173,7 +217,7 @@ form .error {
 }
 
 .form-line select{
-    width: 250px;
+    width: 302px;
     height: 24px;
 }
 
@@ -183,7 +227,7 @@ form .error {
 
 .form-line .button{
     margin-top: 24px;
-    width: 200px;
+    width: 302px;
     height: 32px;
 }
 

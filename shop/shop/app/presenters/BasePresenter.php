@@ -23,7 +23,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
                         $html.= '<li class="dropdown-header">'.$this->translator->translate("ui.footer.purchase").'</li>';
 						$html.= '<li '.$this->isActiveSub("Page", "transport").'><a href="'.$this->link('Page:transport').'">'.$this->translator->translate("ui.footer.purchaseLink1").'</a></li>';
                         $html.= '<li '.$this->isActiveSub("Page", "payment").'><a href="'.$this->link('Page:payment').'">'.$this->translator->translate("ui.footer.purchaseLink2").'</a></li>';
-                        $html.= '<li '.$this->isActiveSub("Page", "termsandconditions").'><a href="'.$this->link('Page:termsandconditions').'">'.$this->translator->translate("ui.footer.purchaseLink3").'</a></li>';
+                        $html.= '<li '.$this->isActive("").'><a href="https://amalteia.cz/docs/obchodni_podminky.pdf">'.$this->translator->translate("ui.footer.purchaseLink3").'</a></li>';
+                         $html.= '<li '.$this->isActiveSub("Page", "benefits").'><a href="'.$this->link('Page:benefits').'">'.$this->translator->translate("ui.footer.purchaseLink6").'</a></li>';
                         //$html.= '<li '.$this->isActiveSub("Page", "rescission").'><a href="'.$this->link('Page:rescission').'">'.$this->translator->translate("ui.footer.purchaseLink4").'</a></li>';
                         //$html.= '<li '.$this->isActiveSub("Page", "services").'><a href="'.$this->link('Page:services').'">'.$this->translator->translate("ui.footer.purchaseLink5").'</a></li>';
 						$html.= '<li role="separator" class="divider"></li>';

@@ -90,6 +90,7 @@ signMessage:
     changeButton: "Uložit změny"
     changeSaved: "Změny uloženy"
     changeForm: "Změnový formulář"
+    newRegistration: "Vytvořit nový účet na Amalteia.cz"
 
 tokenMessage:
     userNotFound: "Litujeme, akci nelze provést."
@@ -122,3 +123,4 @@ footer:
     purchaseLink3: "Obchodní podmínky"
     purchaseLink4: "Odstoupení"
     purchaseLink5: "Služby"
+    purchaseLink6: "Benefity našich výrobků"

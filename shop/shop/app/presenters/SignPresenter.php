@@ -83,6 +83,7 @@ class SignPresenter extends BasePresenter
     protected function createComponentRegForm() {
         $form = new Nette\Application\UI\Form;
 
+        $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-6"));
         $form->addText(\App\Model\Authenticator::COLUMN_PARTNER_ID, Html::el('span')->setText($this->translator->translate("ui.signMessage.partnerId"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
                 ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.partnerIdMsg"));        
         $form->addText(\App\Model\Authenticator::COLUMN_FIRST_NAME, Html::el('span')->setText($this->translator->translate("ui.signMessage.firstName"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
@@ -92,6 +93,9 @@ class SignPresenter extends BasePresenter
         $form->addText(\App\Model\Authenticator::COLUMN_EMAIL, Html::el('span')->setText($this->translator->translate("ui.signMessage.email"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
                 ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.emailMsg"))
                 ->addRule(Form::EMAIL, $this->translator->translate("ui.signMessage.emailIncorect"));
+
+        $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-6"));
+
         $form->addText(\App\Model\Authenticator::COLUMN_PHONE, Html::el('span')->setText($this->translator->translate("ui.signMessage.phone")));
         $form->addText(\App\Model\Authenticator::COLUMN_BIRTH_DATE, Html::el('span')->setText($this->translator->translate("ui.signMessage.birthDay")))
                 ->setRequired(false)
@@ -144,9 +148,10 @@ class SignPresenter extends BasePresenter
 
             return TRUE;
         };
-        $form->addText(\App\Model\Authenticator::COLUMN_PERSONAL_ID, Html::el('span')->setText($this->translator->translate("ui.signMessage.personalId")))
+        /*$form->addText(\App\Model\Authenticator::COLUMN_PERSONAL_ID, Html::el('span')->setText($this->translator->translate("ui.signMessage.personalId")))
                 ->setRequired(false)
-                ->addRule($verifyRC, $this->translator->translate("ui.signMessage.personalIdIncorect"));
+                ->addRule($verifyRC, $this->translator->translate("ui.signMessage.personalIdIncorect"));*/
+        $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-12"));
         $form->addCheckbox(\App\Model\Authenticator::AGREE_TERM_CON, $this->translator->translate("ui.signMessage.agreeTermsCon"))
                 ->setOmitted(TRUE)
                 ->setRequired($this->translator->translate("ui.signMessage.agreeTermsConMsg"));
