@@ -10,7 +10,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
        //class="active" 
        $html='';
        $html.= '<li '.$this->isActive("Aboutus").'><a href="'.$this->link('Aboutus:default').'">O nás</a></li>';
-       $html.= '<li '.$this->isActive("Partner").'><a href="'.$this->link('Partner:default').'">Partnerství</a></li>';
+       $html.= '<li '.$this->isActive("Partner").'><a href="'.$this->link('Partner:default').'">Klubové výhody</a></li>';
        $html.= '<li '.$this->isActive("Contact").'><a href="'.$this->link('Contact:default').'">Kontakt</a></li>';
        $html.= '<li '.$this->isActive("Faq").'><a href="'.$this->link('Faq:default').'">FAQ</a></li>';
        $html.= '<li class="dropdown">';
