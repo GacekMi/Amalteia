@@ -2,14 +2,21 @@
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
 
+html{
+   position: relative;
+   min-height: 100%;
+}
+
 body {
-  padding-bottom: 40px;
+  padding-bottom: 0px;
   color: #5a5a5a;
   background-color: #f8f8f8;
+   margin-bottom: 300px;
 }
 
 .include_content{
   background-color: #f8f8f8;
+  margin-top: 100px;
 }
 
 .footer{
@@ -36,6 +43,161 @@ footer{
 
 .dropdown-menu .active a:hover{
   background-color: #D53F22;
+}
+
+ /* PAGES */
+
+  /* Login page */
+.login-page{
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    background-color: #fff;
+    border: 2px solid;
+    border-radius: 25px;
+    border-color: #eee;
+    padding-left: 97px;
+    padding-right: 0px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.login-page label{
+    display: inline-block;
+}
+
+  /* Reg page */
+.reg-page{
+    margin-left: auto;
+    margin-right: auto;
+    width: 500px;
+    background-color: #fff;
+    border: 2px solid;
+    border-radius: 25px;
+    border-color: #eee;
+    padding-left: 97px;
+    padding-right: 0px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.reg-page label{
+    display: inline-block;
+}
+
+div.flash {
+    color: black;
+    background: #FFF9D7;
+    border: 1px solid #E2C822;
+    padding: 1em;
+    margin: 1em 0;
+}
+
+div.flash.success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+}
+
+div.flash.error {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+}
+
+a[href^="#error:"] {
+    background: red;
+    color: white;
+}
+
+form{
+    margin-top: 30px;
+}
+
+form .required label {
+    font-weight: bold;
+}
+
+form .error {
+    color: #D00;
+    font-weight: bold;
+}
+
+/*Nastaveni pro formulare*/
+
+.form-required {
+    color: #f00;
+}
+
+.form-line{
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form-line label{
+    display: block;
+    margin-bottom: 0px;
+}
+
+.form-line label p{
+    margin-bottom: 0px;
+}
+
+.form-line input{
+    width: 250px;
+    height: 24px;
+}
+
+.form-line label input{
+    width: 50px;
+    height: 13px;
+    margin-top: 28px;
+}
+
+.form-line select{
+    width: 250px;
+    height: 24px;
+}
+
+.form-line textarea{
+    width: 100%;
+}
+
+.form-line .button{
+    margin-top: 24px;
+    width: 200px;
+    height: 32px;
+}
+
+.form-line .checkbox 
+{
+    width: 25px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    margin-left: 20px;
+    display: inline-block;
+}
+
+.form-line .radio 
+{
+    width: 25px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    display: inline-block;
+}
+
+
+.button-row{
+    margin-top: 100px;
+    margin-left: 150px;
+
+}
+
+/*Login page*/
+#frm-signInForm-remember{
+    width: 25px;
+    margin-bottom: 20px;
 }
 
 /* CUSTOMIZE THE NAVBAR
@@ -260,3 +422,5 @@ footer{
     margin-top: 0px;
   }
 }
+
+
