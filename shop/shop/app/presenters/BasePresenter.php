@@ -24,13 +24,13 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 						$html.= '<li '.$this->isActiveSub("Page", "transport").'><a href="'.$this->link('Page:transport').'">'.$this->translator->translate("ui.footer.purchaseLink1").'</a></li>';
                         $html.= '<li '.$this->isActiveSub("Page", "payment").'><a href="'.$this->link('Page:payment').'">'.$this->translator->translate("ui.footer.purchaseLink2").'</a></li>';
                         $html.= '<li '.$this->isActiveSub("Page", "termsandconditions").'><a href="'.$this->link('Page:termsandconditions').'">'.$this->translator->translate("ui.footer.purchaseLink3").'</a></li>';
-                        $html.= '<li '.$this->isActiveSub("Page", "rescission").'><a href="'.$this->link('Page:rescission').'">'.$this->translator->translate("ui.footer.purchaseLink4").'</a></li>';
-                        $html.= '<li '.$this->isActiveSub("Page", "services").'><a href="'.$this->link('Page:services').'">'.$this->translator->translate("ui.footer.purchaseLink5").'</a></li>';
+                        //$html.= '<li '.$this->isActiveSub("Page", "rescission").'><a href="'.$this->link('Page:rescission').'">'.$this->translator->translate("ui.footer.purchaseLink4").'</a></li>';
+                        //$html.= '<li '.$this->isActiveSub("Page", "services").'><a href="'.$this->link('Page:services').'">'.$this->translator->translate("ui.footer.purchaseLink5").'</a></li>';
 						$html.= '<li role="separator" class="divider"></li>';
                         $html.= '<li class="dropdown-header">'.$this->translator->translate("ui.footer.order").'</li>';
 						$html.= '<li '.$this->isActiveSub("Page", "state").'><a href="'.$this->link('Page:state').'">'.$this->translator->translate("ui.footer.orderLink1").'</a></li>';
                         $html.= '<li '.$this->isActiveSub("Page", "track").'><a href="'.$this->link('Page:track').'">'.$this->translator->translate("ui.footer.orderLink2").'</a></li>';
-                        $html.= '<li '.$this->isActiveSub("Page", "reclamation").'><a href="'.$this->link('Page:reclamation').'">'.$this->translator->translate("ui.footer.orderLink3").'</a></li>';
+                        //$html.= '<li '.$this->isActiveSub("Page", "reclamation").'><a href="'.$this->link('Page:reclamation').'">'.$this->translator->translate("ui.footer.orderLink3").'</a></li>';
                         $html.= '<li '.$this->isActive("").'><a href="https://amalteia.cz/faq">'.$this->translator->translate("ui.footer.orderLink4").'</a></li>';
                         $html.= '<li role="separator" class="divider"></li>';
                         $html.= '<li class="dropdown-header">'.$this->translator->translate("ui.footer.aboutUs").'</li>';

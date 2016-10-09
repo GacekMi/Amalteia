@@ -45,7 +45,25 @@ footer{
   background-color: #D53F22;
 }
 
+.content-margin-top{
+  margin-top: 50px;
+  margin-left: 30px;
+}
+
  /* PAGES */
+
+.box-page{
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+    border: 2px solid;
+    border-radius: 10px;
+    border-color: #eee;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
 
   /* Login page */
 .login-page{
@@ -54,7 +72,7 @@ footer{
     width: 500px;
     background-color: #fff;
     border: 2px solid;
-    border-radius: 25px;
+    border-radius: 10px;
     border-color: #eee;
     padding-left: 97px;
     padding-right: 0px;
