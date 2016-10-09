@@ -56,6 +56,35 @@ footer{
   margin-right: auto;
 }
 
+/* Prvky v galerii*/
+.gallery-items{
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.gallery-item{
+  width: 350px;
+}
+
+.buttons-gallery-item{
+  margin-top: 50px;
+}
+
+.button-gallery-image-cart{
+  margin-left: 10px;
+}
+
+.button-gallery-info{
+  text-align: right;
+  float: right;
+}
+
+.button-gallery-cart{
+  color: #fff;
+  background-color: #56121B;
+  border-color: #36060D;
+}
+   
  /* PAGES */
 
 .box-page{

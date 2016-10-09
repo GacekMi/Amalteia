@@ -80,6 +80,15 @@ footer a:hover{
   height: 500px;
 }
 
+.carousel-text-area {
+  position: absolute;
+  top: 350px;
+  left: 0;
+  min-width: 100%;
+  height: 150px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
 
 /* MARKETING CONTENT
 -------------------------------------------------- */

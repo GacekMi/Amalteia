@@ -22,6 +22,7 @@ class TokenPresenter extends BasePresenter
 
     public function renderActivate($id)
     {
+        $this->template->title = $this->translator->translate("ui.menuItems.acountActivate");
         if($id == null) $id = -1;
         $userItem = $this->authenticator->getUserByToken($id);
         if($userItem != null)

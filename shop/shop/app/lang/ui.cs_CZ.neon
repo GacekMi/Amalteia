@@ -70,8 +70,8 @@ signMessage:
     emailMsg: "Zadejte email"
     emailIncorect: "Email nemá správný formát"
     phone: "Telefon"
-    birthDay: "Datum narození ve tvaru d.m.yy"
-    birthDayIncorect: "Datum musí být ve tvaru d.m.yy"
+    birthDay: "Datum narození ve tvaru d.m.rrrr"
+    birthDayIncorect: "Datum musí být ve tvaru d.m.rrrr"
     passMsg: "Heslo"
     passLenght: "Heslo musí mít alespoň %len% znaků"
     passPattern: "Musí obsahovat číslici"
@@ -106,6 +106,7 @@ menuItems:
     gallery: "Galerie"
     user: "Uživatelé"
     page: "Vše o nákupu"
+    acountActivate: "Aktivace účtu"
 
 footer:
     aboutUs: "O NÁS"

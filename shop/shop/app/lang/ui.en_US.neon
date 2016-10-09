@@ -105,6 +105,7 @@ menuItems:
     gallery: "Gallery"
     user: "Users"
     page: "All about purchase"
+    acountActivate: "Aktivace účtu"
    
 footer:
     aboutUs: "ABOUT US"

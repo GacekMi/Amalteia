@@ -111,6 +111,10 @@ class SignPresenter extends BasePresenter
                     ->addConditionOn($form[\App\Model\Authenticator::COLUMN_PASSWORD_HASH], Form::FILLED)
                     ->addRule(Form::EQUAL, $this->translator->translate("ui.signMessage.passNoEqual"), $form[\App\Model\Authenticator::COLUMN_PASSWORD_HASH]);
         $verifyRC = function ($rc, $arg) {
+
+            //neni treba ted
+
+            return TRUE;
             // be liberal in what you receive
             $rc = $rc->value;
             if (!preg_match('#^\s*(\d\d)(\d\d)(\d\d)[ /]*(\d\d\d)(\d?)\s*$#', $rc, $matches)) {
@@ -148,9 +152,9 @@ class SignPresenter extends BasePresenter
 
             return TRUE;
         };
-        /*$form->addText(\App\Model\Authenticator::COLUMN_PERSONAL_ID, Html::el('span')->setText($this->translator->translate("ui.signMessage.personalId")))
+        $form->addHidden(\App\Model\Authenticator::COLUMN_PERSONAL_ID, Html::el('span')->setText($this->translator->translate("ui.signMessage.personalId")))
                 ->setRequired(false)
-                ->addRule($verifyRC, $this->translator->translate("ui.signMessage.personalIdIncorect"));*/
+                ->addRule($verifyRC, $this->translator->translate("ui.signMessage.personalIdIncorect"));
         $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-12"));
         $form->addCheckbox(\App\Model\Authenticator::AGREE_TERM_CON, $this->translator->translate("ui.signMessage.agreeTermsCon"))
                 ->setOmitted(TRUE)
@@ -195,12 +199,12 @@ class SignPresenter extends BasePresenter
         
         $personalId = $values[\App\Model\Authenticator::COLUMN_PERSONAL_ID];
         if($personalId != null)
-        {   
-            $personalIdIsUnique = $this->authenticator->getByPersonalId($personalId);
+        {   //rc neni pozadovano
+           /* $personalIdIsUnique = $this->authenticator->getByPersonalId($personalId);
             if ($personalIdIsUnique != null)
             {
                 $form->addError($this->translator->translate("ui.signMessage.duplicitPartnerId"));
-            }    
+            }   */ 
         }
     }
 
