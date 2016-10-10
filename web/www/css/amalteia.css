@@ -64,7 +64,18 @@ footer a:hover{
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
+  min-width: 100%;
   z-index: 10;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+  margin-left: auto;
+  margin-right: auto;
+  right: 0;
+  left: 0;
+  bottom: 0px;
+}
+
+.carousel-indicators{
+  bottom: 0px;
 }
 
 /* Declare heights because of positioning of img element */
@@ -72,24 +83,30 @@ footer a:hover{
   height: 500px;
   background-color: #777;
 }
-.carousel-inner > .item > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: 500px;
+
+.first-slide{
+   min-width: 100%;
+   height: 500px;
+   background-size: cover;
+   background-image: url("/www/images/slide1.jpg");
+   background-position: center 65%;
 }
 
-.carousel-text-area {
-  position: absolute;
-  top: 350px;
-  left: 0;
-  min-width: 100%;
-  height: 150px;
-  background-color: rgba(0, 0, 0, 0.6);
+.second-slide{
+   min-width: 100%;
+   height: 500px;
+   background-size: cover;
+   background-image: url("/www/images/slide2.jpg");
+   background-position: center center;
 }
 
-
+.third-slide{
+   min-width: 100%;
+   height: 500px;
+   background-size: cover;
+   background-image: url("/www/images/slide2.jpg");
+}
+ 
 /* MARKETING CONTENT
 -------------------------------------------------- */
 
