@@ -20,9 +20,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
       // $html.= '<li '.$this->isActive("Private").'><a href="'.$this->link('Private:default').'">Ochrana soukromí</a></li>';//je to v op
        $html.= '<li><a href="'.$this->template->basePath.'/docs/obchodni_podminky.pdf">Obchodní podmínky</a></li>';
        $html.= '<li role="separator" class="divider"></li>';
-       $html.= '<li class="dropdown-header">Amalteia klub</li>';
+      /* $html.= '<li class="dropdown-header">Amalteia klub</li>';
        $html.= '<li><a href="'.$this->template->basePath.'/docs/amalteia_klub_VOP.pdf">Amalteia klub VOP</a></li>';
-       $html.= '<li><a href="'.$this->template->basePath.'/docs/amalteia_klub_specifikace_benefitu.pdf">Amalteia klub benefity</a></li>'; 
+       $html.= '<li><a href="'.$this->template->basePath.'/docs/amalteia_klub_specifikace_benefitu.pdf">Amalteia klub benefity</a></li>'; */
 
         
         return $html;
