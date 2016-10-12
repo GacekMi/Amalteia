@@ -70,6 +70,8 @@ signMessage:
     emailMsg: "Zadejte email"
     emailIncorect: "Email nemá správný formát"
     phone: "Telefon"
+    phoneMsg: "Zadejte telefon ve mezinarodnim tvaru +420/+421 XXX XXX XXX"
+    phoneIncorect: "Telefon nesplňuje meyinarodni format +420/+421 XXX XXX XXX"
     birthDay: "Datum narození ve tvaru d.m.rrrr"
     birthDayIncorect: "Datum musí být ve tvaru d.m.rrrr"
     passMsg: "Heslo"

@@ -96,7 +96,10 @@ class SignPresenter extends BasePresenter
 
         $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-6"));
 
-        $form->addText(\App\Model\Authenticator::COLUMN_PHONE, Html::el('span')->setText($this->translator->translate("ui.signMessage.phone")));
+        $form->addText(\App\Model\Authenticator::COLUMN_PHONE, Html::el('span')->setText($this->translator->translate("ui.signMessage.phone"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
+                ->setRequired($this->translator->translate("ui.signMessage.phoneMsg"))
+                ->addRule(Form::PATTERN, $this->translator->translate("ui.signMessage.phoneIncorect"), '^(\+420|\+421){1} ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$');
+
         $form->addText(\App\Model\Authenticator::COLUMN_BIRTH_DATE, Html::el('span')->setText($this->translator->translate("ui.signMessage.birthDay")))
                 ->setRequired(false)
                 ->addRule(Form::PATTERN, $this->translator->translate("ui.signMessage.birthDayIncorect"), '([0-9]\s*){1,2}\.([0-9]\s*){1,2}\.([0-9]\s*){4}')
