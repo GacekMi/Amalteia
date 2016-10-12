@@ -98,7 +98,7 @@ class SignPresenter extends BasePresenter
 
         $form->addText(\App\Model\Authenticator::COLUMN_PHONE, Html::el('span')->setText($this->translator->translate("ui.signMessage.phone"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
                 ->setRequired($this->translator->translate("ui.signMessage.phoneMsg"))
-                ->addRule(Form::PATTERN, $this->translator->translate("ui.signMessage.phoneIncorect"), '^(\+420|\+421){1} ?[1-9][0-9]{2} ?[0-9]{3} ?[0-9]{3}$');
+                ->addRule(Form::PATTERN, $this->translator->translate("ui.signMessage.phoneIncorect"), '^(\+420|\+421){1} {1}[1-9][0-9]{2} {1}[0-9]{3} {1}[0-9]{3}$');
 
         $form->addText(\App\Model\Authenticator::COLUMN_BIRTH_DATE, Html::el('span')->setText($this->translator->translate("ui.signMessage.birthDay")))
                 ->setRequired(false)
@@ -113,51 +113,6 @@ class SignPresenter extends BasePresenter
                     ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.confirmPassMsg"))
                     ->addConditionOn($form[\App\Model\Authenticator::COLUMN_PASSWORD_HASH], Form::FILLED)
                     ->addRule(Form::EQUAL, $this->translator->translate("ui.signMessage.passNoEqual"), $form[\App\Model\Authenticator::COLUMN_PASSWORD_HASH]);
-        $verifyRC = function ($rc, $arg) {
-
-            //neni treba ted
-
-            return TRUE;
-            // be liberal in what you receive
-            $rc = $rc->value;
-            if (!preg_match('#^\s*(\d\d)(\d\d)(\d\d)[ /]*(\d\d\d)(\d?)\s*$#', $rc, $matches)) {
-                return FALSE;
-            }
-
-            list(, $year, $month, $day, $ext, $c) = $matches;
-
-            if ($c === '') {
-                $year += $year < 54 ? 1900 : 1800;
-            } else {
-                // kontrolní číslice
-                $mod = ($year . $month . $day . $ext) % 11;
-                if ($mod === 10) $mod = 0;
-                if ($mod !== (int) $c) {
-                    return FALSE;
-                }
-
-                $year += $year < 54 ? 2000 : 1900;
-            }
-
-            // k měsíci může být připočteno 20, 50 nebo 70
-            if ($month > 70 && $year > 2003) {
-                $month -= 70;
-            } elseif ($month > 50) {
-                $month -= 50;
-            } elseif ($month > 20 && $year > 2003) {
-                $month -= 20;
-            }
-
-            // kontrola data
-            if (!checkdate($month, $day, $year)) {
-                return FALSE;
-            }
-
-            return TRUE;
-        };
-        $form->addHidden(\App\Model\Authenticator::COLUMN_PERSONAL_ID, Html::el('span')->setText($this->translator->translate("ui.signMessage.personalId")))
-                ->setRequired(false)
-                ->addRule($verifyRC, $this->translator->translate("ui.signMessage.personalIdIncorect"));
         $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-12"));
         $form->addCheckbox(\App\Model\Authenticator::AGREE_TERM_CON, $this->translator->translate("ui.signMessage.agreeTermsCon"))
                 ->setOmitted(TRUE)
@@ -183,7 +138,7 @@ class SignPresenter extends BasePresenter
         //$agree = $values[\App\Model\Authenticator::AGREE_TERM_CON];
 
         $id = $values[\App\Model\Authenticator::COLUMN_PARTNER_ID];
-        if($id > 0)
+        if($id > 936000000 || $id < 936000000)
         {
             $partnerID = $this->authenticator->get($id);
             if ($partnerID == null)
@@ -199,16 +154,12 @@ class SignPresenter extends BasePresenter
                 $form->addError($this->translator->translate("ui.signMessage.duplicitEmail"));
             }
 
-        
-        $personalId = $values[\App\Model\Authenticator::COLUMN_PERSONAL_ID];
-        if($personalId != null)
-        {   //rc neni pozadovano
-           /* $personalIdIsUnique = $this->authenticator->getByPersonalId($personalId);
-            if ($personalIdIsUnique != null)
+        $phone = $values[\App\Model\Authenticator::COLUMN_PHONE];
+        $phoneIsUnique = $this->authenticator->getByPhone($phone);
+            if ($phoneIsUnique != null)
             {
-                $form->addError($this->translator->translate("ui.signMessage.duplicitPartnerId"));
-            }   */ 
-        }
+                $form->addError($this->translator->translate("ui.signMessage.duplicitPhone"));
+            }
     }
 
     public function regFormSucceeded($form, $values) {

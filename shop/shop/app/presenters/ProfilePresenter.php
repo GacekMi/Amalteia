@@ -21,12 +21,68 @@ class ProfilePresenter extends PrivatePresenter
     public function beforeRender()
     {
         parent::beforeRender();
-        $id = $this->getUser()->getIdentity()->getData()['id'];
-        $this->template->userItem = $this->authenticator->get($id);
+        $id = $this->getUser()->getIdentity()->getData()[\App\Model\Authenticator::COLUMN_ID];
+        $editUser = $this->authenticator->get($id);
+        $this->template->userItem =  $editUser;
+        $data = $editUser->toArray();
+        unset($data[\App\Model\Authenticator::COLUMN_PASSWORD_HASH]);
+        $data[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = $data[\App\Model\Authenticator::COLUMN_BIRTH_DATE]->format('d.m.Y');; 
+        $this['profileForm']->setDefaults($data);
         $this->template->title = $this->translator->translate("ui.menuItems.profile");
     }
 
-    protected function createComponentProfileForm() {
+
+    //  ZMENA HESLA
+    protected function createComponentPassUserForm() {
+        $userId = $this->getParameter('id');
+
+        $form = new Nette\Application\UI\Form;
+
+        $form->addPassword(\App\Model\Authenticator::COLUMN_PASSWORD_HASH, Html::el('span')->setText('Původní heslo')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
+                ->addRule(Form::FILLED, 'Původní heslo');
+
+        $form->addPassword('new_password', Html::el('span')->setText('Nové heslo')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
+                ->addRule(Form::FILLED, 'Nové heslo')
+                ->addRule(Form::MIN_LENGTH, 'Heslo musí mít alespoň %d znaků', 8)
+                ->addRule(Form::PATTERN, 'Musí obsahovat číslici', '.*[0-9].*');
+        $form->addPassword("confirm_password", Html::el('span')->setText('Potvrzení nového hesla')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
+                ->addRule(Form::FILLED, "Potvrzení nového hesla musí být vyplněné !")
+                ->addConditionOn($form["new_password"], Form::FILLED)
+                ->addRule(Form::EQUAL, "Hesla se musí shodovat !", $form["new_password"]);
+
+
+        $form->addSubmit('send', 'Změnit heslo');
+
+
+        $form['send']->getControlPrototype()->class('btn btn-success');
+        $renderer = $form->getRenderer();
+        $renderer->wrappers['controls']['container'] = 'div';
+        $renderer->wrappers['pair']['container'] = Html::el('div')->class('form-line');
+        $renderer->wrappers['label']['container'] = NULL;
+        $renderer->wrappers['control']['container'] = NULL;
+
+        $form->onSuccess[] = array($this, 'passUserFormSucceeded');
+        return $form;
+    }
+
+    public function PassUserFormSucceeded($form, $values) {
+        $id = $this->getUser()->getIdentity()->getData()['id'];
+        $editUser = $this->authenticator->get($id);
+        $data = $editUser->toArray();
+        $values = $form->getValues(TRUE);
+        $resultPasswd = $this->authenticator->verifiPassword($values[\App\Model\Authenticator::COLUMN_PASSWORD_HASH], $data[\App\Model\Authenticator::COLUMN_PASSWORD_HASH]);
+        if (!$resultPasswd) {
+            $this->flashMessage("Vaše heslo není zprávné.", 'error');
+        } else {
+            $this->authenticator->changePassword($id, $values['new_password']);
+            $this->flashMessage("Vaše heslo bylo změněno. Změny se projeví až po opětovném přihlášení.", 'success');
+            $this->redirect('default');
+        }
+    }
+
+
+    // ZMENA UZIVATELSKEHO PROFILU
+     protected function createComponentProfileForm() {
         $form = new Nette\Application\UI\Form;
        
         $form->addText(\App\Model\Authenticator::COLUMN_FIRST_NAME, Html::el('span')->setText($this->translator->translate("ui.signMessage.firstName")));
@@ -39,56 +95,6 @@ class ProfilePresenter extends PrivatePresenter
                 ->setRequired(false)
                 ->addRule(Form::PATTERN, $this->translator->translate("ui.signMessage.birthDayIncorect"), '([0-9]\s*){1,2}\.([0-9]\s*){1,2}\.([0-9]\s*){4}')
                 ->setHtmlId('datepicker1');
-        $form->addPassword(\App\Model\Authenticator::COLUMN_PASSWORD_HASH, Html::el('span')->setText($this->translator->translate("ui.signMessage.password")))
-                    ->setRequired(false)
-                    ->addRule(Form::MIN_LENGTH, $this->translator->translate("ui.signMessage.passLenght", ['len' => 8]), 8)
-                    ->addRule(Form::PATTERN, $this->translator->translate("ui.signMessage.passPattern"), '.*[0-9].*');
-        $form->addPassword("confirm_password", Html::el('span')->setText($this->translator->translate("ui.signMessage.confirmPass")))
-                    ->setOmitted(TRUE)
-                    ->setRequired(false)
-                    ->addConditionOn($form[\App\Model\Authenticator::COLUMN_PASSWORD_HASH], Form::FILLED)
-                    ->addRule(Form::EQUAL, $this->translator->translate("ui.signMessage.passNoEqual"), $form[\App\Model\Authenticator::COLUMN_PASSWORD_HASH]);
-        $verifyRC = function ($rc, $arg) {
-            // be liberal in what you receive
-            $rc = $rc->value;
-            if (!preg_match('#^\s*(\d\d)(\d\d)(\d\d)[ /]*(\d\d\d)(\d?)\s*$#', $rc, $matches)) {
-                return FALSE;
-            }
-
-            list(, $year, $month, $day, $ext, $c) = $matches;
-
-            if ($c === '') {
-                $year += $year < 54 ? 1900 : 1800;
-            } else {
-                // kontrolní číslice
-                $mod = ($year . $month . $day . $ext) % 11;
-                if ($mod === 10) $mod = 0;
-                if ($mod !== (int) $c) {
-                    return FALSE;
-                }
-
-                $year += $year < 54 ? 2000 : 1900;
-            }
-
-            // k měsíci může být připočteno 20, 50 nebo 70
-            if ($month > 70 && $year > 2003) {
-                $month -= 70;
-            } elseif ($month > 50) {
-                $month -= 50;
-            } elseif ($month > 20 && $year > 2003) {
-                $month -= 20;
-            }
-
-            // kontrola data
-            if (!checkdate($month, $day, $year)) {
-                return FALSE;
-            }
-
-            return TRUE;
-        };
-        $form->addText(\App\Model\Authenticator::COLUMN_PERSONAL_ID, Html::el('span')->setText($this->translator->translate("ui.signMessage.personalId")))
-                ->setRequired(false)
-                ->addRule($verifyRC, $this->translator->translate("ui.signMessage.personalIdIncorect"));
         $form->addSubmit('send', $this->translator->translate("ui.signMessage.changeButton"));
         $form['send']->getControlPrototype()->class('btn btn-success');
         $renderer = $form->getRenderer();
@@ -106,84 +112,53 @@ class ProfilePresenter extends PrivatePresenter
     public function validateProfileForm($form)
     {
         $values = $form->getValues();
+        $id = $this->getUser()->getIdentity()->getData()['id'];
 
         $email = $values[\App\Model\Authenticator::COLUMN_EMAIL];
         if($email != null)
         { 
             $emailIsUnique = $this->authenticator->getByEmail($email);
-            if ($emailIsUnique != null)
+            if ($emailIsUnique != null && $emailIsUnique->id != $id)
             {
                 $form->addError($this->translator->translate("ui.signMessage.duplicitEmail"));
             }
         }
 
-        $personalId = $values[\App\Model\Authenticator::COLUMN_PERSONAL_ID];
-        if($personalId != null)
-        {   
-            $personalIdIsUnique = $this->authenticator->getByPersonalId($personalId);
-            if ($personalIdIsUnique != null)
+        $phone = $values[\App\Model\Authenticator::COLUMN_PHONE];
+        $phoneIsUnique = $this->authenticator->getByPhone($phone);
+            if ($phoneIsUnique != null && $phoneIsUnique->id != $id)
             {
-                $form->addError($this->translator->translate("ui.signMessage.duplicitPartnerId"));
-            }    
-        }
+                $form->addError($this->translator->translate("ui.signMessage.duplicitPhone"));
+            }
     }
 
-    public function profileFormSucceeded($form, $values) {
+     public function profileFormSucceeded($form, $values) {
             $values = $form->getValues(TRUE);
-            
+            $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = \DateTime::createFromFormat('d.m.yy', $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE]);   
             $id = $this->getUser()->getIdentity()->getData()['id'];
-
-            //pouze pokud je vyplneno jinak odstran z aktualizace
-            $firstName = $values[\App\Model\Authenticator::COLUMN_FIRST_NAME];
-            if($firstName == null)
-            {
-                unset($values[\App\Model\Authenticator::COLUMN_FIRST_NAME]);
-            }
-
-            $lastName = $values[\App\Model\Authenticator::COLUMN_LAST_NAME];
-            if($lastName == null)
-            {
-                unset($values[\App\Model\Authenticator::COLUMN_LAST_NAME]);
-            }
-
-            $email = $values[\App\Model\Authenticator::COLUMN_EMAIL];
-            if($email == null)
-            {
-                unset($values[\App\Model\Authenticator::COLUMN_EMAIL]);
-            }
-
-            $phone = $values[\App\Model\Authenticator::COLUMN_PHONE];
-            if($phone == null)
-            {
-                unset($values[\App\Model\Authenticator::COLUMN_PHONE]);
-            }
-
-            $birth = $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE];
-            if($birth != null)
-            {
-                $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = \DateTime::createFromFormat('d.m.yy', $birth); 
-            }
-            else{
-                unset($values[\App\Model\Authenticator::COLUMN_BIRTH_DATE]);
-            }
-
-            $pass = $values[\App\Model\Authenticator::COLUMN_PASSWORD_HASH];
-            if($pass != null)
-            { 
-                $values[\App\Model\Authenticator::COLUMN_PASSWORD_HASH] = Passwords::hash($pass);   
-            }   
-            else{
-                unset($values[\App\Model\Authenticator::COLUMN_PASSWORD_HASH]);
-            }  
-
-            $personalId = $values[\App\Model\Authenticator::COLUMN_PERSONAL_ID];
-            if($personalId == null)
-            {
-                unset($values[\App\Model\Authenticator::COLUMN_PERSONAL_ID]);
-            }  
             
             $this->authenticator->update($id, $values);
             $this->flashMessage($this->translator->translate("ui.signMessage.changeSaved"), 'success');
             $this->redirect('default');
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+    
+
+   

@@ -1,34 +1,21 @@
 
 {block content}
 
-<div class="container">
-    <div class="content">
-		<h2>{_ui.titlePages.userProfilePage}</h2>	
-		<div>
-		<p>
-			<span style="width:200px;">{_ui.signMessage.userID}: {$userItem->id}</span></br>
-			<span style="width:200px;">{_ui.signMessage.partnerId}: {$userItem->partner_id}</span>
-		</p>
-		<p>
-			<span style="width:200px;">{$userItem->first_name}  </span>
-			<span style="width:200px;"> {$userItem->last_name} </span>
-			</p>
-		<p>
-			<span style="width:200px;">{_ui.signMessage.email}: {$userItem->email} | </span>
-			<span style="width:200px;">{_ui.signMessage.phone}: {$userItem->phone} | </span>
-			<span style="width:200px;">{_ui.signMessage.birthDay}: {$userItem->birth_date} | </span>
-			<span style="width:200px;">{_ui.signMessage.personalId}: {$userItem->personal_id} | </span>
-		</p>
-		<p>
-			<span style="width:200px;">{_ui.signMessage.registered}: {$userItem->registered} | </span>
-			<span style="width:200px;">{_ui.signMessage.lastLogin}: {$userItem->last_login}</span>
-		</p>
+<div class="container reg-page">
+		<h2>{_ui.titlePages.userProfilePage} <i><u>{$userItem->first_name} {$userItem->last_name}</u></i></h2>
+        </br>
+		<h4>{$userItem->id} {$userItem->partner_id}  </h4>	
+	    <hr>
+		<div class="info-box info-box-info">
+            <p> <strong>Pokud si přejete provést změnu svých údajů, opravte je ve formuláři a stiskněte odeslat.</strong></p>
+        </div>
+		<div class="rov">
+			<div class="col-lg-6">
+				{control profileForm} 
+			</div>
+			<div class="col-lg-6">
+				{control passUserForm}
+			</div>
 		</div>
-		<hr>
-		<p>
-			<b>{_ui.signMessage.changeForm}</b>
-		</p>
-		{control profileForm} 
-	</div>
 </div>
 

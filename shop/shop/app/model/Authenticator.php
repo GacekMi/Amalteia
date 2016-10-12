@@ -23,7 +23,6 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
 	COLUMN_BIRTH_DATE = 'birth_date',
 	COLUMN_PASSWORD_HASH = 'pass',
 	COLUMN_VIP_DATE = 'vip_date',
-	COLUMN_PERSONAL_ID = 'personal_id',
 	COLUMN_TOKEN = 'token',
 	COLUMN_TOKEN_TYPE = 'token_type',
 	COLUMN_STATE = 'state',
@@ -85,9 +84,9 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
        return $this->database->table(self::TABLE_NAME)->where(self::COLUMN_EMAIL, $email)->fetch();
     }
 
-    public function getByPersonalId($rc)
+    public function getByPhone($phone)
     {
-         return $this->database->table(self::TABLE_NAME)->where(self::COLUMN_PERSONAL_ID, $rc)->fetch();
+        return $this->database->table(self::TABLE_NAME)->where(self::COLUMN_PHONE, $phone)->fetch();
     }
 
     public function delete($key) {

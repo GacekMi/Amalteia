@@ -54,8 +54,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 					$html.= '<ul class="dropdown-menu">';
 						$html.= '<li '.$this->isActive("Dashboard").'><a href="'.$this->link('Dashboard:default').'">'.$this->translator->translate("ui.menuItems.dashboard").'</a></li>';
                         $html.= '<li '.$this->isActive("Profile").'><a href="'.$this->link('Profile:default').'">'.$this->translator->translate("ui.menuItems.profile").'</a></li>';
+                        
+                        if($this->user->isAllowed('User','default'))
                         $html.= '<li '.$this->isActive("User").'><a href="'.$this->link('User:default').'">'.$this->translator->translate("ui.menuItems.user").'</a></li>';
-						$html.= '<li role="separator" class="divider"></li>';
+						
+                        $html.= '<li role="separator" class="divider"></li>';
 						$html.= '<li '.$this->isActive("Sign").'><a href="'.$this->link('Sign:out').'">'.$this->translator->translate("ui.menuItems.logOut").'</a></li>';
 					$html.= '</ul>';
 				$html.= '</li>';
