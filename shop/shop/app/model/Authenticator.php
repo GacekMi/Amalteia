@@ -150,9 +150,8 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
         return substr(preg_replace("/[^a-zA-Z0-9]/", "", base64_encode($this->getRandomBytes($length + 1))), 0, $length);
     }
 
+    //Reset hesla officem
     public function resetUserPassword($key) {
-        //Doplnit ma se nastavit token a typ tokenu a vratit ten token a pak vygenerovat email a taky
-        //nastavit state na prislusnou hodnotu, vse by mel resit pak pri prohlaseni
         $resetPass = $this->generatePassword(8);
         $res = $this->database->table(self::TABLE_NAME)->where('id', $key)->update(array(
             self::COLUMN_PASSWORD_HASH => Passwords::hash($resetPass),

@@ -39,6 +39,7 @@ titlePages:
 
 
 signMessage:
+    id: "ID"
     logOutNoActivity: "Proběhlo odhlášení z důvodů neaktivity."
     accessDeniedPermi: "Přístup zamítnut. Nemáte dostatečné oprávnění."
     exceptionRandom: "Unable to generate secure token from OpenSSL."
@@ -75,6 +76,8 @@ signMessage:
     phoneIncorect: "Telefon nesplňuje meyinarodni format +420/+421 XXX XXX XXX"
     birthDay: "Datum narození ve tvaru d.m.rrrr"
     birthDayIncorect: "Datum musí být ve tvaru d.m.rrrr"
+    vipDay: "Datum vip ve tvaru d.m.rrrr"
+    vipDayIncorect: "Datum vip být ve tvaru d.m.rrrr"
     passMsg: "Heslo"
     passLenght: "Heslo musí mít alespoň %len% znaků"
     passPattern: "Musí obsahovat číslici"
@@ -94,6 +97,7 @@ signMessage:
     changeSaved: "Změny uloženy"
     changeForm: "Změnový formulář"
     newRegistration: "Vytvořit nový účet na Amalteia.cz"
+    vip: "Platnost VIP"
 
 tokenMessage:
     userNotFound: "Litujeme, akci nelze provést."

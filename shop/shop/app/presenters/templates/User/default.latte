@@ -1,32 +1,32 @@
+{block addscripts}
+    <script src="{$basePath}/js/grido.js"></script>
+	<script src="{$basePath}/js/plugins/grido.typeahead.js"></script>
+	<script src="{$basePath}/js/plugins/grido.nette.ajax.js"></script>
+	<script src="{$basePath}/js/plugins/grido.history.js"></script>
+	<script src="{$basePath}/js/plugins/grido.daterangepicker.js"></script>
+	<script src="{$basePath}/js/plugins/grido.datepicker.js"></script>
+	<script src="{$basePath}/js/plugins/grido.bootstrap.select.js"></script>
+	<script src="{$basePath}/js/plugins/grido.bootstrap.paginator.js"></script>
+
+    <!--<script src="{$basePath}/js/grido/moment.js"></script>
+    <script src="{$basePath}/js/grido/nprogress.js"></script>
+    <script src="{$basePath}/js/grido/nette.nprogress.js"></script>
+   
+    
+    <script src="{$basePath}/js/grido/main.ajax.js"></script>
+    <script src="{$basePath}/js/grido/main.js"></script>   
+    <script src="{$basePath}/js/grido/cs.js"></script>-->
+{/block}
 
 {block content}
 
-<div class="container">
-    <div class="content">
+<div class="reg-page">
 		<h2>{_ui.titlePages.userDefaultPage}</h2>	
-		<div class="users">
-			{foreach $users as $userItem}
-			<div>
-				<p>
-					<span style="width:200px;">{_ui.signMessage.userID}: {$userItem->id} | </span>
-					<span style="width:200px;">{_ui.signMessage.partnerId}: {$userItem->partner_id} | </span>
-					<span style="width:200px;">{_ui.signMessage.firstName}: {$userItem->first_name} | </span>
-					<span style="width:200px;">{_ui.signMessage.lastName}: {$userItem->last_name} | </span>
-					<span style="width:200px;">{_ui.signMessage.email}: {$userItem->email} | </span>
-					<span style="width:200px;">{_ui.signMessage.phone}: {$userItem->phone} | </span>
-					<span style="width:200px;">{_ui.signMessage.birthDay}: {$userItem->birth_date} | </span>
-					<span style="width:200px;">{_ui.signMessage.personalId}: {$userItem->personal_id} | </span>
-					<span style="width:200px;">{_ui.signMessage.role}: {$userItem->role} | </span>
-					<span style="width:200px;">{_ui.signMessage.state}: {$userItem->state} | </span>
-					<span style="width:200px;">{_ui.signMessage.registered}: {$userItem->registered} | </span>
-					<span style="width:200px;">{_ui.signMessage.lastLogin}: {$userItem->last_login} | </span>
-					<span style="width:200px;">{_ui.signMessage.tokenType}: {$userItem->token_type} | </span>
-					<span style="width:200px;">{_ui.signMessage.token}: {$userItem->token}</span>
-				</p>
-			</div>
-			<hr>
-			{/foreach}
-		</div>
-	</div>
+		<ul class="nav nav-pills">
+      {if !$isSelect}
+                 <li role="presentation" ><a n:href="Sign:reg">Přidat uživatele</a></li>
+      {/if}
+    </ul>
+   {control grid}
 </div>
 

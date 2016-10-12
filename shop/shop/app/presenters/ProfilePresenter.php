@@ -26,7 +26,7 @@ class ProfilePresenter extends PrivatePresenter
         $this->template->userItem =  $editUser;
         $data = $editUser->toArray();
         unset($data[\App\Model\Authenticator::COLUMN_PASSWORD_HASH]);
-        $data[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = $data[\App\Model\Authenticator::COLUMN_BIRTH_DATE]->format('d.m.Y');; 
+        $data[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = $data[\App\Model\Authenticator::COLUMN_BIRTH_DATE]->format('d.m.Y');
         $this['profileForm']->setDefaults($data);
         $this->template->title = $this->translator->translate("ui.menuItems.profile");
     }
@@ -84,13 +84,17 @@ class ProfilePresenter extends PrivatePresenter
     // ZMENA UZIVATELSKEHO PROFILU
      protected function createComponentProfileForm() {
         $form = new Nette\Application\UI\Form;
-       
-        $form->addText(\App\Model\Authenticator::COLUMN_FIRST_NAME, Html::el('span')->setText($this->translator->translate("ui.signMessage.firstName")));
-        $form->addText(\App\Model\Authenticator::COLUMN_LAST_NAME, Html::el('span')->setText($this->translator->translate("ui.signMessage.lastName")));
-        $form->addText(\App\Model\Authenticator::COLUMN_EMAIL, Html::el('span')->setText($this->translator->translate("ui.signMessage.email")))
-                ->setRequired(false)
+        $form->addText(\App\Model\Authenticator::COLUMN_FIRST_NAME, Html::el('span')->setText($this->translator->translate("ui.signMessage.firstName"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
+                ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.firstNameMsg"));
+        $form->addText(\App\Model\Authenticator::COLUMN_LAST_NAME, Html::el('span')->setText($this->translator->translate("ui.signMessage.lastName"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
+                ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.lastNameMsg"));
+        $form->addText(\App\Model\Authenticator::COLUMN_EMAIL, Html::el('span')->setText($this->translator->translate("ui.signMessage.email"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
+                ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.emailMsg"))
                 ->addRule(Form::EMAIL, $this->translator->translate("ui.signMessage.emailIncorect"));
-        $form->addText(\App\Model\Authenticator::COLUMN_PHONE, Html::el('span')->setText($this->translator->translate("ui.signMessage.phone")));
+        $form->addText(\App\Model\Authenticator::COLUMN_PHONE, Html::el('span')->setText($this->translator->translate("ui.signMessage.phone"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
+                ->setRequired($this->translator->translate("ui.signMessage.phoneMsg"))
+                ->addRule(Form::PATTERN, $this->translator->translate("ui.signMessage.phoneIncorect"), '^(\+420|\+421){1} {1}[1-9][0-9]{2} {1}[0-9]{3} {1}[0-9]{3}$');
+
         $form->addText(\App\Model\Authenticator::COLUMN_BIRTH_DATE, Html::el('span')->setText($this->translator->translate("ui.signMessage.birthDay")))
                 ->setRequired(false)
                 ->addRule(Form::PATTERN, $this->translator->translate("ui.signMessage.birthDayIncorect"), '([0-9]\s*){1,2}\.([0-9]\s*){1,2}\.([0-9]\s*){4}')

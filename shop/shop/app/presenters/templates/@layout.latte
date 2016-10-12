@@ -18,7 +18,7 @@
     <link href="{$basePath}/bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <script src="{$basePath}/bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
-
+    <link rel="stylesheet" media="screen,projection,tv" href="{$basePath}/css/grido.css">
     <link href="{$basePath}/css/amalteia.css" rel="stylesheet">
   </head>
 
@@ -71,8 +71,9 @@
       </div>
     </div>
 	<!-- End menu block -->
-    <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+    
 	<div class="include_content">
+		<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 		{include content}
 	</div>
 
@@ -128,6 +129,7 @@
 	</div>
 	<noscript><style>.eu-cookies { display:none }</style></noscript>
 
+
 	{block scripts}
 	<script src="https://nette.github.io/resources/js/netteForms.min.js"></script>
 	<!-- Bootstrap core JavaScript
@@ -150,6 +152,7 @@
 		});
 	</script>
 	{/block}
+	{ifset #addscripts}{include addscripts}   {/ifset}
 </body>
 </html>
 

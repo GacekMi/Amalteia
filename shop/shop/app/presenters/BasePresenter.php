@@ -2,7 +2,8 @@
 
 namespace App\Presenters;
 
-use Nette; 
+use Nette,
+    App\Model;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
@@ -77,6 +78,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $this->template->left_menu = $this->getLeftMenu();
         $this->template->right_menu = $this->getRightMenu();
         $this->template->lang = $this->translator->getLocale();
+        
+        $baseUri = NULL;
+        $this->template->baseUri = $baseUri ? $baseUri : $this->template->basePath;
+       // $this->template->first = $this->context->httpRequest->getCookie('grido-sandbox-first', 1);
     }
 
      public function isActive($presenter)
@@ -100,5 +105,26 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         {
             return 'class="active"';
         }
+    }
+
+    //Akce pro grid
+    public function handleCloseTip()
+    {
+        $this->context->httpResponse->setCookie('grido-sandbox-first', 0, 0);
+        $this->redirect('this');
+    }
+
+   
+    
+     protected function createTemplate($class = NULL)
+    {
+        $template = parent::createTemplate();
+        $latte = $template->getLatte();
+
+        $set = new \Latte\Macros\MacroSet($latte->getCompiler());
+        $set->addMacro('scache', '?>?<?php echo strtotime(date(\'Y-m-d hh \')); ?>"<?php');
+
+        $latte->addFilter('scache', $set);
+        return $template;
     }
 }
