@@ -44,8 +44,16 @@ class UserPresenter extends PrivatePresenter
             } else {
                 $data = $editUser->toArray();
                 unset($data[\App\Model\Authenticator::COLUMN_PASSWORD_HASH]);
-                $data[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = $data[\App\Model\Authenticator::COLUMN_BIRTH_DATE]->format('d.m.Y');
-                $data[\App\Model\Authenticator::COLUMN_VIP_DATE] = $data[\App\Model\Authenticator::COLUMN_VIP_DATE]->format('d.m.Y');
+                if(isset($data[\App\Model\Authenticator::COLUMN_BIRTH_DATE]))
+                {
+                    $data[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = $data[\App\Model\Authenticator::COLUMN_BIRTH_DATE]->format('d.m.Y');
+                }
+                
+                if(isset($data[\App\Model\Authenticator::COLUMN_VIP_DATE]))
+                {
+                    $data[\App\Model\Authenticator::COLUMN_VIP_DATE] = $data[\App\Model\Authenticator::COLUMN_VIP_DATE]->format('d.m.Y');
+                }
+                
                 $data[\App\Model\Authenticator::COLUMN_ROLE] = explode(',', $data[\App\Model\Authenticator::COLUMN_ROLE]);
                 $this['editUserForm']->setDefaults($data);
             }
@@ -60,7 +68,7 @@ class UserPresenter extends PrivatePresenter
         }
 
         $grid = new MyGrid($this, $name);
-        $grid->model = $this->database->table('users');
+        $grid->model = $this->database->table(\App\Model\Authenticator::TABLE_NAME);
 
         $grid->translator->setLang('cs');
         $grid->addColumnText(\App\Model\Authenticator::COLUMN_ID, $this->translator->translate("ui.signMessage.id"))
@@ -83,7 +91,7 @@ class UserPresenter extends PrivatePresenter
                 ->setSortable()
                 ->setFilterText();
         $grid->getColumn(\App\Model\Authenticator::COLUMN_EMAIL)->cellPrototype->class[] = 'center';
-          $grid->addColumnText(\App\Model\Authenticator::COLUMN_PHONE, $this->translator->translate("ui.signMessage.phone"))
+        $grid->addColumnText(\App\Model\Authenticator::COLUMN_PHONE, $this->translator->translate("ui.signMessage.phone"))
                 ->setSortable()
                 ->setFilterText();
         $grid->getColumn(\App\Model\Authenticator::COLUMN_PHONE)->cellPrototype->class[] = 'center';

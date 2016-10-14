@@ -1,93 +1,98 @@
 /* GLOBAL STYLES
 -------------------------------------------------- */
+
+
 /* Padding below the footer and lighter body text */
 
-html{
-   position: relative;
-   min-height: 100%;
+html {
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  padding-bottom: 0px;
-  color: #5a5a5a;
-  background-color: #f8f8f8;
-   margin-bottom: 300px;
+    padding-bottom: 0px;
+    color: #5a5a5a;
+    background-color: #f8f8f8;
+    margin-bottom: 300px;
 }
 
-.include_content{
-  background-color: #f8f8f8;
-  margin-top: 60px;
+.include_content {
+    background-color: #f8f8f8;
+    margin-top: 60px;
 }
 
-.footer{
-  margin-top: 30px;
-  background-color: #fff;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 250px;
+.footer {
+    margin-top: 30px;
+    background-color: #fff;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 250px;
 }
 
-.footer a{
-  color: #56121B;
+.footer a {
+    color: #56121B;
 }
 
-footer{
-  margin-left: 10px;
-  margin-right: 10px;
+footer {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
-.dropdown-menu .active a{
-  background-color: #D53F22;
+.dropdown-menu .active a {
+    background-color: #D53F22;
 }
 
-.dropdown-menu .active a:hover{
-  background-color: #D53F22;
+.dropdown-menu .active a:hover {
+    background-color: #D53F22;
 }
 
-.content-margin-top{
-  margin-top: 50px;
-  margin-left: 30px;
+.content-margin-top {
+    margin-top: 50px;
+    margin-left: 30px;
 }
 
-.content-margin-top-center{
-  margin-top: 50px;
-  margin-left: auto;
-  margin-right: auto;
+.content-margin-top-center {
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
 }
+
 
 /* Prvky v galerii*/
-.gallery-items{
-  margin-left: 50px;
-  margin-right: 50px;
+
+.gallery-items {
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
-.gallery-item{
-  width: 350px;
+.gallery-item {
+    width: 350px;
 }
 
-.buttons-gallery-item{
-  margin-top: 50px;
+.buttons-gallery-item {
+    margin-top: 50px;
 }
 
-.button-gallery-image-cart{
-  margin-left: 10px;
+.button-gallery-image-cart {
+    margin-left: 10px;
 }
 
-.button-gallery-info{
-  text-align: right;
-  float: right;
+.button-gallery-info {
+    text-align: right;
+    float: right;
 }
 
-.button-gallery-cart{
-  color: #fff;
-  background-color: #56121B;
-  border-color: #36060D;
+.button-gallery-cart {
+    color: #fff;
+    background-color: #56121B;
+    border-color: #36060D;
 }
-   
- /* PAGES */
 
-.box-page{
+
+/* PAGES */
+
+.box-page {
     margin-left: auto;
     margin-right: auto;
     background-color: #fff;
@@ -100,13 +105,15 @@ footer{
     padding-bottom: 30px;
 }
 
-.amalteia-button{
-  width: 302px;
-  height: 32px;
+.amalteia-button {
+    width: 302px;
+    height: 32px;
 }
 
-  /* Login page */
-.login-page{
+
+/* Login page */
+
+.login-page {
     margin-left: auto;
     margin-right: auto;
     width: 500px;
@@ -120,12 +127,14 @@ footer{
     padding-bottom: 30px;
 }
 
-.login-page label{
+.login-page label {
     display: inline-block;
 }
 
-  /* Reg page */
-.reg-page{
+
+/* Reg page */
+
+.reg-page {
     margin-left: auto;
     margin-right: auto;
     background-color: #fff;
@@ -138,7 +147,7 @@ footer{
     padding-bottom: 30px;
 }
 
-.reg-page label{
+.reg-page label {
     display: inline-block;
 }
 
@@ -167,7 +176,7 @@ a[href^="#error:"] {
     color: white;
 }
 
-form{
+form {
     margin-top: 30px;
 }
 
@@ -179,6 +188,7 @@ form .error {
     color: #D00;
     font-weight: bold;
 }
+
 
 /* Info boxiky*/
 
@@ -202,6 +212,7 @@ form .error {
     border-left-color: #1b809e;
 }
 
+
 /*Nastaveni pro formulare*/
 
 .form-required {
@@ -214,54 +225,51 @@ form .error {
     font-size: 35px;
 }
 
-
-.form-line{
+.form-line {
     display: block;
     margin-bottom: 10px;
 }
 
-.form-line label{
+.form-line label {
     display: block;
     margin-bottom: 0px;
 }
 
-.form-line label span{
-
+.form-line label span {
     height: 35px;
 }
 
-.form-line label p{
+.form-line label p {
     margin-bottom: 0px;
 }
 
-.form-line input{
+.form-line input {
     width: 302px;
     height: 24px;
 }
 
-.form-line label input{
+.form-line label input {
     width: 50px;
     height: 13px;
     margin-top: 28px;
 }
 
-.form-line select{
+.form-line select {
     width: 302px;
     height: 24px;
 }
 
-.form-line textarea{
+.form-line textarea {
     width: 100%;
 }
 
-.form-line .button{
+.form-line .button {
     margin-top: 24px;
     width: 302px;
     height: 32px;
 }
 
-.form-line .checkbox 
-{
+.form-line .checkbox {
     width: 25px;
     margin-bottom: 0px;
     margin-top: 0px;
@@ -269,8 +277,7 @@ form .error {
     display: inline-block;
 }
 
-.form-line .radio 
-{
+.form-line .radio {
     width: 25px;
     margin-top: 0px;
     margin-bottom: 20px;
@@ -278,138 +285,159 @@ form .error {
     display: inline-block;
 }
 
-
-.button-row{
+.button-row {
     margin-top: 100px;
     margin-left: 150px;
-
 }
 
+
 /*Login page*/
-#frm-signInForm-remember{
+
+#frm-signInForm-remember {
     width: 25px;
     margin-bottom: 20px;
 }
 
+
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */
 
+
 /* Special class on .container surrounding .navbar, used for positioning it into place. */
+
 .navbar-wrapper {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 20;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 20;
 }
+
 
 /* Flip around the padding for proper display in narrow viewports */
-.navbar-wrapper > .container {
-  padding-right: 0;
-  padding-left: 0;
+
+.navbar-wrapper>.container {
+    padding-right: 0;
+    padding-left: 0;
 }
+
 .navbar-wrapper .navbar {
-  padding-right: 15px;
-  padding-left: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
+
 .navbar-wrapper .navbar .container {
-  width: auto;
+    width: auto;
 }
 
-.second_menu{
-  margin-top: 25px; 
+.second_menu {
+    margin-top: 25px;
 }
 
-.navbar-default{
- background-color: white;
+.navbar-default {
+    background-color: white;
 }
 
-.navbar-right{
-  margin-right: 10px;
+.navbar-right {
+    margin-right: 10px;
 }
-
-
 
 
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 
-.btn-gallery{
-  margin-right: 30px;
+.btn-gallery {
+    margin-right: 30px;
 }
+
 
 /* Carousel base class */
+
 .carousel {
-  height: 500px;
-  margin-bottom: 60px;
-}
-/* Since positioning the image, we need to help out the caption */
-.carousel-caption {
-  z-index: 10;
+    height: 500px;
+    margin-bottom: 60px;
 }
 
-/* Declare heights because of positioning of img element */
-.carousel .item {
-  height: 500px;
-  background-color: #777;
+
+/* Since positioning the image, we need to help out the caption */
+
+.carousel-caption {
+    z-index: 10;
 }
-.carousel-inner > .item > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: 500px;
+
+
+/* Declare heights because of positioning of img element */
+
+.carousel .item {
+    height: 500px;
+    background-color: #777;
+}
+
+.carousel-inner>.item>img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    height: 500px;
 }
 
 
 /* MARKETING CONTENT
 -------------------------------------------------- */
 
+
 /* Center align the text within the three columns below the carousel */
+
 .marketing .col-lg-4 {
-  margin-bottom: 20px;
-  text-align: center;
+    margin-bottom: 20px;
+    text-align: center;
 }
+
 .marketing h2 {
-  font-weight: normal;
+    font-weight: normal;
 }
+
 .marketing .col-lg-4 p {
-  margin-right: 10px;
-  margin-left: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .marketing .company_contact {
-  margin-top: 100px;
-  margin-left: 50px;
+    margin-top: 100px;
+    margin-left: 50px;
 }
 
 .content {
-  margin-top: 100px;
-  margin-left: 50px;
+    margin-top: 100px;
+    margin-left: 50px;
 }
 
-.top_line{
-  border: 0;
-  border-top: 3px solid #D53F22;
-  margin: 0px;
+.top_line {
+    border: 0;
+    border-top: 3px solid #D53F22;
+    margin: 0px;
 }
+
 
 /* Featurettes
 ------------------------- */
 
 .featurette-divider {
-  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+    margin: 80px 0;
+    /* Space out the Bootstrap <hr> more */
 }
+
 
 /* Thin out the marketing headings */
+
 .featurette-heading {
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -1px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -1px;
 }
 
-.lead{
-  font-size: 18px;
+.lead {
+    font-size: 18px;
 }
 
 .btn-gold {
@@ -426,11 +454,11 @@ form .error {
     border-color: #6A0F3A;
 }
 
-.faqHeader{
-  font-size: 25px;
-  font-weight: normal;
-  margin-top: 30px;
-  margin-bottom: 10px;
+.faqHeader {
+    font-size: 25px;
+    font-weight: normal;
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
 
 .eu-cookies {
@@ -447,7 +475,7 @@ form .error {
     z-index: 1000;
 }
 
-.eu_cookies .text_area{
+.eu_cookies .text_area {
     display: inline-block;
     vertical-align: middle;
     font-size: 16px;
@@ -457,7 +485,7 @@ form .error {
     text-align: left;
 }
 
-.eu_cookies .button_area{
+.eu_cookies .button_area {
     display: inline-block;
     vertical-align: middle;
     white-space: nowrap;
@@ -470,44 +498,50 @@ form .error {
     border: none;
 }
 
+
+/* Specificke prvky*/
+
+
+/* formular zbozi*/
+
+#frm-editGoodForm .col-lg-12 {
+    max-width: 818px;
+}
+
+
 /* RESPONSIVE CSS
 -------------------------------------------------- */
 
 @media (min-width: 768px) {
-  /* Navbar positioning foo */
-  .navbar-wrapper {
-    margin-top: 3px;
-  }
-  .navbar-wrapper .container {
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-  .navbar-wrapper .navbar {
-    padding-right: 0;
-    padding-left: 0;
-  }
-
-  /* The navbar becomes detached from the top, so we round the corners */
-  .navbar-wrapper .navbar {
-    border-radius: 0px;
-  }
-
-  /* Bump up size of carousel content */
-  .carousel-caption p {
-    margin-bottom: 20px;
-    font-size: 21px;
-    line-height: 1.4;
-  }
-
-  .featurette-heading {
-    font-size: 50px;
-  }
+    /* Navbar positioning foo */
+    .navbar-wrapper {
+        margin-top: 3px;
+    }
+    .navbar-wrapper .container {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    .navbar-wrapper .navbar {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    /* The navbar becomes detached from the top, so we round the corners */
+    .navbar-wrapper .navbar {
+        border-radius: 0px;
+    }
+    /* Bump up size of carousel content */
+    .carousel-caption p {
+        margin-bottom: 20px;
+        font-size: 21px;
+        line-height: 1.4;
+    }
+    .featurette-heading {
+        font-size: 50px;
+    }
 }
 
 @media (min-width: 992px) {
-  .featurette-heading {
-    margin-top: 0px;
-  }
+    .featurette-heading {
+        margin-top: 0px;
+    }
 }
-
-

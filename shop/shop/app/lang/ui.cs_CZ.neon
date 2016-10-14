@@ -114,6 +114,7 @@ menuItems:
     user: "Uživatelé"
     page: "Vše o nákupu"
     acountActivate: "Aktivace účtu"
+    good: "Zboží"
 
 footer:
     aboutUs: "O NÁS"

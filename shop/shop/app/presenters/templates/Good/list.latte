@@ -1,0 +1,20 @@
+{block addscripts}
+    <script src="{$basePath}/js/grido.js"></script>
+	<script src="{$basePath}/js/plugins/grido.typeahead.js"></script>
+	<script src="{$basePath}/js/plugins/grido.nette.ajax.js"></script>
+	<script src="{$basePath}/js/plugins/grido.history.js"></script>
+	<script src="{$basePath}/js/plugins/grido.daterangepicker.js"></script>
+	<script src="{$basePath}/js/plugins/grido.datepicker.js"></script>
+	<script src="{$basePath}/js/plugins/grido.bootstrap.select.js"></script>
+	<script src="{$basePath}/js/plugins/grido.bootstrap.paginator.js"></script>
+{/block}
+
+{block content}
+
+<div class="reg-page">
+	<h2>Výpis zboží</h2>	
+	<ul class="nav nav-pills">
+         <li role="presentation" ><a n:href="Good:edit">Přidat zboží</a></li>
+    </ul>
+   {control grid}
+</div>
