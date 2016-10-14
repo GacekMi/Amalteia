@@ -71,7 +71,7 @@ footer {
 }
 
 .buttons-gallery-item {
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .button-gallery-image-cart {
@@ -89,6 +89,9 @@ footer {
     border-color: #36060D;
 }
 
+.button-gallery-cart:hover {
+    color: #D53F22;
+}
 
 /* PAGES */
 

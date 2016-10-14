@@ -46,7 +46,7 @@ class GoodPresenter extends PrivatePresenter
           $good['id'] = $goodDB->id;
           $good['image'] = $goodDB->image;
           $good['label'] = $goodDB->label;
-          $good['price_vat'] = $goodDB->price_vat;
+          $good['price'] = $goodDB->price_vat;
           $good['unit'] = $this->unit[$goodDB->unit];
           $good['currency'] = $this->currency[$goodDB->currency];
           $good['availability'] = $this->availability[$goodDB->availability];
