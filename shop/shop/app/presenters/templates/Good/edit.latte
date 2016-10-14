@@ -7,6 +7,9 @@
 	    <hr>
 		<div class="info-box info-box-info">
             <p> <strong>Formulář pro vkládání a editaci zboží</strong></p>
+			{if $isImage}
+                <p><strong>Ke zboží je připojen obrázek <a href="{$basePath}/images/goods/{$image}">{$image}</a>.</strong></p>
+            {/if}
         </div>
 		{control editGoodForm} 
 </div>
