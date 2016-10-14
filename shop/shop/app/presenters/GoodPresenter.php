@@ -22,14 +22,14 @@ class GoodPresenter extends PrivatePresenter
     /** @var \Nette\Database\Context @inject */
     public $database;
 
-    private $state = array('Z' => 'Zobrazeno','N' => 'Nezobrazeno','S' => 'Staženo');
-    private $availability = array('S' => 'Skaldem','C' => 'Na cestě','D' => 'U dodavatele','X' => 'Nedostupné','N' => 'Na dotaz');
-    private $discontType = array('0' => 'Procenta', '1' => 'Pevná částka', '2' => 'Není');
-    private $unit = array('0' => 'ks', '1' => 'balení');
-    private $flag = array('0'=> 'Nic', 'N' => 'Novinka', 'S' => 'Sleva', 'A' => 'Akce', 'P' => 'Poslední kus');
-    private $transport = array('0' => 'Obyčejná', '1' => 'Nadrozměrná');
-    private $vat = array('1' => '15%', '2' => '21%');
-    private $currency = array('0' => 'Kč', '1' => 'EUR');
+    public $state = array('Z' => 'Zobrazeno','N' => 'Nezobrazeno','S' => 'Staženo');
+    public $availability = array('S' => 'Skaldem','C' => 'Na cestě','D' => 'U dodavatele','X' => 'Nedostupné','N' => 'Na dotaz');
+    public $discontType = array('0' => 'Procenta', '1' => 'Pevná částka', '2' => 'Není');
+    public $unit = array('0' => 'ks', '1' => 'balení');
+    public $flag = array('0'=> 'Nic', 'N' => 'Novinka', 'S' => 'Sleva', 'A' => 'Akce', 'P' => 'Poslední kus');
+    public $transport = array('0' => 'Obyčejná', '1' => 'Nadrozměrná');
+    public $vat = array('1' => '15%', '2' => '21%');
+    public $currency = array('0' => 'Kč', '1' => 'EUR');
 
     public function beforeRender()
     {
@@ -38,17 +38,36 @@ class GoodPresenter extends PrivatePresenter
     }
 
     public function renderDefault() {
+      $goodsDB = $this->goods->getPreviewList();
+      $goods = [];
+      foreach ($goodsDB as $goodDB)
+      {
+          $good = $goodDB->toArray();
+          $good['id'] = $goodDB->id;
+          $good['image'] = $goodDB->image;
+          $good['label'] = $goodDB->label;
+          $good['price_vat'] = $goodDB->price_vat;
+          $good['unit'] = $this->unit[$goodDB->unit];
+          $good['currency'] = $this->currency[$goodDB->currency];
+          $good['availability'] = $this->availability[$goodDB->availability];
+          $goods[] = $good;
+      }
+      $this->template->goods =  $goods;
+    }
+
+    public function renderDetail($id) {
+
     }
 
     public function renderEdit($id) {
         $good = $this->goods->get($id);
+        $this->template->isImage = False;
         if (!$good) {
              $this->template->Name = 'Vložení nového zboží';
         } else 
         {
             $data = $good->toArray();
             $this->template->Name = 'Editace zboží "'.$good->label.'"';
-            $this->template->isImage = False;
             if(strlen($data[\App\Model\Goods::COLUMN_IMAGE])>0)
             {
                 $this->template->isImage = True;
@@ -188,7 +207,7 @@ class GoodPresenter extends PrivatePresenter
         $goodId = $this->getParameter('id');
         $form = new Nette\Application\UI\Form;
 
-        $form->addHidden(\App\Model\Goods::COLUMN_IMAGE, 'image');
+        $form->addHidden(\App\Model\Goods::COLUMN_IMAGE);
 
         $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-6"));
         $form->addText(\App\Model\Goods::COLUMN_LABEL, Html::el('span')->setText('Název zboží')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))

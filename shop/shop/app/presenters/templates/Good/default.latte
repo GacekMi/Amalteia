@@ -1,4 +1,25 @@
 {block content}
-<div class="reg-page">
-		Vypis zbozi
+<div class="container-fluid gallery-items">
+	<div class="row">
+		{foreach $goods as $good}
+		 <div class="col-sm-6 col-md-4 col-lg-2 gallery-item">
+                <div class="thumbnail">
+					<div class="caption">
+                        <h3 align="center">{$good[label]}</h3>
+					</div>
+                    <img alt="img" src="{$basePath}/images/goods/thumbs/{$good[image]}" data-holder-rendered="true" style="display: block;">
+                    <div class="caption">
+                        <hr>
+                        <p><b>Cena:</b> {$good[price_vat]} {$good[currency]} / {$good[unit]}</p>
+						<p><b>Dostupnost:</b> {$good[availability]} </p>
+                        <div class="buttons-gallery-item">
+                            <p>
+							<a href="#" class="btn button-gallery-cart" role="button">Do košíku <span class="glyphicon glyphicon-shopping-cart buttons-gallery-image-cart" aria-hidden="true"></span></a> 
+							<a n:href="Good:detail $good[id]" class="btn btn-default button-gallery-info" role="button"> Více o produktu</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    	{/foreach}
+  	</div>
 </div>

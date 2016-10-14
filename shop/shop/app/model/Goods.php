@@ -57,7 +57,7 @@ class Goods extends Nette\Object{
     }
 
 	public function getPreviewList(){
-		$columns = array(self::COLUMN_ID,self::COLUMN_ID,self::COLUMN_SHORT_DESCRIPTION,self::COLUMN_IMAGE, self::COLUMN_PRICE_VAT);
+		$columns = array(self::COLUMN_ID,self::COLUMN_ID,self::COLUMN_LABEL,self::COLUMN_IMAGE, self::COLUMN_PRICE_VAT, self::COLUMN_CURRENCY, self::COLUMN_UNIT,  self::COLUMN_AVAILABILITY);
 		$columns = implode(",", $columns);
 		return $this->database->table(self::TABLE_NAME)->Select($columns);
 	}
