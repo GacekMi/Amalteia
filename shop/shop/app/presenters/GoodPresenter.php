@@ -48,6 +48,13 @@ class GoodPresenter extends PrivatePresenter
         {
             $data = $good->toArray();
             $this->template->Name = 'Editace zboží "'.$good->label.'"';
+            $this->template->isImage = False;
+            if(strlen($data[\App\Model\Goods::COLUMN_IMAGE])>0)
+            {
+                $this->template->isImage = True;
+                $this->template->image = $data[\App\Model\Goods::COLUMN_IMAGE];
+            }
+            
             $this['editGoodForm']->setDefaults($data);
         }
     }
@@ -164,7 +171,14 @@ class GoodPresenter extends PrivatePresenter
 
     public function actionDelete() {
         $id = $this->getParameter('id');
-        $id = is_array($id) ? implode(', ', $id) : $id;
+        $good = $this->goods->get($id);
+        $data = $good->toArray();
+        if(strlen($data[\App\Model\Goods::COLUMN_IMAGE])>0)
+        {
+                //smazani
+                unlink(IMG_DIR . '/images/goods/'. $data[\App\Model\Goods::COLUMN_IMAGE]);
+                unlink(IMG_DIR . '/images/goods/thumbs/'. $data[\App\Model\Goods::COLUMN_IMAGE]);
+        }
         $this->goods->delete($id);
         $this->flashMessage("Akce '$this->action' pro řádek s id: $id byla provedena.", 'success');
         $this->redirect('list');
@@ -173,6 +187,9 @@ class GoodPresenter extends PrivatePresenter
     protected function createComponentEditGoodForm() {
         $goodId = $this->getParameter('id');
         $form = new Nette\Application\UI\Form;
+
+        $form->addHidden(\App\Model\Goods::COLUMN_IMAGE, 'image');
+
         $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-6"));
         $form->addText(\App\Model\Goods::COLUMN_LABEL, Html::el('span')->setText('Název zboží')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
                 ->addRule(Form::FILLED, 'Vyplňte název zboží'); 
@@ -181,7 +198,7 @@ class GoodPresenter extends PrivatePresenter
         
         $form->addUpload('upload_image', Html::el('span')->setText('Obrázek zboží:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
             ->addRule(Form::MAX_FILE_SIZE, 'Maximální velikost souboru je 5 MB.', 5000 * 1024 /* v bytech */)
-            ->addRule(Form::FILLED, 'Vyberte obrázek')
+            ->setRequired(false)
             ->addRule(Form::IMAGE, 'Obrázek musí být JPEG, PNG.');
 
         $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-12"));
@@ -255,16 +272,25 @@ class GoodPresenter extends PrivatePresenter
     public function validateGoodForm($form)
     {
         $values = $form->getValues();
+        $file = $values['upload_image'];
+
+        if(strlen($values[\App\Model\Goods::COLUMN_IMAGE])==0)
+        {
+            if (!$file->isImage() || !$file->isOk())
+            {
+                $form->addError('Zboží musí mít vybrán obrázek');
+            }
+        }
     }
 
      public function goodFormSucceeded($form, $values) {
         $goodId = $this->getParameter('id');
         $values = $form->getValues(TRUE);
-        $values[\App\Model\Goods::COLUMN_IMAGE] = $this->saveGoodPhoto($values['upload_image']);
+        $values[\App\Model\Goods::COLUMN_IMAGE] = $this->saveGoodPhoto($values);
+        unset($values['upload_image']);
 
         if ($goodId) {
             $id = $this->getParameter('id');
-
 
             $this->goods->update($id, $values);
             $this->flashMessage($this->translator->translate("ui.signMessage.changeSaved"), 'success');
@@ -276,5 +302,41 @@ class GoodPresenter extends PrivatePresenter
         }     
     }
 
-    
+    public function saveGoodPhoto($values){
+        $file = $values['upload_image'];
+        // kontrola jestli se jedná o obrázek a jestli se nahrál dobře
+        if ($file->isImage() && $file->isOk()) {
+            //Pripadne mazani
+            if(strlen($values[\App\Model\Goods::COLUMN_IMAGE])>0)
+            {
+                //smazani
+                unlink(IMG_DIR . '/images/goods/'. $values[\App\Model\Goods::COLUMN_IMAGE]);
+                unlink(IMG_DIR . '/images/goods/thumbs/'. $values[\App\Model\Goods::COLUMN_IMAGE]);
+            }
+
+            // oddělení přípony pro účel změnit název souboru na co chceš se zachováním přípony
+            $file_ext=strtolower(mb_substr($file->getSanitizedName(), strrpos($file->getSanitizedName(), ".")));
+            // vygenerování náhodného řetězce znaků, můžeš použít i \Nette\Strings::random()
+            $file_name = uniqid(rand(0,20), TRUE).$file_ext;
+            // přesunutí souboru z temp složky někam, kam nahráváš soubory
+            $file->move(IMG_DIR . '/images/goods/'. $file_name);
+
+            //v případě, že chceš vytvořit z obrázku i miniaturu
+            $image = \Nette\Image::fromFile(IMG_DIR . '/images/goods/'. $file_name);
+            if($image->getWidth() > $image->getHeight()) {
+            $image->resize(200, NULL);
+            }
+            else {
+            $image->resize(NULL, 200);
+            }
+            $image->sharpen();
+            $image->save(IMG_DIR . '/images/goods/thumbs/'. $file_name);
+
+            return $file_name;
+        }
+        else
+        {
+            return $values[\App\Model\Goods::COLUMN_IMAGE];
+        }
+    }
 }
