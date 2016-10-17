@@ -163,7 +163,7 @@ class UserPresenter extends PrivatePresenter
                         return false;
                     });
 
-            $grid->addActionHref('data', 'MLM')
+            $grid->addActionHref('data', 'Profil')
                     ->setIcon('info-sign')
                     ->setDisable(function($item) {
                         if (strpos($item->role, "admin")) {
@@ -191,7 +191,7 @@ class UserPresenter extends PrivatePresenter
                         return "Opravdu si přejete tomuto uživateli resetovat heslo?";
                     });
 
-            $grid->addActionHref('delete', 'Smazat')
+           /* $grid->addActionHref('delete', 'Smazat')
                     ->setIcon('trash')
                     ->setDisable(function($item) {
                         if (strpos($item->role, "admin")) {
@@ -203,7 +203,7 @@ class UserPresenter extends PrivatePresenter
                     })
                     ->setConfirm(function($item) {
                         return "Jste si jisti smazáním účtu {$item->email} ?";
-                    });
+                    });*/
 
             $grid->addActionHref('block', 'Blokovat')
                     ->setIcon('ban-circle')
@@ -291,6 +291,7 @@ class UserPresenter extends PrivatePresenter
     }
 
     public function actionDelete() {
+        /*
         $id = $this->getParameter('id');
         $id = is_array($id) ? implode(', ', $id) : $id;
         if ($this->authenticator->isAdminRow($id, $this->getUser()->getIdentity()->getData()['role'])) {
@@ -300,7 +301,8 @@ class UserPresenter extends PrivatePresenter
             $this->authenticator->delete($id);
             $this->flashMessage("Akce '$this->action' pro řádek s id: $id byla provedena.", 'success');
             $this->redirect('default');
-        }
+        }*/
+        $this->redirect('default');
     }
 
     public function actionBlock() {

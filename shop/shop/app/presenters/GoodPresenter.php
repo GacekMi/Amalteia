@@ -23,11 +23,11 @@ class GoodPresenter extends PrivatePresenter
     public $database;
 
     public $state = array('Z' => 'Zobrazeno','N' => 'Nezobrazeno','S' => 'Staženo');
-    public $availability = array('S' => 'Skaldem','C' => 'Na cestě','D' => 'U dodavatele','X' => 'Nedostupné','N' => 'Na dotaz');
+    public $availability = array('S' => 'Skaldem','C' => 'Do 14 dnů','D' => 'U dodavatele','X' => 'Nedostupné','N' => 'Na dotaz');
     public $discontType = array('0' => 'Procenta', '1' => 'Pevná částka', '2' => 'Není');
     public $unit = array('0' => 'ks', '1' => 'balení');
     public $flag = array('0'=> 'Nic', 'N' => 'Novinka', 'S' => 'Sleva', 'A' => 'Akce', 'P' => 'Poslední kus');
-    public $transport = array('0' => 'Obyčejná', '1' => 'Nadrozměrná');
+    public $transport = array('0' => 'Obyčejná', '1' => 'Nadrozměrná', '2' => 'Zdarma');
     public $vat = array('1' => '15%', '2' => '21%');
     public $currency = array('0' => 'Kč', '1' => 'EUR');
 

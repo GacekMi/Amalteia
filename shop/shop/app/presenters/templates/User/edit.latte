@@ -3,7 +3,8 @@
 <div class="container reg-page">
 		<h2>{_ui.titlePages.userProfilePage} <i><u>{$userItem->first_name} {$userItem->last_name}</u></i></h2>
         </br>
-        <h4>{$userItem->id} {$userItem->partner_id}  </h4>	
+        <h4>{_ui.signMessage.myId} : {$userItem->id}</h4>
+		<h4>{_ui.signMessage.partnerId} : {$userItem->partner_id}</h4>		
 	    <hr>
 		<div class="info-box info-box-info">
             <p> <strong>Pokud si přejete provést změnu svých údajů, opravte je ve formuláři a stiskněte odeslat.</strong></p>
