@@ -42,21 +42,66 @@ class GoodPresenter extends PrivatePresenter
       $goods = [];
       foreach ($goodsDB as $goodDB)
       {
-          $good = $goodDB->toArray();
-          $good['id'] = $goodDB->id;
-          $good['image'] = $goodDB->image;
-          $good['label'] = $goodDB->label;
-          $good['price'] = $goodDB->price_vat;
-          $good['unit'] = $this->unit[$goodDB->unit];
-          $good['currency'] = $this->currency[$goodDB->currency];
-          $good['availability'] = $this->availability[$goodDB->availability];
-          $goods[] = $good;
+          if($goodDB->state == 'Z')
+          {
+            $good = $goodDB->toArray();
+            $good['id'] = $goodDB->id;
+            $good['image'] = $goodDB->image;
+            $good['label'] = $goodDB->label;
+            //cena dle prihlaseneho uzivatele
+            if ($this->getUser()->isLoggedIn())
+            {
+                $good['price'] = $goodDB->d_price_vat;
+            }
+            else
+            {
+                $good['price'] = $goodDB->price_vat;
+            }
+            $good['unit'] = $this->unit[$goodDB->unit];
+            $good['currency'] = $this->currency[$goodDB->currency];
+            $good['availability'] = $this->availability[$goodDB->availability];
+            $goods[] = $good;
+          }
       }
       $this->template->goods =  $goods;
     }
 
     public function renderDetail($id) {
+           $goodDB = $this->goods->get($id);
+           //kontrola state 
+            if($goodDB->state != 'Z')
+            {
+                $this->redirect('default');
+            }
+            else
+            {
+                $good = $goodDB->toArray();
+                $good['id'] = $goodDB->id;
+                $good['image'] = $goodDB->image;
+                $good['label'] = $goodDB->label;
+                //cenu upravovat dle uzivatele
+                if ($this->getUser()->isLoggedIn())
+                {
+                    $good['price'] = $goodDB->d_price_vat;
+                }
+                else
+                {
+                    $good['price'] = $goodDB->price_vat;
+                }
+                $good['unit'] = $this->unit[$goodDB->unit];
+                $good['currency'] = $this->currency[$goodDB->currency];
+                $good['availability'] = $this->availability[$goodDB->availability];
 
+                $good['short_description'] = $goodDB->short_description;
+                $good['description'] = $goodDB->description;
+
+                $good['vat'] = $this->vat[$goodDB->vat];
+                $good['flag'] = $this->flag[$goodDB->flag];
+                $good['transport'] = $this->transport[$goodDB->transport];
+
+                //dopsat moznost slevy pro prijlaseny atd....
+                $this->template->good =  $good;
+            }
     }
 
     public function renderEdit($id) {

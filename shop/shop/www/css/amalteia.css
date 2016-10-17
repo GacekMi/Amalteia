@@ -12,31 +12,38 @@ html {
 body {
     padding-bottom: 0px;
     color: #5a5a5a;
-    background-color: #f8f8f8;
+    background-color: white;
     margin-bottom: 300px;
+}
+
+a {
+    color: black;
+}
+
+a:hover {
+    color: #56121B;
+}
+
+.navbar-wrapper {
+    margin-top: 3px;
 }
 
 .include_content {
     background-color: #f8f8f8;
-    margin-top: 60px;
+    margin-top: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
-.footer {
+footer {
+    margin-left: 10px;
+    margin-right: 10px;
     margin-top: 30px;
     background-color: #fff;
     position: absolute;
     bottom: 0;
     width: 100%;
     height: 250px;
-}
-
-.footer a {
-    color: #56121B;
-}
-
-footer {
-    margin-left: 10px;
-    margin-right: 10px;
 }
 
 .dropdown-menu .active a {
@@ -56,6 +63,15 @@ footer {
     margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.kategory {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.kategory-banner {
+    min-height: 250px;
 }
 
 
@@ -92,6 +108,7 @@ footer {
 .button-gallery-cart:hover {
     color: #D53F22;
 }
+
 
 /* PAGES */
 
@@ -357,31 +374,62 @@ form .error {
 /* Carousel base class */
 
 .carousel {
-    height: 500px;
-    margin-bottom: 60px;
+    min-height: 390px;
 }
 
 
 /* Since positioning the image, we need to help out the caption */
 
+.carousel .item {
+    background-color: transparent;
+}
+
+.carousel-inner {}
+
 .carousel-caption {
     z-index: 10;
+    position: initial;
+    text-align: left;
+    margin-left: 20px;
 }
 
-
-/* Declare heights because of positioning of img element */
-
-.carousel .item {
-    height: 500px;
-    background-color: #777;
+.carousel-indicators {
+    bottom: 0px;
 }
 
-.carousel-inner>.item>img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-width: 100%;
-    height: 500px;
+.carousel-indicators li {
+    width: 70px;
+    height: 70px;
+    background-color: transparent;
+    border: none;
+}
+
+.carousel-indicators li.active {
+    width: 80px;
+    height: 80px;
+    background-color: transparent;
+    border: none;
+}
+
+.first-slide-button {
+    width: 70px;
+    height: 70px;
+    background-size: cover;
+    background-image: url("/amalteia/web/www/images/cir1.png");
+}
+
+.second-slide-button {
+    width: 70px;
+    height: 70px;
+    background-size: cover;
+    background-image: url("/amalteia/web/www/images/cir2.png");
+}
+
+.third-slide-button {
+    width: 70px;
+    height: 70px;
+    background-size: cover;
+    background-image: url("/amalteia/web/www/images/cir3.png");
 }
 
 
@@ -512,10 +560,68 @@ form .error {
 }
 
 
+/* Detail zbozi */
+
+.good-left-block {}
+
+.good-image-block {
+    align-content: center;
+    display: block;
+}
+
+.good-right-block {}
+
+.good-label-block {}
+
+.good-short-block {
+    margin-top: 60px;
+    margin-left: 30px;
+}
+
+.good-price-block {
+    margin-top: 50px;
+}
+
+.good-param-block {
+    margin-top: 70px;
+}
+
+.good-description-block {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.good-media-block {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.good-params-block {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+
 /* RESPONSIVE CSS
 -------------------------------------------------- */
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1020px) {
+    .navbar-collapse.collapse {
+        display: none !important;
+    }
+    .navbar-collapse.collapse.in {
+        display: block !important;
+    }
+    .navbar-header .collapse,
+    .navbar-toggle {
+        display: block !important;
+    }
+    .navbar-header {
+        float: none;
+    }
     /* Navbar positioning foo */
     .navbar-wrapper {
         margin-top: 3px;
@@ -546,5 +652,8 @@ form .error {
 @media (min-width: 992px) {
     .featurette-heading {
         margin-top: 0px;
+    }
+    body {
+        background-color: #f8f8f8;
     }
 }

@@ -1,4 +1,83 @@
 {block content}
 <div class="reg-page">
-		Deatil zbozi
+		<div class="row">
+ 			 <div class="col-md-6">
+			 	 	<div class="good-left-block">
+					  	<div class="good-image-block">
+			  				<img alt="img" src="{$basePath}/images/goods/thumbs/{$good[image]}" data-holder-rendered="true" style="display: block;">
+						</div>
+					</div>
+			  </div>
+ 			 <div class="col-md-6">
+			  	<div class="good-right-block">
+			  		<div class="good-label-block">
+                        <h1 >{$good[label]}</h1>
+					</div>
+					<div class="good-short-block">
+                        <blockquote>
+                        	<p>{$good[short_description]} </p>
+						</blockquote >
+					</div>
+					<div class="good-price-block">
+						<div class="row">
+									<div class="col-md-8">
+										<h2 style="color:#D53F22"><b>Vaše cena: {$good[price]} {$good[currency]}</b></h2>
+									</div>
+									<div class="col-md-4" style="text-align: right">
+										<a href="#" class="btn button-gallery-cart btn-lg">
+          									<span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart
+        								</a>
+									</div>
+							</div>
+					</div>
+					<div class="good-param-block">		
+						<div class="panel panel-default">
+							<div class="panel-heading"><h4>Parametry zboží</h4></div>
+							<div class="panel-body">
+									<div class="col-md-6">
+										<p><b>Dostupnost:</b> {$good[availability]} </p>
+										<p><b>Doprava:</b> {$good[transport]} </p>
+									</div>
+									<div class="col-md-6">
+										<p><b>DPH:</b> {$good[vat]} </p>
+										<p><b>Jednotka:</b> {$good[unit]} </p>
+									</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			  </div>
+			 <div class="col-md-12">
+			 		<ul class="nav nav-tabs">
+						<li class="active">
+							<a  href="#1" data-toggle="tab">Podrobné informace</a>
+						</li>
+						<li><a href="#2" data-toggle="tab">Media</a>
+						</li>
+						<li><a href="#3" data-toggle="tab">Parametry</a>
+						</li>
+					</ul>
+					<div class="tab-content ">
+						<div class="tab-pane active" id="1">
+							<div class="good-description-block">
+								<p> {$good[description]} </p>
+							</div>
+						</div>
+						<div class="tab-pane" id="2">
+							<div class="good-media-block">
+								<img alt="img" src="{$basePath}/images/goods/{$good[image]}" data-holder-rendered="true" style="display: block;">
+							</div>
+						</div>
+						<div class="tab-pane" id="3">
+							<div class="good-params-block">
+								<p><b>Dostupnost:</b> {$good[availability]} </p>
+								<p><b>Jednotka:</b> {$good[unit]} </p>
+								<p><b>Akce:</b> {$good[flag]} </p>
+								<p><b>Doprava:</b> {$good[transport]} </p>
+								<p><b>DPH:</b> {$good[vat]} </p>
+							</div>
+						</div>
+					</div>
+		</div>
 </div>
