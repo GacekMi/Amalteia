@@ -58,6 +58,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
                         
                         if($this->user->isAllowed('User','default'))
                         $html.= '<li '.$this->isActive("User").'><a href="'.$this->link('User:default').'">'.$this->translator->translate("ui.menuItems.user").'</a></li>';
+                        if($this->user->isAllowed('Category','default'))
+                        $html.= '<li '.$this->isActive("Category").'><a href="'.$this->link('Category:default').'">'.$this->translator->translate("ui.menuItems.categories").'</a></li>';
                         if($this->user->isAllowed('Good','list'))
                         $html.= '<li '.$this->isActive("Good").'><a href="'.$this->link('Good:list').'">'.$this->translator->translate("ui.menuItems.good").'</a></li>';
 						

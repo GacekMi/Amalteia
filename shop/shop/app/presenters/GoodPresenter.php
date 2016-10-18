@@ -49,7 +49,14 @@ class GoodPresenter extends PrivatePresenter
             $good['image'] = $goodDB->image;
             $good['label'] = $goodDB->label;
             //cena dle prihlaseneho uzivatele
-            if ($this->getUser()->isLoggedIn())
+            $vipData = $this->getUser()->getIdentity()->getData()['vip_date'];
+            $isVIP = false;
+            if(date("Y-m-d") <= $vipData)
+            {
+                 $isVIP = true;
+            }
+           
+            if ($this->getUser()->isLoggedIn()&&($this->getUser()->isInRole('partner') || $isVIP))
             {
                 $good['price'] = $goodDB->d_price_vat;
             }
@@ -79,8 +86,15 @@ class GoodPresenter extends PrivatePresenter
                 $good['id'] = $goodDB->id;
                 $good['image'] = $goodDB->image;
                 $good['label'] = $goodDB->label;
-                //cenu upravovat dle uzivatele
-                if ($this->getUser()->isLoggedIn())
+               //cena dle prihlaseneho uzivatele
+                $vipData = $this->getUser()->getIdentity()->getData()['vip_date'];
+                $isVIP = false;
+                if(date("Y-m-d") <= $vipData)
+                {
+                    $isVIP = true;
+                }
+            
+                if ($this->getUser()->isLoggedIn()&&($this->getUser()->isInRole('partner') || $isVIP))
                 {
                     $good['price'] = $goodDB->d_price_vat;
                 }
@@ -123,7 +137,6 @@ class GoodPresenter extends PrivatePresenter
         }
     }
 
-    //treba prozpusobit
     protected function createComponentGrid($name) {
         $id = $this->getParameter('id');
 

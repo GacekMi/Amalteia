@@ -46,6 +46,7 @@ services:
             - addResource('Sign')
             - addResource('User')
             - addResource('Good')
+            - addResource('Category')
             - allow('guest', 'Gallery', 'default') 
             - allow('guest', 'Page', 'default') 
             - allow('guest', 'Good', 'default')
@@ -68,9 +69,16 @@ services:
             - allow('office', 'Good', 'edit')
             - allow('office', 'Good', 'delete')
             - allow('office', 'Good', 'goEdit')
+            - allow('office', 'Category', 'default')
+            - allow('office', 'Category', 'edit')
+            - allow('office', 'Category', 'delete')
+            - allow('office', 'Category', 'goEdit')
+            - allow('office', 'Category', 'up')
+            - allow('office', 'Category', 'down')
             - allow('admin') # admin muze vse
     authenticator: App\Model\Authenticator
     goods: App\Model\Goods
+    categories: App\Model\Categories
 
 database:
     dsn:        "mysql:host=wm127.wedos.net;dbname=d140658_portal"
