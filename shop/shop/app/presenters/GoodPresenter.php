@@ -23,7 +23,7 @@ class GoodPresenter extends PrivatePresenter
     public $database;
 
     public $state = array('Z' => 'Zobrazeno','N' => 'Nezobrazeno','S' => 'Staženo');
-    public $availability = array('S' => 'Skaldem','C' => 'Do 14 dnů','D' => 'U dodavatele','X' => 'Nedostupné','N' => 'Na dotaz');
+    public $availability = array('S' => 'Skladem','C' => 'Do 14 dnů','D' => 'U dodavatele','X' => 'Nedostupné','N' => 'Na dotaz');
     public $discontType = array('0' => 'Procenta', '1' => 'Pevná částka', '2' => 'Není');
     public $unit = array('0' => 'ks', '1' => 'balení');
     public $flag = array('0'=> 'Nic', 'N' => 'Novinka', 'S' => 'Sleva', 'A' => 'Akce', 'P' => 'Poslední kus');
@@ -309,11 +309,15 @@ class GoodPresenter extends PrivatePresenter
         $form->addSelect(\App\Model\Goods::COLUMN_FLAG, Html::el('span')->setText('Flag:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->flag)
             ->setPrompt('Zvolte flag')
             ->addRule(Form::FILLED, 'Vyplňte flag');
+        $form->addText(\App\Model\Goods::COLUMN_WEIGHT, Html::el('span')->setText('Hmotnost v kg:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
+                ->addRule(Form::FILLED, 'Vyplňte hmotnost v kg'); 
 
         $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-12"));
         $form->addTextArea(\App\Model\Goods::COLUMN_DESCRIPTION, Html::el('span')->setText('Popis')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
                 ->addRule(Form::FILLED, 'Vyplňte popis'); 
-
+        $form->addTextArea(\App\Model\Goods::COLUMN_DOCUMENTS, 'Documenty');
+        $form->addTextArea(\App\Model\Goods::COLUMN_COMPARSION, 'Porovnání');
+        $form->addTextArea(\App\Model\Goods::COLUMN_TIPS, 'Tipy');
         if ($goodId) {
             $form->addSubmit('send', 'Uložit změny');
         } else {

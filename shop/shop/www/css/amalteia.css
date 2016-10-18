@@ -75,7 +75,26 @@ footer {
 }
 
 
+/* detail zbozi */
+
+.good-label-block h1 {
+    word-wrap: break-word;
+}
+
+
 /* Prvky v galerii*/
+
+.good-label-div {
+    margin-top: 5px;
+    height: 70px;
+    overflow: hidden;
+}
+
+.good-label {
+    font-size: 24px;
+    word-wrap: break-word;
+    text-align: center;
+}
 
 .gallery-items {
     margin-left: 50px;
@@ -86,8 +105,31 @@ footer {
     width: 350px;
 }
 
+.gallery-item .thumbnail {
+    height: 500px;
+}
+
+.gallery-item .thumbnail .good-img {
+    margin-top: 20px;
+    margin-bottom: 0px;
+    height: 200px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.gallery-item .thumbnail .good-img img {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.gallery-item .thumbnail .good-bottom-div {
+    height: 160px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 .buttons-gallery-item {
-    margin-top: 30px;
+    margin-top: 15px;
 }
 
 .button-gallery-image-cart {
@@ -281,6 +323,7 @@ form .error {
 
 .form-line textarea {
     width: 100%;
+    min-height: 250px;
 }
 
 .form-line .button {

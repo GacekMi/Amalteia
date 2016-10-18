@@ -27,7 +27,12 @@ class Goods extends Nette\Object{
 	COLUMN_STOCK = 'stock',
 	COLUMN_CURRENCY = 'currency',
 	COLUMN_D_PRICE = 'd_price',
-	COLUMN_D_PRICE_VAT = 'd_price_vat';
+	COLUMN_D_PRICE_VAT = 'd_price_vat',
+	COLUMN_WEIGHT = 'weight',
+	COLUMN_CATEGORY = 'category',
+	COLUMN_DOCUMENTS = 'documents',
+	COLUMN_COMPARSION = 'comparsion',
+	COLUMN_TIPS = 'tips';
 	
 	/** @var Nette\Database\Context */
     private $database;
