@@ -400,6 +400,28 @@ class GoodPresenter extends PrivatePresenter
             $image->sharpen();
             $image->save(IMG_DIR . '/images/goods/thumbs/'. $file_name);
 
+            //Ulozeni obr pro detail zbozi
+            $image = \Nette\Image::fromFile(IMG_DIR . '/images/goods/'. $file_name);
+            if($image->getWidth() > $image->getHeight()) {
+            $image->resize(500, NULL);
+            }
+            else {
+            $image->resize(NULL, 500);
+            }
+            $image->sharpen();
+            $image->save(IMG_DIR . '/images/goods/detail/'. $file_name);
+
+            //Ulozeni miniatury pro kosik nahled
+            $image = \Nette\Image::fromFile(IMG_DIR . '/images/goods/'. $file_name);
+            if($image->getWidth() > $image->getHeight()) {
+            $image->resize(50, NULL);
+            }
+            else {
+            $image->resize(NULL, 50);
+            }
+            $image->sharpen();
+            $image->save(IMG_DIR . '/images/goods/cart/'. $file_name);
+
             return $file_name;
         }
         else

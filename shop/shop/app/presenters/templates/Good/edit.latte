@@ -1,6 +1,15 @@
 {block addscripts}
-    <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
-    <script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+    <script src="{$basePath}/js/nicEdit.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        bkLib.onDomLoaded(
+            function() 
+            { 
+                new nicEditor({ iconsPath : '../../images/nicicon.gif' }).panelInstance('frm-editGoodForm-description');
+                new nicEditor({ iconsPath : '../../images/nicicon.gif' }).panelInstance('frm-editGoodForm-documents');
+                new nicEditor({ iconsPath : '../../images/nicicon.gif' }).panelInstance('frm-editGoodForm-comparsion');
+                new nicEditor({ iconsPath : '../../images/nicicon.gif' }).panelInstance('frm-editGoodForm-tips');
+            });
+    </script>
 {/block}
 
 {block content}

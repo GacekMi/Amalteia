@@ -607,8 +607,8 @@ form .error {
 
 .good-left-block {}
 
-.good-image-block {
-    align-content: center;
+.good-image-block img {
+    margin: auto;
     display: block;
 }
 
