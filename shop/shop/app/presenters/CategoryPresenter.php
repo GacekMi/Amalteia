@@ -19,6 +19,9 @@ class CategoryPresenter extends PrivatePresenter
     /** @inject @var \App\Model\Categories */
     public $categories;
 
+    /** @inject @var \App\Model\Goods */
+    public $goods;
+
     /** @var \Nette\Database\Context @inject */
     public $database;
 
@@ -139,8 +142,17 @@ class CategoryPresenter extends PrivatePresenter
 
     public function actionDelete() {
         $id = $this->getParameter('id');
-        $this->categories->delete($id);
-        $this->flashMessage("Akce '$this->action' pro řádek s id: $id byla provedena.", 'success');
+        $list = $this->goods->getList()->where('category', $id)->fetch();
+        if($list != null)
+        {
+             $this->flashMessage("Katgeorii nelze smazat. Existuje zboží s touto kategorií.", 'error');
+        }
+        else
+        {
+            $this->categories->delete($id);
+            $this->flashMessage("Akce '$this->action' pro řádek s id: $id byla provedena.", 'success');
+        }
+
         $this->redirect('default');
     }
 

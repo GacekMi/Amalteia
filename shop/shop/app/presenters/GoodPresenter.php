@@ -22,6 +22,12 @@ class GoodPresenter extends PrivatePresenter
     /** @var \Nette\Database\Context @inject */
     public $database;
 
+    /** @inject @var \App\Model\Categories */
+    public $categories;
+
+    private $category;
+    private $gridCategory;
+
     public $state = array('Z' => 'Zobrazeno','N' => 'Nezobrazeno','S' => 'Staženo');
     public $availability = array('S' => 'Skladem','C' => 'Do 14 dnů','D' => 'U dodavatele','X' => 'Nedostupné','N' => 'Na dotaz');
     public $discontType = array('0' => 'Procenta', '1' => 'Pevná částka', '2' => 'Není');
@@ -35,6 +41,50 @@ class GoodPresenter extends PrivatePresenter
     {
         parent::beforeRender();
         $this->template->title = $this->translator->translate("ui.menuItems.good");
+    }
+
+    private function fillGridCategory()
+    {
+        $category = array();
+        $list = $this->categories->getList();
+        foreach ($list as $cat)
+        {
+             $category[$cat->id]=$cat->label;
+        }
+
+        return $category;
+    }
+
+    private function fillCategory()
+    {
+        $fin = array();
+        $tel = array();
+        $psy = array();
+
+        $list = $this->categories->getList();
+        foreach ($list as $cat)
+        {
+            switch ($cat->sub_id) {
+                case 0:
+                    $fin[$cat->id]=$cat->label;
+                    break;
+                case 1:
+                    $tel[$cat->id]=$cat->label;
+                    break;
+                case 2:
+                    $psy[$cat->id]=$cat->label;
+                    break;
+            }
+        }
+
+        $category = [
+            'Finanční zdraví' => $fin,
+            'Tělesné zdraví' => $tel,
+            'Psychické  zdraví' => $psy,
+            '-1' => 'Klubové Balíčky',
+        ];
+
+        return $category;
     }
 
     public function renderDefault() {
@@ -138,6 +188,7 @@ class GoodPresenter extends PrivatePresenter
     }
 
     protected function createComponentGrid($name) {
+        $this->category = $this->fillGridCategory();
         $id = $this->getParameter('id');
 
         $grid = new MyGrid($this, $name);
@@ -168,6 +219,12 @@ class GoodPresenter extends PrivatePresenter
                 ->setSortable()
                 ->setFilterText()
                 ->setSuggestion();
+
+         $grid->addColumnText(\App\Model\Goods::COLUMN_CATEGORY, 'Kategorie')
+                        ->setSortable()
+                        ->setReplacement($this->category)
+                ->cellPrototype->class[] = 'center';
+        $grid->addFilterSelect(\App\Model\Goods::COLUMN_CATEGORY, 'Kategorie', $this->category);
 
         $grid->addColumnText(\App\Model\Goods::COLUMN_CURRENCY, 'Měna')
                         ->setSortable()
@@ -262,6 +319,7 @@ class GoodPresenter extends PrivatePresenter
     }
 
     protected function createComponentEditGoodForm() {
+        $this->category = $this->fillCategory();
         $goodId = $this->getParameter('id');
         $form = new Nette\Application\UI\Form;
 
@@ -301,6 +359,9 @@ class GoodPresenter extends PrivatePresenter
         $form->addSelect(\App\Model\Goods::COLUMN_UNIT, Html::el('span')->setText('Jednotka:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->unit)
             ->setPrompt('Zvolte jednotku')
             ->addRule(Form::FILLED, 'Vyplňte jednotku');
+         $form->addSelect(\App\Model\Goods::COLUMN_CATEGORY, Html::el('span')->setText('Kategorie:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->category)
+            ->setPrompt('Zvolte kategorii')
+            ->addRule(Form::FILLED, 'Vyplňte kategorii');
 
 
         $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-6"));
