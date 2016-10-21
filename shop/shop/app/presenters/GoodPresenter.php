@@ -28,67 +28,14 @@ class GoodPresenter extends PrivatePresenter
     private $category;
     private $gridCategory;
 
-    public $state = array('Z' => 'Zobrazeno','N' => 'Nezobrazeno','S' => 'Staženo');
-    public $availability = array('S' => 'Skladem','C' => 'Do 14 dnů','D' => 'U dodavatele','X' => 'Nedostupné','N' => 'Na dotaz');
-    public $discontType = array('0' => 'Procenta', '1' => 'Pevná částka', '2' => 'Není');
-    public $unit = array('0' => 'ks', '1' => 'balení');
-    public $flag = array('0'=> 'Nic', 'N' => 'Novinka', 'S' => 'Sleva', 'A' => 'Akce', 'P' => 'Poslední kus');
-    public $transport = array('0' => 'Obyčejná', '1' => 'Nadrozměrná', '2' => 'Zdarma');
-    public $vat = array('1' => '15%', '2' => '21%');
-    public $currency = array('0' => 'Kč', '1' => 'EUR');
-
     public function beforeRender()
     {
         parent::beforeRender();
         $this->template->title = $this->translator->translate("ui.menuItems.good");
     }
 
-    private function fillGridCategory()
-    {
-        $category = array();
-        $list = $this->categories->getList();
-        foreach ($list as $cat)
-        {
-             $category[$cat->id]=$cat->label;
-        }
-
-        return $category;
-    }
-
-    private function fillCategory()
-    {
-        $fin = array();
-        $tel = array();
-        $psy = array();
-
-        $list = $this->categories->getList();
-        foreach ($list as $cat)
-        {
-            switch ($cat->sub_id) {
-                case 0:
-                    $fin[$cat->id]=$cat->label;
-                    break;
-                case 1:
-                    $tel[$cat->id]=$cat->label;
-                    break;
-                case 2:
-                    $psy[$cat->id]=$cat->label;
-                    break;
-            }
-        }
-
-        $category = [
-            'Finanční zdraví' => $fin,
-            'Tělesné zdraví' => $tel,
-            'Psychické  zdraví' => $psy,
-            '-1' => 'Klubové Balíčky',
-        ];
-
-        return $category;
-    }
-
-    public function renderDefault() {
-      $goodsDB = $this->goods->getPreviewList();
+    public function renderDefault($id) {
+      $goodsDB = $this->goods->getPreviewList($id);
       $goods = [];
       foreach ($goodsDB as $goodDB)
       {
@@ -99,11 +46,16 @@ class GoodPresenter extends PrivatePresenter
             $good['image'] = $goodDB->image;
             $good['label'] = $goodDB->label;
             //cena dle prihlaseneho uzivatele
-            $vipData = $this->getUser()->getIdentity()->getData()['vip_date'];
             $isVIP = false;
-            if(date("Y-m-d") <= $vipData)
+
+            if($this->getUser()->getIdentity()!=null)
             {
-                 $isVIP = true;
+                $vipData = $this->getUser()->getIdentity()->getData()['vip_date'];
+                
+                if(date("Y-m-d") <= $vipData)
+                {
+                    $isVIP = true;
+                }
             }
            
             if ($this->getUser()->isLoggedIn()&&($this->getUser()->isInRole('partner') || $isVIP))
@@ -114,9 +66,9 @@ class GoodPresenter extends PrivatePresenter
             {
                 $good['price'] = $goodDB->price_vat;
             }
-            $good['unit'] = $this->unit[$goodDB->unit];
-            $good['currency'] = $this->currency[$goodDB->currency];
-            $good['availability'] = $this->availability[$goodDB->availability];
+            $good['unit'] = $this->goods->unit[$goodDB->unit];
+            $good['currency'] = $this->goods->currency[$goodDB->currency];
+            $good['availability'] = $this->goods->availability[$goodDB->availability];
             $goods[] = $good;
           }
       }
@@ -137,11 +89,16 @@ class GoodPresenter extends PrivatePresenter
                 $good['image'] = $goodDB->image;
                 $good['label'] = $goodDB->label;
                //cena dle prihlaseneho uzivatele
-                $vipData = $this->getUser()->getIdentity()->getData()['vip_date'];
-                $isVIP = false;
-                if(date("Y-m-d") <= $vipData)
+               $isVIP = false;
+
+                if($this->getUser()->getIdentity()!=null)
                 {
-                    $isVIP = true;
+                    $vipData = $this->getUser()->getIdentity()->getData()['vip_date'];
+                    
+                    if(date("Y-m-d") <= $vipData)
+                    {
+                        $isVIP = true;
+                    }
                 }
             
                 if ($this->getUser()->isLoggedIn()&&($this->getUser()->isInRole('partner') || $isVIP))
@@ -152,16 +109,16 @@ class GoodPresenter extends PrivatePresenter
                 {
                     $good['price'] = $goodDB->price_vat;
                 }
-                $good['unit'] = $this->unit[$goodDB->unit];
-                $good['currency'] = $this->currency[$goodDB->currency];
-                $good['availability'] = $this->availability[$goodDB->availability];
+                $good['unit'] = $this->goods->unit[$goodDB->unit];
+                $good['currency'] = $this->goods->currency[$goodDB->currency];
+                $good['availability'] = $this->goods->availability[$goodDB->availability];
 
                 $good['short_description'] = $goodDB->short_description;
                 $good['description'] = $goodDB->description;
 
-                $good['vat'] = $this->vat[$goodDB->vat];
-                $good['flag'] = $this->flag[$goodDB->flag];
-                $good['transport'] = $this->transport[$goodDB->transport];
+                $good['vat'] = $this->goods->vat[$goodDB->vat];
+                $good['flag'] = $this->goods->flag[$goodDB->flag];
+                $good['transport'] = $this->goods->transport[$goodDB->transport];
 
                 //dopsat moznost slevy pro prijlaseny atd....
                 $this->template->good =  $good;
@@ -188,7 +145,7 @@ class GoodPresenter extends PrivatePresenter
     }
 
     protected function createComponentGrid($name) {
-        $this->category = $this->fillGridCategory();
+        $this->category = $this->goods->fillGridCategory();
         $id = $this->getParameter('id');
 
         $grid = new MyGrid($this, $name);
@@ -228,26 +185,26 @@ class GoodPresenter extends PrivatePresenter
 
         $grid->addColumnText(\App\Model\Goods::COLUMN_CURRENCY, 'Měna')
                         ->setSortable()
-                        ->setReplacement($this->currency)
+                        ->setReplacement($this->goods->currency)
                 ->cellPrototype->class[] = 'center';
-        $grid->addFilterSelect(\App\Model\Goods::COLUMN_CURRENCY, 'Měna', $this->currency);
+        $grid->addFilterSelect(\App\Model\Goods::COLUMN_CURRENCY, 'Měna', $this->goods->currency);
         $grid->addColumnText(\App\Model\Goods::COLUMN_DISCOUNT_TYPE, 'Typ slevy')
                         ->setSortable()
-                        ->setReplacement($this->discontType)
+                        ->setReplacement($this->goods->discontType)
                 ->cellPrototype->class[] = 'center';
-        $grid->addFilterSelect(\App\Model\Goods::COLUMN_DISCOUNT_TYPE, 'Typ slevy', $this->discontType);
+        $grid->addFilterSelect(\App\Model\Goods::COLUMN_DISCOUNT_TYPE, 'Typ slevy', $this->goods->discontType);
 
         $grid->addColumnText(\App\Model\Goods::COLUMN_UNIT, 'Jednotka')
                         ->setSortable()
-                        ->setReplacement($this->unit)
+                        ->setReplacement($this->goods->unit)
                 ->cellPrototype->class[] = 'center';
-        $grid->addFilterSelect(\App\Model\Goods::COLUMN_UNIT, 'Jednotka', $this->unit);
+        $grid->addFilterSelect(\App\Model\Goods::COLUMN_UNIT, 'Jednotka', $this->goods->unit);
 
         $grid->addColumnText(\App\Model\Goods::COLUMN_AVAILABILITY, 'Dostupnost')
                         ->setSortable()
-                        ->setReplacement($this->availability)
+                        ->setReplacement($this->goods->availability)
                 ->cellPrototype->class[] = 'center';
-        $grid->addFilterSelect(\App\Model\Goods::COLUMN_AVAILABILITY, 'Dostupnost', $this->availability);
+        $grid->addFilterSelect(\App\Model\Goods::COLUMN_AVAILABILITY, 'Dostupnost', $this->goods->availability);
 
         $grid->addColumnText(\App\Model\Goods::COLUMN_STOCK, 'Skald')
                 ->setSortable()
@@ -256,27 +213,27 @@ class GoodPresenter extends PrivatePresenter
 
         $grid->addColumnText(\App\Model\Goods::COLUMN_TRANSPORT, 'Doprava')
                         ->setSortable()
-                        ->setReplacement($this->transport)
+                        ->setReplacement($this->goods->transport)
                 ->cellPrototype->class[] = 'center';
-        $grid->addFilterSelect(\App\Model\Goods::COLUMN_TRANSPORT, 'Doprava', $this->transport);
+        $grid->addFilterSelect(\App\Model\Goods::COLUMN_TRANSPORT, 'Doprava', $this->goods->transport);
 
         $grid->addColumnText(\App\Model\Goods::COLUMN_STATE, 'Stav')
                         ->setSortable()
-                        ->setReplacement($this->state)
+                        ->setReplacement($this->goods->state)
                 ->cellPrototype->class[] = 'center';
-        $grid->addFilterSelect(\App\Model\Goods::COLUMN_STATE, 'Stav', $this->state);
+        $grid->addFilterSelect(\App\Model\Goods::COLUMN_STATE, 'Stav', $this->goods->state);
 
         $grid->addColumnText(\App\Model\Goods::COLUMN_VAT, 'DPH')
                         ->setSortable()
-                        ->setReplacement($this->vat)
+                        ->setReplacement($this->goods->vat)
                 ->cellPrototype->class[] = 'center';
-        $grid->addFilterSelect(\App\Model\Goods::COLUMN_VAT, 'DPH',$this->vat );
+        $grid->addFilterSelect(\App\Model\Goods::COLUMN_VAT, 'DPH',$this->goods->vat );
 
         $grid->addColumnText(\App\Model\Goods::COLUMN_FLAG, 'Flag')
                         ->setSortable()
-                        ->setReplacement($this->flag)
+                        ->setReplacement($this->goods->flag)
                 ->cellPrototype->class[] = 'center';
-        $grid->addFilterSelect(\App\Model\Goods::COLUMN_FLAG, 'Flag', $this->flag);
+        $grid->addFilterSelect(\App\Model\Goods::COLUMN_FLAG, 'Flag', $this->goods->flag);
        
 
         $grid->filterRenderType = \Grido\Components\Filters\Filter::RENDER_INNER;
@@ -319,7 +276,7 @@ class GoodPresenter extends PrivatePresenter
     }
 
     protected function createComponentEditGoodForm() {
-        $this->category = $this->fillCategory();
+        $this->category = $this->goods->fillCategory();
         $goodId = $this->getParameter('id');
         $form = new Nette\Application\UI\Form;
 
@@ -345,18 +302,18 @@ class GoodPresenter extends PrivatePresenter
                 ->addRule(Form::FILLED, 'Vyplňte cenu bez DPH'); 
         $form->addText(\App\Model\Goods::COLUMN_D_PRICE, Html::el('span')->setText('Klubová cena')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
                 ->addRule(Form::FILLED, 'Vyplňte klubovou cenu bez DPH');
-        $form->addSelect(\App\Model\Goods::COLUMN_VAT, Html::el('span')->setText('DPH:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->vat)
+        $form->addSelect(\App\Model\Goods::COLUMN_VAT, Html::el('span')->setText('DPH:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->goods->vat)
             ->setPrompt('Zvolte DPH')
             ->addRule(Form::FILLED, 'Vyplňte DPH');
         $form->addText(\App\Model\Goods::COLUMN_DISCOUNT, Html::el('span')->setText('Sleva')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
                 ->addRule(Form::FILLED, 'Vyplňte slevu'); 
-        $form->addSelect(\App\Model\Goods::COLUMN_AVAILABILITY, Html::el('span')->setText('Dostupnost:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->availability)
+        $form->addSelect(\App\Model\Goods::COLUMN_AVAILABILITY, Html::el('span')->setText('Dostupnost:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->goods->availability)
             ->setPrompt('Zvolte dostupnost')
             ->addRule(Form::FILLED, 'Vyplňte dostupnost');
-        $form->addSelect(\App\Model\Goods::COLUMN_TRANSPORT, Html::el('span')->setText('Doprava:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->transport)
+        $form->addSelect(\App\Model\Goods::COLUMN_TRANSPORT, Html::el('span')->setText('Doprava:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->goods->transport)
             ->setPrompt('Zvolte dopravu')
             ->addRule(Form::FILLED, 'Vyplňte dopravu');
-        $form->addSelect(\App\Model\Goods::COLUMN_UNIT, Html::el('span')->setText('Jednotka:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->unit)
+        $form->addSelect(\App\Model\Goods::COLUMN_UNIT, Html::el('span')->setText('Jednotka:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->goods->unit)
             ->setPrompt('Zvolte jednotku')
             ->addRule(Form::FILLED, 'Vyplňte jednotku');
          $form->addSelect(\App\Model\Goods::COLUMN_CATEGORY, Html::el('span')->setText('Kategorie:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->category)
@@ -369,18 +326,18 @@ class GoodPresenter extends PrivatePresenter
                 ->addRule(Form::FILLED, 'Vyplňte cenu s DPH'); 
         $form->addText(\App\Model\Goods::COLUMN_D_PRICE_VAT, Html::el('span')->setText('Klubová cena s DPH')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
                 ->addRule(Form::FILLED, 'Vyplňte klubovou cenu s DPH'); 
-        $form->addSelect(\App\Model\Goods::COLUMN_CURRENCY, Html::el('span')->setText('Měna:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->currency)
+        $form->addSelect(\App\Model\Goods::COLUMN_CURRENCY, Html::el('span')->setText('Měna:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->goods->currency)
             ->setPrompt('Zvolte měnu')
             ->addRule(Form::FILLED, 'Vyplňte měnu');
-        $form->addSelect(\App\Model\Goods::COLUMN_DISCOUNT_TYPE, Html::el('span')->setText('Druh slevy:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->discontType)
+        $form->addSelect(\App\Model\Goods::COLUMN_DISCOUNT_TYPE, Html::el('span')->setText('Druh slevy:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->goods->discontType)
             ->setPrompt('Zvolte druh slevy')
             ->addRule(Form::FILLED, 'Vyplňte druh slevy');
         $form->addText(\App\Model\Goods::COLUMN_STOCK, Html::el('span')->setText('Stav na skladě:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
                 ->addRule(Form::FILLED, 'Vyplňte stav skladu'); 
-        $form->addSelect(\App\Model\Goods::COLUMN_STATE, Html::el('span')->setText('Stav:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->state)
+        $form->addSelect(\App\Model\Goods::COLUMN_STATE, Html::el('span')->setText('Stav:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->goods->state)
             ->setPrompt('Zvolte stav')
             ->addRule(Form::FILLED, 'Vyplňte stav');
-        $form->addSelect(\App\Model\Goods::COLUMN_FLAG, Html::el('span')->setText('Flag:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->flag)
+        $form->addSelect(\App\Model\Goods::COLUMN_FLAG, Html::el('span')->setText('Flag:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->goods->flag)
             ->setPrompt('Zvolte flag')
             ->addRule(Form::FILLED, 'Vyplňte flag');
         $form->addText(\App\Model\Goods::COLUMN_WEIGHT, Html::el('span')->setText('Hmotnost v kg:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))

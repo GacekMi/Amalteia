@@ -1,116 +1,84 @@
 
 {block content}
+ <div id="carousel-category" class="carousel slide" data-ride="carousel">
+<!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li class="first-slide-button " data-target="#carousel-category" data-slide-to="0" >
+                            </li>
+                            <li class="second-slide-button active" data-target="#carousel-category" data-slide-to="1">
+                            </li>
+                            <li class="third-slide-button" data-target="#carousel-category" data-slide-to="2">
+                            </li>
+                            <li class="fourth-slide-button" data-target="#carousel-category" data-slide-to="3">
+                            </li>
+                        </ol>
 
 <div class="container kategory reg-page">
 		<div class="kategory-banner">
-                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+               
                    
 
                     <!-- Wrapper for slides -->
                 <div class="row">
                     
-                    <!-- Indicators -->
-                        <ol class="carousel-indicators col-md-12">
-                            <li class="first-slide-button " data-target="#carousel-example-generic" data-slide-to="0" >
-                            </li>
-                            <li class="second-slide-button active" data-target="#carousel-example-generic" data-slide-to="1">
-                            </li>
-                            <li class="third-slide-button" data-target="#carousel-example-generic" data-slide-to="2">
-                            </li>
-                        </ol>
+                    
 
                     <div class="carousel-inner col-md-12" role="listbox">
                         <div class="item first-slide col-md-12 ">
                             <div class="row">
-                                <h1><a n:href="Good:default">Finanční zdraví</a></h1>
+                                <h1>Finanční zdraví</h1>
                                 <ul>
-                                    <li><a n:href="Good:default"> Sub kategorie 1</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 2</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 3</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 4</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 5</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 6</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 7</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 8</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 9</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 10</a></li>
+                                    {foreach $fin as $key => $item}
+                                        <li><a n:href="Good:default $key"> {$item}</a></li>
+                                    {/foreach}
                                 </ul>
                             </div>
                         </div>
                         <div class="item second-slide col-md-12 active">
                             <div class="row">
-                                 <h1><a n:href="Good:default">Tělesné zdraví</a></h1>
-                                 <div class="row">
-                                        <div class="col-md-4">
-                                            <ul>
-                                                <li><a n:href="Good:default"> Sub kategorie 1</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 2</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 3</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 4</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 5</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 6</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 7</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 8</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 9</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 10</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <ul>
-                                                <li><a n:href="Good:default"> Sub kategorie 11</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 12</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 13</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 14</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 15</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 16</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 17</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 18</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 19</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 20</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <ul>
-                                                <li><a n:href="Good:default"> Sub kategorie 21</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 22</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 23</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 24</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 25</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 26</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 27</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 28</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 29</a></li>
-                                                <li><a n:href="Good:default"> Sub kategorie 30</a></li>
-                                            </ul>
-                                        </div>
-                                </div>
+                                 <h1>Tělesné zdraví</h1>
+                                 <ul>
+                                    {foreach $tel as $key => $item}
+                                        <li><a n:href="Good:default $key"> {$item}</a></li>
+                                    {/foreach}
+                                </ul>
                             </div>
                         </div>
                         <div class="item third-slide col-md-12">
                             <div class="row">
-                                 <h1><a n:href="Good:default">Psychické zdraví</a></h1>
+                                 <h1>Psychické zdraví</h1>
                                  <ul>
-                                    <li><a n:href="Good:default"> Sub kategorie 1</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 2</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 3</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 4</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 5</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 6</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 7</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 8</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 9</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 10</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 11</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 12</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 13</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 14</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 15</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 16</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 17</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 18</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 19</a></li>
-                                    <li><a n:href="Good:default"> Sub kategorie 20</a></li>
+                                    {foreach $psy as $key => $item}
+                                        <li><a n:href="Good:default $key"> {$item}</a></li>
+                                    {/foreach}
                                 </ul>
+                            </div>
+                        </div>
+                        <div class="item third-slide col-md-12">
+                            <div class="row">
+                                 <h1>Klubové balíčky</h1>
+                                 {foreach $membership as $good}
+                                    <div class="col-sm-6 col-md-4 col-lg-2 gallery-item">
+                                            <div class="thumbnail">
+                                                <div class="good-label-div">
+                                                    <p class="good-label" align="center">{$good[label]}</p>
+                                                </div>
+                                                <div class="good-img">
+                                                    <img alt="img" src="{$basePath}/images/goods/thumbs/{$good[image]}" data-holder-rendered="true" style="display: block;">
+                                                </div>
+                                                <div class="good-bottom-div">
+                                                    <hr>
+                                                    <h2 align="center" style="color:#D53F22"><b> {$good[price]} {$good[currency]}</b></h2>
+                                                    </br>
+                                                    <div class="buttons-gallery-item">
+                                                        <p>
+                                                        <a href="#" class="btn button-gallery-cart" role="button">Do košíku <span class="glyphicon glyphicon-shopping-cart buttons-gallery-image-cart" aria-hidden="true"></span></a> 
+                                                        <a n:href="Good:detail $good[id]" class="btn btn-default button-gallery-info" role="button"> Více o balíčku</a></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {/foreach}
                             </div>
                         </div>
 
