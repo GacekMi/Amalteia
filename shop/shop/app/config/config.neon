@@ -47,6 +47,7 @@ services:
             - addResource('User')
             - addResource('Good')
             - addResource('Category')
+            - addResource('Upload')
             - allow('guest', 'Gallery', 'default') 
             - allow('guest', 'Page', 'default') 
             - allow('guest', 'Good', 'default')
@@ -75,6 +76,7 @@ services:
             - allow('office', 'Category', 'goEdit')
             - allow('office', 'Category', 'up')
             - allow('office', 'Category', 'down')
+            - allow('office', 'Upload', 'add')
             - allow('admin') # admin muze vse
     authenticator: App\Model\Authenticator
     goods: App\Model\Goods

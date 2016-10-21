@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Nette,
+App\Model,
 Nette\Utils\Strings;
 
 class Goods extends Nette\Object{
@@ -40,9 +41,66 @@ class Goods extends Nette\Object{
     /** @var \Kdyby\Translation\Translator  */
     public $translator;
 
-    public function __construct(Nette\Database\Context $database, Nette\Localization\ITranslator $translator) {
+	/** @inject @var \App\Model\Categories */
+    public $categories;
+
+	public $state = array('Z' => 'Zobrazeno','N' => 'Nezobrazeno','S' => 'Staženo');
+    public $availability = array('S' => 'Skladem','C' => 'Do 14 dnů','D' => 'U dodavatele','X' => 'Nedostupné','N' => 'Na dotaz');
+    public $discontType = array('0' => 'Procenta', '1' => 'Pevná částka', '2' => 'Není');
+    public $unit = array('0' => 'ks', '1' => 'balení');
+    public $flag = array('0'=> 'Nic', 'N' => 'Novinka', 'S' => 'Sleva', 'A' => 'Akce', 'P' => 'Poslední kus');
+    public $transport = array('0' => 'Obyčejná', '1' => 'Nadrozměrná', '2' => 'Zdarma');
+    public $vat = array('1' => '15%', '2' => '21%');
+    public $currency = array('0' => 'Kč', '1' => 'EUR');
+
+	public function fillGridCategory()
+    {
+        $category = array();
+        $list = $this->categories->getList();
+        foreach ($list as $cat)
+        {
+             $category[$cat->id]=$cat->label;
+        }
+
+        return $category;
+    }
+
+    public function fillCategory()
+    {
+        $fin = array();
+        $tel = array();
+        $psy = array();
+
+        $list = $this->categories->getList();
+        foreach ($list as $cat)
+        {
+            switch ($cat->sub_id) {
+                case 0:
+                    $fin[$cat->id]=$cat->label;
+                    break;
+                case 1:
+                    $tel[$cat->id]=$cat->label;
+                    break;
+                case 2:
+                    $psy[$cat->id]=$cat->label;
+                    break;
+            }
+        }
+
+        $category = [
+            'Finanční zdraví' => $fin,
+            'Tělesné zdraví' => $tel,
+            'Psychické  zdraví' => $psy,
+            '-1' => 'Klubové Balíčky',
+        ];
+
+        return $category;
+    }
+
+    public function __construct(Nette\Database\Context $database, Nette\Localization\ITranslator $translator, Categories $categories) {
         $this->database = $database;
         $this->translator = $translator;
+		$this->categories = $categories;
     }
 
 	public function update($key, $values) {
@@ -61,10 +119,10 @@ class Goods extends Nette\Object{
         return $this->database->table(self::TABLE_NAME);
     }
 
-	public function getPreviewList(){
+	public function getPreviewList($category){
 		$columns = array(self::COLUMN_ID,self::COLUMN_ID,self::COLUMN_LABEL,self::COLUMN_IMAGE, self::COLUMN_PRICE_VAT, self::COLUMN_CURRENCY, self::COLUMN_UNIT,  self::COLUMN_AVAILABILITY, self::COLUMN_STATE, self::COLUMN_D_PRICE_VAT);
 		$columns = implode(",", $columns);
-		return $this->database->table(self::TABLE_NAME)->Select($columns);
+		return $this->database->table(self::TABLE_NAME)->Select($columns)->where('category', $category);
 	}
 
 	public function create(array $values) {

@@ -36,8 +36,8 @@ a:hover {
 }
 
 footer {
-    margin-left: 10px;
-    margin-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     margin-top: 30px;
     background-color: #fff;
     position: absolute;
@@ -68,6 +68,7 @@ footer {
 .kategory {
     margin-left: 50px;
     margin-right: 50px;
+    margin-top: 20px;
 }
 
 .kategory-banner {
@@ -95,6 +96,12 @@ footer {
     word-wrap: break-word;
     text-align: center;
 }
+
+.membership-item {
+    width: 350px;
+}
+
+.membership-item .thumbnail {}
 
 .gallery-items {
     margin-left: 50px;
@@ -203,8 +210,8 @@ footer {
     border: 2px solid;
     border-radius: 25px;
     border-color: #eee;
-    padding-left: 97px;
-    padding-right: 97px;
+    padding-left: 50px;
+    padding-right: 50px;
     padding-top: 30px;
     padding-bottom: 30px;
 }
@@ -418,6 +425,7 @@ form .error {
 
 .carousel {
     min-height: 390px;
+    position: initial;
 }
 
 
@@ -438,6 +446,11 @@ form .error {
 
 .carousel-indicators {
     bottom: 0px;
+    margin-top: 20px;
+    position: initial;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
 }
 
 .carousel-indicators li {
@@ -458,21 +471,28 @@ form .error {
     width: 70px;
     height: 70px;
     background-size: cover;
-    background-image: url("/amalteia/web/www/images/cir1.png");
+    background-image: url("https://shop.amalteia.cz/images/cir1.png");
 }
 
 .second-slide-button {
     width: 70px;
     height: 70px;
     background-size: cover;
-    background-image: url("/amalteia/web/www/images/cir2.png");
+    background-image: url("https://shop.amalteia.cz/images/cir2.png");
 }
 
 .third-slide-button {
     width: 70px;
     height: 70px;
     background-size: cover;
-    background-image: url("/amalteia/web/www/images/cir3.png");
+    background-image: url("https://shop.amalteia.cz/images/cir3.png");
+}
+
+.fourth-slide-button {
+    width: 70px;
+    height: 70px;
+    background-size: cover;
+    background-image: url("https://shop.amalteia.cz/images/cir4.png");
 }
 
 
