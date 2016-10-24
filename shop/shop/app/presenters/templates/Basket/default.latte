@@ -1,0 +1,18 @@
+{block content}
+<div class="reg-page">
+		<div class="row">
+        {if $basketIsEmpty}
+            <div class="info-box info-box-info">
+                <p> <strong>Košík neobsahuje žádné zboží.</strong></p>
+            </div>
+        {else}
+             {foreach $goods as $item}
+                <div>
+                    <p> <b>Id zboží:</b> {$item[id]}   {$item[count]}*{$item[unit]} / {$item[price]}{$item[currency]} *** {$item[total_price]}{$item[currency]} <a n:href="Basket:removeItem $item[id]">Vymazat položku </a></p>
+                </div>
+                <hr>
+            {/foreach}
+            <a n:href="Basket:deleteBasket" class="btn btn-default button-gallery-info" role="button">Vymazat košík </a>
+        {/if}
+        </div>
+</div>

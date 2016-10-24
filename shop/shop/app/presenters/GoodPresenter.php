@@ -8,7 +8,8 @@ use Nette,
     Nette\Mail\Message,
     Nette\Mail\SendmailMailer,
     App\Controls\Grido\MyGrid,
-    Nette\Utils\Html;
+    Nette\Utils\Html,
+    Nette\Application\UI\Multiplier;
 
 
 class GoodPresenter extends PrivatePresenter
@@ -28,6 +29,80 @@ class GoodPresenter extends PrivatePresenter
     private $category;
     private $gridCategory;
 
+    protected function createComponentAddItemsForm()
+    {
+        return new Multiplier(function ($itemId) {
+            $form = new Nette\Application\UI\Form;
+            $form->addText('count', '')
+                ->addRule($form::FILLED)
+                ->addRule($form::INTEGER)
+                ->setDefaultValue(1)
+                ->addRule(Form::MIN, 'Počet kusů musí být nezáporný a větší než nula.', 1)
+                ->setAttribute('class', 'good-detail-count');
+            $form->addHidden('itemId', $itemId);
+            
+            $form->addSubmit('send', 'Přidat do košíku')
+                ->setAttribute('class', 'btn button-gallery-cart ');
+          
+            $form->onSuccess[] = array($this, 'addItemsFormSucceeded');
+            $renderer = $form->getRenderer();
+            $renderer->wrappers['controls']['container'] = Html::el('p')->class('count-cart-button-line');
+            $renderer->wrappers['pair']['container'] = Html::el('span');
+            $renderer->wrappers['label']['container'] = NULL;
+            $renderer->wrappers['control']['container'] = NULL;
+            return $form;
+        });
+    }
+
+
+    public function addItemsFormSucceeded($form) {
+        $values = $form->getValues();
+        try {
+            $session = $this->getSession('basket');
+            if(isset($session->itemsBasket[$values->itemId]))
+            {
+                  $session->itemsBasket[$values->itemId]+= $values->count;
+            }
+            else{
+                  $session->itemsBasket[$values->itemId] = $values->count;
+            }
+
+            $this->presenter->flashMessage('Zbozi vlozeno do kosiku.'.$values->itemId, 'success');
+        } catch (\Exception $exc) {
+            $this->presenter->flashMessage($exc->getMessage(), 'danger');
+        }
+    }
+
+    protected function createComponentAddItemForm()
+    {
+        return new Multiplier(function ($itemId) {
+            $form = new Nette\Application\UI\Form;
+            $form->addHidden('itemId', $itemId);
+            $form->addSubmit('send', 'Přidat do košíku')
+                ->setAttribute('class', 'btn button-gallery-cart');
+            $form->onSuccess[] = array($this, 'addItemFormSucceeded');
+            return $form;
+        });
+    }
+
+    public function addItemFormSucceeded($form) {
+        $values = $form->getValues();
+        try {
+            $session = $this->getSession('basket');
+            if(isset($session->itemsBasket[$values->itemId]))
+            {
+                  $session->itemsBasket[$values->itemId]+= 1;
+            }
+            else{
+                  $session->itemsBasket[$values->itemId] = 1;
+            }
+
+            $this->presenter->flashMessage('Zbozi vlozeno do kosiku.'.$values->itemId, 'success');
+        } catch (\Exception $exc) {
+            $this->presenter->flashMessage($exc->getMessage(), 'danger');
+        }
+    }
+
     public function beforeRender()
     {
         parent::beforeRender();
@@ -42,6 +117,7 @@ class GoodPresenter extends PrivatePresenter
           if($goodDB->state == 'Z')
           {
             $good = $goodDB->toArray();
+
             $good['id'] = $goodDB->id;
             $good['image'] = $goodDB->image;
             $good['label'] = $goodDB->label;
@@ -122,6 +198,7 @@ class GoodPresenter extends PrivatePresenter
 
                 //dopsat moznost slevy pro prijlaseny atd....
                 $this->template->good =  $good;
+                $this->template->id =  $good['id'];
             }
     }
 

@@ -3,7 +3,8 @@
 namespace App\Presenters;
 
 use App\Model,
-    Nette;
+    Nette,
+    Nette\Application\UI\Multiplier;
 
 
 class GalleryPresenter extends BasePresenter
@@ -14,11 +15,42 @@ class GalleryPresenter extends BasePresenter
     /** @inject @var \App\Model\Goods */
     public $goods;
 
+    protected function createComponentAddMembershipForm()
+    {
+        return new Multiplier(function ($itemId) {
+            $form = new Nette\Application\UI\Form;
+            $form->addHidden('itemId', $itemId);
+            $form->addSubmit('send', 'Přidat do košíku')
+                ->setAttribute('class', 'btn button-gallery-cart');
+            $form->onSuccess[] = array($this, 'addItemFormSucceeded');
+            return $form;
+        });
+    }
+
+    public function addItemFormSucceeded($form) {
+        $values = $form->getValues();
+        try {
+            $session = $this->getSession('basket');
+            $session->itemsBasket[$values->itemId] = 1;
+
+            $this->presenter->flashMessage('Zbozi vlozeno do kosiku.'.$values->itemId, 'success');
+        } catch (\Exception $exc) {
+            $this->presenter->flashMessage($exc->getMessage(), 'danger');
+        }
+    }
+
     public function beforeRender()
     {
-         parent::beforeRender();
-         $this->template->title = $this->translator->translate("ui.menuItems.gallery");
-         $this->fillCategory();
+        parent::beforeRender();
+        $showAddBasket = false;
+        if ($this->getUser()->isLoggedIn())
+        {
+            $showAddBasket = true;
+        }
+        $this->template->showAddBasket =$showAddBasket;
+
+        $this->template->title = $this->translator->translate("ui.menuItems.gallery");
+        $this->fillCategory();
     }
 
      private function fillCategory()

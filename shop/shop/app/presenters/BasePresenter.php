@@ -86,6 +86,19 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $baseUri = NULL;
         $this->template->baseUri = $baseUri ? $baseUri : $this->template->basePath;
        // $this->template->first = $this->context->httpRequest->getCookie('grido-sandbox-first', 1);
+       $count = 0;
+       if($this->getSession('basket') != null)
+       {
+            if($this->getSession('basket')->itemsBasket != null)
+            {
+                    foreach($this->getSession('basket')->itemsBasket as $item)
+                    {
+                        $count += $item;
+                    }
+            }
+       }
+      
+       $this->template->basketCounter = $count;
     }
 
      public function isActive($presenter)

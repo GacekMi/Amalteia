@@ -111,6 +111,10 @@ class Goods extends Nette\Object{
         return $this->database->table(self::TABLE_NAME)->get($key);
     }
 
+    public function getGooods($keys) {
+         return $this->database->table(self::TABLE_NAME)->where('id', $keys);
+    }
+
 	 public function delete($key) {
         return $this->database->table(self::TABLE_NAME)->where('id', $key)->delete();
     }

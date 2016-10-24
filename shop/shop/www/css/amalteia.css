@@ -139,6 +139,11 @@ footer {
     margin-top: 15px;
 }
 
+.buttons-gallery-item form {
+    display: inline-block;
+    margin-top: 0px;
+}
+
 .button-gallery-image-cart {
     margin-left: 10px;
 }
@@ -156,6 +161,19 @@ footer {
 
 .button-gallery-cart:hover {
     color: #D53F22;
+}
+
+.good-detail-count {
+    width: 50px;
+    height: 33px;
+}
+
+.count-cart-button-line {
+    margin-bottom: 10px;
+}
+
+.count-cart-button-div form {
+    margin-top: 20px;
 }
 
 

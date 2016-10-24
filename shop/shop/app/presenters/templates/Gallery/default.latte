@@ -57,6 +57,11 @@
                         <div class="item third-slide col-md-12">
                             <div class="row">
                                  <h1>Klubové balíčky</h1>
+                                 {if !$showAddBasket}
+                                         <div class="info-box info-box-info">
+                                            <p> <strong>Klubové balíčky mohou nakupovat jen registrovaní uživatelé.</strong></p>
+                                        </div>             
+                                 {/if}
                                  {foreach $membership as $good}
                                     <div class="col-sm-6 col-md-4 col-lg-2 gallery-item">
                                             <div class="thumbnail">
@@ -72,7 +77,9 @@
                                                     </br>
                                                     <div class="buttons-gallery-item">
                                                         <p>
-                                                        <a href="#" class="btn button-gallery-cart" role="button">Do košíku <span class="glyphicon glyphicon-shopping-cart buttons-gallery-image-cart" aria-hidden="true"></span></a> 
+                                                        {if $showAddBasket}
+                                                        {control addMembershipForm-$good[id]}  
+                                                        {/if}
                                                         <a n:href="Good:detail $good[id]" class="btn btn-default button-gallery-info" role="button"> Více o balíčku</a></p>
                                                     </div>
                                                 </div>

@@ -55,7 +55,7 @@
 						<button type="submit" class="btn btn-default">{_ui.findButton}</button>
 			  </form>
               <ul class="nav navbar-nav navbar-right">
-				<li><a href="#"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="false"></span> Košík</a></li>
+				<li><a n:href="Basket:default"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="false"></span> Košík <span id="basket-num-of-count" class="badge">{$basketCounter}</span></a></li>
 				{$right_menu|noescape}
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{$lang} <span class="caret"></span></a>
