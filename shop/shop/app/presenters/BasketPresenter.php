@@ -37,6 +37,8 @@ class BasketPresenter extends PrivatePresenter
 
             $goodsDB = $this->goods->getGooods($keys);
             $goods = [];
+            $totalOrderPrice = 0;
+            $orderCurrency = "";
             foreach ($goodsDB as $goodDB)
             {
                 if($goodDB->state == 'Z')
@@ -66,13 +68,17 @@ class BasketPresenter extends PrivatePresenter
                     }
 
                     $good['total_price'] = $good['price'] * $good['count'];
+                    $totalOrderPrice += $good['total_price'];
                     $good['unit'] = $this->goods->unit[$goodDB->unit];
                     $good['currency'] = $this->goods->currency[$goodDB->currency];
+                    $orderCurrency = $good['currency'];
                     $good['availability'] = $this->goods->availability[$goodDB->availability];
                     $goods[] = $good;
                 }
             }
             $this->template->goods =  $goods;
+            $this->template->totalOrderPrice =  $totalOrderPrice;
+            $this->template->orderCurrency = $orderCurrency;
         }
 
         $this->template->basketIsEmpty = $basketIsEmpty;

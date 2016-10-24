@@ -149,6 +149,14 @@ footer {
     margin-top: 0px;
 }
 
+.basket-header {
+    margin-bottom: 50px;
+}
+
+.basket-progressbar {
+    margin-bottom: 100px;
+}
+
 .button-gallery-image-cart {
     margin-left: 10px;
 }
@@ -560,6 +568,12 @@ form .error {
 .top_line {
     border: 0;
     border-top: 3px solid #D53F22;
+    margin: 0px;
+}
+
+.bottom_line {
+    border: 0;
+    border-top: 3px solid #eee;
     margin: 0px;
 }
 
