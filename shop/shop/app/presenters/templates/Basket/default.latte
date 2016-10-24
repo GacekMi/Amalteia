@@ -1,14 +1,59 @@
 {block content}
-<div class="reg-page">
+<div class=" container reg-page">
 		<div class="row">
         {if $basketIsEmpty}
             <div class="info-box info-box-info">
                 <p> <strong>Košík neobsahuje žádné zboží.</strong></p>
             </div>
         {else}
+             <div class="row">
+                <div class="col-md-1">
+                    <p>Zboží</p>
+                </div>
+                <div class="col-md-4">
+
+                </div>
+                <div class="col-md-1">
+                    <p>Stav</p>
+                </div>
+                
+                <div class="col-md-2 align-right">
+                    <p>Cena za jedn.</p>
+                </div>
+                <div class="col-md-1 align-center">
+                    
+                </div>
+                <div class="col-md-2 align-right">
+                    <p>Cena celkem</p>
+                </div>
+                 <div class="col-md-1 align-center">
+                    <p>Odebrat</p>
+                </div>
+             </div>
+             <hr>
              {foreach $goods as $item}
-                <div>
-                    <p> <b>Id zboží:</b> {$item[id]}   {$item[count]}*{$item[unit]} / {$item[price]}{$item[currency]} *** {$item[total_price]}{$item[currency]} <a n:href="Basket:removeItem $item[id]">Vymazat položku </a></p>
+                <div class="row">
+                    <div class="col-md-1">
+                         <img alt="img" src="{$basePath}/images/goods/cart/{$item[image]}" data-holder-rendered="true" style="display: block;">
+                    </div>
+                    <div class="col-md-4">
+                         <p class="good-label-cart" >{$item[label]}</p>
+                    </div>
+                    <div class="col-md-1">
+                        {$item[availability]}
+                    </div>
+                    <div class="col-md-2 align-right">
+                        {$item[price]}{$item[currency]}
+                    </div>
+                    <div class="col-md-1 align-center">
+                        {$item[count]}
+                    </div>
+                    <div class="col-md-2 align-right">
+                        {$item[total_price]}{$item[currency]}
+                    </div>
+                    <div class="col-md-1 align-center">
+                        <a n:href="Basket:removeItem $item[id]"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                    </div>
                 </div>
                 <hr>
             {/foreach}

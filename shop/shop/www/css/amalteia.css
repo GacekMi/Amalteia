@@ -97,6 +97,11 @@ footer {
     text-align: center;
 }
 
+.good-label-cart {
+    font-size: 18px;
+    word-wrap: break-word;
+}
+
 .membership-item {
     width: 350px;
 }
@@ -174,6 +179,14 @@ footer {
 
 .count-cart-button-div form {
     margin-top: 20px;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.align-center {
+    text-align: center;
 }
 
 
