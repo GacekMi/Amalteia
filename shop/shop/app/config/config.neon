@@ -49,6 +49,9 @@ services:
             - addResource('Category')
             - addResource('Upload')
             - addResource('Basket')
+            - addResource('Order')
+            - addResource('OrderItem')
+            - allow('guest', 'Order', 'default')
             - allow('guest', 'Basket', 'default')
             - allow('guest', 'Basket', 'removeItem')
             - allow('guest', 'Basket', 'changeCountItem')
@@ -75,6 +78,10 @@ services:
             - allow('office', 'Good', 'edit')
             - allow('office', 'Good', 'delete')
             - allow('office', 'Good', 'goEdit')
+            - allow('office', 'Order', 'list')
+            - allow('office', 'Order', 'edit')
+            - allow('office', 'Order', 'delete')
+            - allow('office', 'Order', 'goEdit')
             - allow('office', 'Category', 'default')
             - allow('office', 'Category', 'edit')
             - allow('office', 'Category', 'delete')
@@ -86,6 +93,8 @@ services:
     authenticator: App\Model\Authenticator
     goods: App\Model\Goods
     categories: App\Model\Categories
+    orders: App\Model\Orders
+    orderItems: App\Model\OrderItems
 
 database:
     dsn:        "mysql:host=wm127.wedos.net;dbname=d140658_portal"

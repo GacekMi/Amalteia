@@ -1,0 +1,39 @@
+{block content}
+<div class=" container reg-page">
+        <div class="basket-header">
+          <h1> Doprava, platba a dodací údaje</h1>
+        </div>
+        <div class="basket-progressbar">
+            <h4> Stav vaší objednávky: </h4>
+            <div class="progress">
+                <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="90" style="width: 66%">
+                    <span class="sr-only">60% Complete (success)</span>
+                </div>
+            </div>
+             <div class="row">
+                <div class="col-md-4 align-center">
+                    <p><b style="color: #C0BCBC; font-size: 16px">Obsah košíku</b></p>
+                </div>
+                <div class="col-md-4 align-center">
+                    <p><b style="color: black; font-size: 16px">Doprava, platba a dodací údaje</b></p>
+                </div>
+                <div class="col-md-4 align-center">
+                    <p><b style="color: #C0BCBC; font-size: 16px">Souhrn odeslané objednávky</b></p>
+                </div>
+            </div>
+        </div>
+        <div class="info-box info-box-danger">
+            <p> <strong>Pole označené je nutné <span class="form-required-info"> * </span> vyplnit.</strong></p>
+        </div>
+        <div class="row">
+		    {control orderForm} 
+        </div>
+        <div class="row" style="margin-top: 60px;">
+                <div class="col-md-6">
+                     <a n:href="Basket:default" class="btn btn-info" role="button">Zpět do košíku </a>
+                </div>
+                <!--<div class="col-md-6 align-right">
+                     <a n:href="Order:default" class="btn btn-success" role="button">Odeslat objednávku</a>
+                </div>-->
+        </div>   
+</div>

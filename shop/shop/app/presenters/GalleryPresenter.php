@@ -33,7 +33,7 @@ class GalleryPresenter extends BasePresenter
             $session = $this->getSession('basket');
             $session->itemsBasket[$values->itemId] = 1;
 
-            $this->presenter->flashMessage('Zbozi vlozeno do kosiku.'.$values->itemId, 'success');
+            $this->presenter->flashMessage('Klubový balíček byl vložen do kosiku.', 'success');
         } catch (\Exception $exc) {
             $this->presenter->flashMessage($exc->getMessage(), 'danger');
         }

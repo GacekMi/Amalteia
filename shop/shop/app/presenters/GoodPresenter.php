@@ -67,7 +67,7 @@ class GoodPresenter extends PrivatePresenter
                   $session->itemsBasket[$values->itemId] = $values->count;
             }
 
-            $this->presenter->flashMessage('Zbozi vlozeno do kosiku.'.$values->itemId, 'success');
+            $this->presenter->flashMessage('Zbozi vlozeno do kosiku.', 'success');
         } catch (\Exception $exc) {
             $this->presenter->flashMessage($exc->getMessage(), 'danger');
         }
@@ -97,7 +97,7 @@ class GoodPresenter extends PrivatePresenter
                   $session->itemsBasket[$values->itemId] = 1;
             }
 
-            $this->presenter->flashMessage('Zbozi vlozeno do kosiku.'.$values->itemId, 'success');
+            $this->presenter->flashMessage('Zbozi vlozeno do kosiku.', 'success');
         } catch (\Exception $exc) {
             $this->presenter->flashMessage($exc->getMessage(), 'danger');
         }
