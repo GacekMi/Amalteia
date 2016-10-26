@@ -118,7 +118,7 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
     public function isAdminRow($key, $roles)
     {
         $row = $this->database->table(self::TABLE_NAME)->get($key);
-        if(strpos($row['role'], 'admin') && !strpos($roles, 'admin'))
+        if((strpos($row['role'], 'admin') > 0) && strpos($roles, 'admin')===false)
         {
             return true;
         }
