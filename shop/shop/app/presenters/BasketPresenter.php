@@ -48,7 +48,7 @@ class BasketPresenter extends PrivatePresenter
                     //cena dle prihlaseneho uzivatele
                     $isVIP = false;
 
-                    if($this->getUser()->getIdentity()!=null)
+                    if($this->getUser()->getIdentity()!=null && $this->getUser()->isLoggedIn())
                     {
                         $vipData = $this->getUser()->getIdentity()->getData()['vip_date'];
                         
@@ -82,6 +82,30 @@ class BasketPresenter extends PrivatePresenter
         }
 
         $this->template->basketIsEmpty = $basketIsEmpty;
+    }
+
+    public function renderPlusItem($id)
+    {
+        if(isset($this->getSession('basket')->itemsBasket[$id]))
+        {
+              $this->getSession('basket')->itemsBasket[$id]++;
+        }
+
+        $this->redirect('default');
+    }
+
+    public function renderMinusItem($id)
+    {
+        if(isset($this->getSession('basket')->itemsBasket[$id]))
+        {
+              $this->getSession('basket')->itemsBasket[$id]--;
+              if($this->getSession('basket')->itemsBasket[$id]< 1)
+              {
+                   unset($this->getSession('basket')->itemsBasket[$id]);
+              }
+        }
+
+        $this->redirect('default');
     }
 
     public function renderRemoveItem($id)

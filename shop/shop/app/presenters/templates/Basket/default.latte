@@ -69,7 +69,9 @@
                         {$item[price]}{$item[currency]}
                     </div>
                     <div class="col-md-1 align-center">
-                        {$item[count]}
+                        <a n:href="Basket:minusItem $item[id]"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>
+                        <span style="text-align: center; width: 50px">{$item[count]}</span>
+                        <a n:href="Basket:plusItem $item[id]"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
                     </div>
                     <div class="col-md-2 align-right">
                         {$item[total_price]}{$item[currency]}

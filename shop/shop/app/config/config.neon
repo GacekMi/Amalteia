@@ -54,6 +54,8 @@ services:
             - allow('guest', 'Order', 'default')
             - allow('guest', 'Basket', 'default')
             - allow('guest', 'Basket', 'removeItem')
+            - allow('guest', 'Basket', 'plusItem')
+            - allow('guest', 'Basket', 'minusItem')
             - allow('guest', 'Basket', 'changeCountItem')
             - allow('guest', 'Basket', 'deleteBasket') 
             - allow('guest', 'Gallery', 'default') 

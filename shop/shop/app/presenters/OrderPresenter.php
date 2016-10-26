@@ -29,6 +29,18 @@ class OrderPresenter extends PrivatePresenter
         $this->template->title = "Objednávka";
     }
 
+    public function renderDefault()
+    {
+        if($this->getUser()->isLoggedIn())
+        {
+                $id = $this->getUser()->getIdentity()->getData()[\App\Model\Authenticator::COLUMN_ID];
+                $editUser = $this->authenticator->get($id);
+                $data = $editUser->toArray();
+                unset($data[\App\Model\Authenticator::COLUMN_PASSWORD_HASH]);
+                $this['orderForm']->setDefaults($data);
+        }
+    }
+
     protected function createComponentOrderForm() {
         $form = new Nette\Application\UI\Form;
         //Způsob odběru
@@ -39,17 +51,72 @@ class OrderPresenter extends PrivatePresenter
             '3' => 'Česká pošta',
             ];
         $form->addRadioList('deliveryType', '', $deliveryType)
-            ->setAttribute('class', 'radio-button');
+            ->setDefaultValue('3')
+            ->setAttribute('class', 'radio-button')
+            ->addCondition(Form::IS_IN, array(1, 2))
+                ->toggle("paymentType1")
+            ->endCondition()
+            ->addCondition(Form::EQUAL,'2')
+                ->toggle("deliveryPlace")
+            ->endCondition()
+            ->addCondition(Form::EQUAL,'3')
+                ->toggle("paymentType2")
+                ->toggle(\App\Model\Orders::COLUMN_DELIVERY_LABEL)
+                ->toggle(\App\Model\Orders::COLUMN_STREET)
+                ->toggle(\App\Model\Orders::COLUMN_DELIVERY_ADD)
+                ->toggle(\App\Model\Orders::COLUMN_TOWN)
+                ->toggle(\App\Model\Orders::COLUMN_PSC)
+                ->toggle('delivery_area')
+                ->toggle('delivery_mail_type');
+
+        $deliveryMailTypes = [
+            '1' => 'Balík na poštu 135,- Kč',
+            '2' => 'Balík do ruky  160,- Kč',
+
+        ];
+
+        $form->addSelect('deliveryMailType', 'Typ balíku', $deliveryMailTypes)
+            ->setPrompt('Zvolte typ balíku')
+            ->setOption('id', 'delivery_mail_type')
+            ->addConditionOn($form['deliveryType'], Form::EQUAL, 3)
+                        ->setRequired('Druh balíku musí být vybrán');
+
+        $deliveryPlaces = [
+            '1' => 'Ostrava',
+            '2' => 'Frýdek-Místek',
+            '3' => 'Nový Jičín',
+            '4' => 'Olomouc',
+            '5' => 'Hranice',
+            '6' => 'Rožnov pod Radhoštěm',
+            '7' => 'Vsetín',
+
+        ];
+
+        $form->addSelect('deliveryPlace', 'Místa vyzvednutí', $deliveryPlaces)
+            ->setPrompt('Zvolte místo vyzvednutí')
+            ->setOption('id', 'deliveryPlace')
+            ->addConditionOn($form['deliveryType'], Form::EQUAL, 2)
+                        ->setRequired('Místo vyzvednutí musí být vybráno');
 
         //Způsob platby
         $form->addGroup('Způsob platby')->setOption('container', Html::el('div')->class("col-lg-6"));
-        $paymentType = [
+        $paymentType1 = [
             '1' => 'Hotově',
+            '2' => 'Převodem na účet',
+            ];
+        $form->addRadioList('paymentType1', '', $paymentType1)
+            ->setDefaultValue('2')
+            ->setAttribute('class', 'radio-button')
+            ->setOption('id', 'paymentType1');
+        $paymentType2 = [
             '2' => 'Převodem na účet',
             '3' => 'Dobírka',
             ];
-        $form->addRadioList('paymentType', '', $paymentType)
-            ->setAttribute('class', 'radio-button');
+        $form->addRadioList('paymentType2', '', $paymentType2)
+            ->setDefaultValue('2')
+            ->setAttribute('class', 'radio-button')
+            ->setOption('id', 'paymentType2');
+    
 
         //Kontakntí údaje
         $form->addGroup('Kontaktní údaje')->setOption('container', Html::el('div')->class("col-lg-12 margin-top-30"));
@@ -69,48 +136,82 @@ class OrderPresenter extends PrivatePresenter
                 ->setRequired($this->translator->translate("ui.signMessage.phoneMsg"))
                 ->addRule(Form::PATTERN, $this->translator->translate("ui.signMessage.phoneIncorect"), '^(\+420|\+421){1} {1}[1-9][0-9]{2} {1}[0-9]{3} {1}[0-9]{3}$');
 
+
         //Doručovací údaje
-        $form->addGroup('Doručovací údaje')->setOption('container', Html::el('div')->class("col-lg-12 margin-top-30"));
+        $form->addGroup('Doručovací údaje')->setOption('container', Html::el('div')->class("col-lg-12 margin-top-30"))
+            ->setOption('id', 'delivery_area');
         $form->addHidden("label2", NULL)
                     ->setOmitted(TRUE);
             $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-4"));
                 $form->addText(\App\Model\Orders::COLUMN_DELIVERY_LABEL, Html::el('span')->setText('Jméno a příjmení nebo název')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
-                ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.firstNameMsg"));
+                    ->setOption('id', \App\Model\Orders::COLUMN_DELIVERY_LABEL)
+                    ->addConditionOn($form['deliveryType'], Form::EQUAL, 3)
+                        ->setRequired('Jméno a příjmení nebo název musí být vyplněno');
+
                 $form->addText(\App\Model\Orders::COLUMN_STREET, Html::el('span')->setText('Ulice a číslo')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
-                ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.emailMsg"));
+                    ->setOption('id', \App\Model\Orders::COLUMN_STREET)
+                    ->addConditionOn($form['deliveryType'], Form::EQUAL, 3)
+                        ->setRequired('Ulice a číslo musí být vyplněno');
 
             $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-4"));
                 $form->addText(\App\Model\Orders::COLUMN_DELIVERY_ADD, 'Upřesnění místa dodání')
-                    ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.firstNameMsg"));
+                    ->setOption('id', \App\Model\Orders::COLUMN_DELIVERY_ADD);
+                  
                 $form->addText(\App\Model\Orders::COLUMN_TOWN, Html::el('span')->setText('Město')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
-                        ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.firstNameMsg"));
+                        ->setOption('id', \App\Model\Orders::COLUMN_TOWN)
+                        ->addConditionOn($form['deliveryType'], Form::EQUAL, 3)
+                            ->setRequired('Město musí být vyplněno');
                     
             $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-4"));
                 $form->addText(\App\Model\Orders::COLUMN_PSC, Html::el('span')->setText('PSČ')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
-                        ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.firstNameMsg"));
+                        ->setOption('id', \App\Model\Orders::COLUMN_PSC)
+                        ->addConditionOn($form['deliveryType'], Form::EQUAL, 3)
+                            ->setRequired('PSČ musí být vyplněno');
 
         //Fakturační údaje
         $form->addGroup('Fakturační údaje')->setOption('container', Html::el('div')->class("col-lg-12 margin-top-30"));
             $form->addCheckbox('invoiceIsOpen', 'Chci zadat fakturační údaje pro doklady')
                     ->setOmitted(TRUE)
-                    ->setAttribute('class', 'radio-button');
+                    ->setAttribute('class', 'radio-button')
+                    ->addCondition($form::EQUAL, TRUE)
+                        ->toggle(\App\Model\Orders::COLUMN_INVOICE_LABEL)
+                        ->toggle(\App\Model\Orders::COLUMN_INVOICE_STREET)
+                        ->toggle(\App\Model\Orders::COLUMN_INVOICE_ICO)
+                        ->toggle(\App\Model\Orders::COLUMN_INVOICE_TOWN)
+                        ->toggle(\App\Model\Orders::COLUMN_INVOICE_DIC)
+                        ->toggle(\App\Model\Orders::COLUMN_INVOICE_PSC);
+
              $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-4"));
                 $form->addText(\App\Model\Orders::COLUMN_INVOICE_LABEL, Html::el('span')->setText('Jméno a příjmení nebo název')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
-                ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.firstNameMsg"));
+                ->setOption('id', \App\Model\Orders::COLUMN_INVOICE_LABEL)
+                ->addConditionOn($form['invoiceIsOpen'], Form::EQUAL, TRUE)
+                    ->setRequired('Jméno a příjmení nebo název musí být vyplněno');
+
                 $form->addText(\App\Model\Orders::COLUMN_INVOICE_STREET, Html::el('span')->setText('Ulice a číslo')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
-                ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.emailMsg"));
+                ->setOption('id', \App\Model\Orders::COLUMN_INVOICE_STREET)
+                ->addConditionOn($form['invoiceIsOpen'], Form::EQUAL, TRUE)
+                    ->setRequired('Ulice a číslo musí být vyplněno');
+                
 
             $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-4"));
                 $form->addText(\App\Model\Orders::COLUMN_INVOICE_ICO, 'IČO')
-                    ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.firstNameMsg"));
+                    ->setOption('id', \App\Model\Orders::COLUMN_INVOICE_ICO);
+
                 $form->addText(\App\Model\Orders::COLUMN_INVOICE_TOWN, Html::el('span')->setText('Město')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
-                        ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.firstNameMsg"));
+                        ->setOption('id', \App\Model\Orders::COLUMN_INVOICE_TOWN)
+                        ->addConditionOn($form['invoiceIsOpen'], Form::EQUAL, TRUE)
+                            ->setRequired('Město musí být vyplněno');
+                        
                     
             $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-4"));
                 $form->addText(\App\Model\Orders::COLUMN_INVOICE_DIC, 'DIČ')
-                    ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.firstNameMsg"));
+                    ->setOption('id', \App\Model\Orders::COLUMN_INVOICE_DIC);
+
                 $form->addText(\App\Model\Orders::COLUMN_INVOICE_PSC, Html::el('span')->setText('PSČ')->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
-                        ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.firstNameMsg"));
+                        ->setOption('id', \App\Model\Orders::COLUMN_INVOICE_PSC)
+                        ->addConditionOn($form['invoiceIsOpen'], Form::EQUAL, TRUE)
+                            ->setRequired('PSČ musí být vyplněno');
+                        
 
         
 
@@ -148,5 +249,6 @@ class OrderPresenter extends PrivatePresenter
 
     public function orderFormSucceeded($form, $values) {
             $values = $form->getValues(TRUE);
+            $this->flashMessage('Objednávky ještě nejsou v provozu!', 'error');
     }
 }
