@@ -1,3 +1,95 @@
+{block addscripts}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#submitButton").click(function() {
+            $("#frm-orderForm").submit();
+        });
+        var delT = null;
+        $("input[name='deliveryType']").click(function() {
+            delT = this.value;
+            if(delT==1)
+            {
+                $("#deliveryPay").text("0");
+                $("#feePay").text("0");
+                $("#frm-orderForm-deliveryMailType" ).val(0);
+                jQuery("input[name='paymentType2']").each(function() {
+                    if(this.value == 2)
+                    {
+                        this.checked = true;
+                    }
+                
+                });
+            }
+            if(delT==2)
+            {
+                $("#deliveryPay").text("60");
+                $("#feePay").text("0");
+                $("#frm-orderForm-deliveryMailType" ).val(0);
+                jQuery("input[name='paymentType2']").each(function() {
+                    if(this.value == 2)
+                    {
+                        this.checked = true;
+                    }
+                
+                });
+               
+            }
+            if(delT==3)
+            {
+                $("#deliveryPay").text("0");
+                if($("#frm-orderForm-deliveryMailType" ).val() == 1)
+                {
+                    $("#deliveryPay").text(135);
+                }
+                
+                if($("#frm-orderForm-deliveryMailType" ).val() == 2)
+                {
+                    $("#deliveryPay").text(160);
+                }
+            }
+
+            var total = parseFloat($("#totalPrice").text()) +  parseFloat($("#deliveryPay").text()) + parseFloat($("#feePay").text());
+             $("#totalOrderPrice").text(total.toFixed(2)); 
+        });
+
+        $("#frm-orderForm-deliveryMailType").change(function() {
+            $("#deliveryPay").text("0");
+                if($("#frm-orderForm-deliveryMailType" ).val() == 1)
+                {
+                    $("#deliveryPay").text(135);
+                }
+                
+                if($("#frm-orderForm-deliveryMailType" ).val() == 2)
+                {
+                    $("#deliveryPay").text(160);
+                }
+        });
+
+         $("input[name='paymentType2']").click(function() {
+            delT = this.value;
+            if(delT==3)
+            {
+                if((parseFloat($("#totalPrice").text()) +  parseFloat($("#deliveryPay").text()) + 50) > 5000)
+                {
+                     $("#feePay").text("63");
+                }
+                else
+                {
+                    $("#feePay").text("50");
+                }
+            }
+            else
+            {
+                $("#feePay").text("0");
+            }
+            
+            var total = parseFloat($("#totalPrice").text()) +  parseFloat($("#deliveryPay").text()) + parseFloat($("#feePay").text());
+             $("#totalOrderPrice").text(total.toFixed(2)); 
+        });
+    });
+</script>
+{/block}
+
 {block content}
 <div class=" container reg-page">
         <div class="basket-header">
@@ -38,9 +130,9 @@
                     <p>Poplatek za platbu zboží</p>
                 </div>
                 <div class="col-md-4 align-right">
-                    <p> Kč</p>
-                    <p> Kč</p>
-                    <p> Kč</p>
+                    <p><span id="totalPrice">{$totalPrice}</span>,- {$orderCurrency}</p>
+                    <p><span id="deliveryPay">{$deliveryPay}</span>,- {$orderCurrency}</p>
+                    <p><span id="feePay">{$feePay}</span>,- {$orderCurrency}</p>
                 </div>
             </div>
         </div> 
@@ -55,7 +147,7 @@
                     <p><b>Celkem k úhradě</b></p>
                 </div>
                 <div class="col-md-4 align-right">
-                    <p><b> Kč</b></p>
+                    <p><b><span id="totalOrderPrice">{$totalPrice}</span>,- {$orderCurrency}</b></p>
                 </div>
              </div>
         </div> 
@@ -63,8 +155,8 @@
                 <div class="col-md-6">
                      <a n:href="Basket:default" class="btn btn-info" role="button">Zpět do košíku </a>
                 </div>
-                <!--<div class="col-md-6 align-right">
-                     <a n:href="Order:default" class="btn btn-success" role="button">Odeslat objednávku</a>
-                </div>-->
+                <div class="col-md-6 align-right">
+                        <input type="button" value="Odeslat objednávku" id="submitButton" class="btn btn-success"/>
+                </div>
         </div>   
 </div>

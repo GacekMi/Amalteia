@@ -27,6 +27,72 @@ class OrderPresenter extends PrivatePresenter
     {
         parent::beforeRender();
         $this->template->title = "Objednávka";
+        $session = $this->getSession('basket');
+    
+        if($session->itemsBasket != null)
+        {
+            $keys = array();
+            foreach ($session->itemsBasket as $key => $item)
+            {
+               $keys[]= $key;
+            }
+
+            $goodsDB = $this->goods->getGooods($keys);
+            $totalOrderPrice = 0;
+            $orderCurrency = "";
+            foreach ($goodsDB as $goodDB)
+            {
+                if($goodDB->state == 'Z')
+                {
+                    $good = $goodDB->toArray();
+                    $good['count'] = $session->itemsBasket[$goodDB->id];
+                    //cena dle prihlaseneho uzivatele
+                    $isVIP = false;
+
+                    if($this->getUser()->getIdentity()!=null && $this->getUser()->isLoggedIn())
+                    {
+                        $vipData = $this->getUser()->getIdentity()->getData()['vip_date'];
+                        
+                        if(date("Y-m-d") <= $vipData)
+                        {
+                            $isVIP = true;
+                        }
+                    }
+                
+                    if ($this->getUser()->isLoggedIn()&&($this->getUser()->isInRole('partner') || $isVIP))
+                    {
+                        $good['price'] = $goodDB->d_price_vat;
+                    }
+                    else
+                    {
+                        $good['price'] = $goodDB->price_vat;
+                    }
+
+                    $good['total_price'] = $good['price'] * $good['count'];
+                    $totalOrderPrice += $good['total_price'];
+                
+                    //$good['currency'] = $this->goods->currency[$goodDB->currency];
+                    $orderCurrency =  $this->goods->currency[$goodDB->currency];
+                    //$good['availability'] = $this->goods->availability[$goodDB->availability];
+                    //$goods[] = $good;
+                }
+            }
+
+            $this->template->totalPrice =  $totalOrderPrice;
+            $this->template->orderCurrency = $orderCurrency;
+            $this->template->delp1 = 135;
+            $this->template->delp1 = 160;
+            $this->template->delp1 = 60;
+            $this->template->feePay = 50;
+            if($totalOrderPrice > 5000)
+            {
+                $this->template->feePay = 63;
+            }
+            
+            $this->template->deliveryPay = 0;
+            $this->template->feePay = 0;
+        }
+
     }
 
     public function renderDefault()
@@ -222,8 +288,8 @@ class OrderPresenter extends PrivatePresenter
             $form->addTextArea(\App\Model\Orders::COLUMN_DESCRIPTION, '');
 
 
-        $form->addSubmit('send', 'Odeslat objednávku');
-        $form['send']->getControlPrototype()->class('btn btn-success');
+        //$form->addSubmit('send', 'Odeslat objednávku');
+       // $form['send']->getControlPrototype()->class('btn btn-success');
         $renderer = $form->getRenderer();
         $renderer->wrappers['controls']['container'] = 'div';
         $renderer->wrappers['pair']['container'] = Html::el('div')->class('form-line');
