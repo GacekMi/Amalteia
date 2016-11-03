@@ -130,9 +130,9 @@
                     <p>Poplatek za platbu zboží</p>
                 </div>
                 <div class="col-md-4 align-right">
-                    <p><span id="totalPrice">{$totalPrice}</span>,- {$orderCurrency}</p>
-                    <p><span id="deliveryPay">{$deliveryPay}</span>,- {$orderCurrency}</p>
-                    <p><span id="feePay">{$feePay}</span>,- {$orderCurrency}</p>
+                    <p><span id="totalPrice">{$totalPrice|number:2:',':' '}</span> {$orderCurrency}</p>
+                    <p><span id="deliveryPay">{$deliveryPay|number:2:',':' '}</span> {$orderCurrency}</p>
+                    <p><span id="feePay">{$feePay|number:2:',':' '}</span> {$orderCurrency}</p>
                 </div>
             </div>
         </div> 
@@ -147,7 +147,7 @@
                     <p><b>Celkem k úhradě</b></p>
                 </div>
                 <div class="col-md-4 align-right">
-                    <p><b><span id="totalOrderPrice">{$totalPrice}</span>,- {$orderCurrency}</b></p>
+                    <p><b><span id="totalOrderPrice">{$totalPrice|number:2:',':' '}</span> {$orderCurrency}</b></p>
                 </div>
              </div>
         </div> 

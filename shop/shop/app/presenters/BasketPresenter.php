@@ -79,6 +79,8 @@ class BasketPresenter extends PrivatePresenter
             $this->template->goods =  $goods;
             $this->template->totalOrderPrice =  $totalOrderPrice;
             $this->template->orderCurrency = $orderCurrency;
+            $this->template->orderPage = "Basket:in";
+            if($this->getUser()->isLoggedIn()) $this->template->orderPage = "Order:default";
         }
 
         $this->template->basketIsEmpty = $basketIsEmpty;

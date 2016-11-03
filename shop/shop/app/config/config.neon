@@ -52,6 +52,7 @@ services:
             - addResource('Order')
             - addResource('OrderItem')
             - allow('guest', 'Order', 'default')
+            - allow('guest', 'Basket', 'in')
             - allow('guest', 'Basket', 'default')
             - allow('guest', 'Basket', 'removeItem')
             - allow('guest', 'Basket', 'plusItem')

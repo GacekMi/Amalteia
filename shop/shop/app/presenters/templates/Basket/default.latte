@@ -66,7 +66,7 @@
                         {$item[availability]}
                     </div>
                     <div class="col-md-2 align-right">
-                        {$item[price]}{$item[currency]}
+                        {$item[price]|number:0:',':' '} {$item[currency]}
                     </div>
                     <div class="col-md-1 align-center">
                         <a n:href="Basket:minusItem $item[id]"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>
@@ -74,7 +74,7 @@
                         <a n:href="Basket:plusItem $item[id]"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
                     </div>
                     <div class="col-md-2 align-right">
-                        {$item[total_price]}{$item[currency]}
+                        {$item[total_price]|number:0:',':' '} {$item[currency]}
                     </div>
                     <div class="col-md-1 align-center">
                         <a n:href="Basket:removeItem $item[id]"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
@@ -88,7 +88,7 @@
                     <div class="col-md-1"></div>
                     <div class="col-md-1 align-right"></div>
                     <div class="col-md-2 align-center"><b>Celkem k úhradě: </b></div>
-                    <div class="col-md-2 align-right"><b>{$totalOrderPrice}{$orderCurrency}</b></div>
+                    <div class="col-md-2 align-right"><b>{$totalOrderPrice|number:2:',':' '} {$orderCurrency}</b></div>
                     <div class="col-md-1 align-center"></div>
             </div>
             <div class="row" style="margin-top: 60px;">
@@ -99,7 +99,7 @@
                      <a n:href="Basket:deleteBasket" class="btn btn-danger" role="button">Vymazat košík </a>
                 </div>
                 <div class="col-md-4 align-right">
-                     <a n:href="Order:default" class="btn btn-success" role="button">Pokračovak k objednávce </a>
+                     <a n:href="{$orderPage}" class="btn btn-success" role="button">Pokračovak k objednávce </a>
                 </div>
                 </div>
             </div>
