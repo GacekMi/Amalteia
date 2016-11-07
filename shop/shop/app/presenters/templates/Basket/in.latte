@@ -1,0 +1,38 @@
+
+{block content}
+
+<div class="container-fluid">
+		<div class="rov">
+			<div class="col-lg-4">
+                <div class="thumbnail basket-column">
+                    <h4>Přihlášení </h4>
+                    {control signInForm} 
+                </div>
+			</div>
+			<div class="col-lg-4">
+                <div class="thumbnail basket-column">
+                    <h4>Registrace </h4>
+                    {control regForm}
+                </div>
+			</div>
+            <div class="col-lg-4">
+                <div class="thumbnail basket-column">
+                    <h4>Výhody registrace</h4>
+                    </br>
+                    <ul>
+                        <li><h5>Přehled svých objednávek</h5></li>
+                        <li><h5>Aktuální stav objednávky</h5></li>
+                        <li><h5>Zajímavé slevy</h5></li>
+                        <li><h5>Bonusy</h5></li>
+                        <li><h5>Speciální nabídky</h5></li>
+                    </ul>
+                    </br>
+                    </br>
+                    </br>
+                    <div class="">
+                        <a n:href="Order:default" class="btn btn-default" role="button">I přes <u><span style="color: red;">nevýhody</span></u> nakoupit bez registrace</a>
+                    </div>
+                </div>
+			</div>
+		</div>
+</div>

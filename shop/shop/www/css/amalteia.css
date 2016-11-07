@@ -598,6 +598,11 @@ form .error {
     margin: 0px;
 }
 
+.basket-column {
+    padding-left: 20px;
+    height: 700px;
+}
+
 
 /* Featurettes
 ------------------------- */
