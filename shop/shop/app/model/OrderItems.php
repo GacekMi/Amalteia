@@ -9,8 +9,19 @@ Nette\Utils\Strings;
 class OrderItems extends Nette\Object{
 
 	const
-	TABLE_NAME = 'orderitems',
-	COLUMN_ID = 'id';
+	TABLE_NAME = 'order_items',
+	COLUMN_ID = 'id',
+    COLUMN_ORDER_ID = 'order_id',
+    COLUMN_TYPE = 'type',
+    COLUMN_GOOD_ID = 'good_id',
+    COLUMN_LABEL = 'label',
+    COLUMN_PRICE = 'price',
+    COLUMN_PRICE_VAT = 'price_vat',
+    COLUMN_VAT = 'vat',
+    COLUMN_CURRENCY = 'currency',
+    COLUMN_UNIT = 'unit',
+    COLUMN_QUANTITY= 'quantity';
+
 	
 	/** @var Nette\Database\Context */
     private $database;

@@ -1,5 +1,30 @@
 {block addscripts}
 <script type="text/javascript">
+    var delp1 = {$delp1};
+    var delp2 = {$delp2};
+    var delp3 = {$delp3};
+    var feePay1 = {$feePay1};
+    var feePay2 = {$feePay2};
+
+    Number.prototype.formatMoney = function(c, d, t){
+        var n = this, 
+            c = isNaN(c = Math.abs(c)) ? 2 : c, 
+            d = d == undefined ? "." : d, 
+            t = t == undefined ? "," : t, 
+            s = n < 0 ? "-" : "", 
+            i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), 
+            j = (j = i.length) > 3 ? j % 3 : 0;
+        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    };
+
+    function getFloatPrice(price) {
+        return parseFloat(price.replace(',', '.').replace(' ', ''));             
+    }
+
+    function formatPrice(price) {
+        return price.replace('.', ',');             
+    }
+
     $(document).ready(function() {
         $("#submitButton").click(function() {
             $("#frm-orderForm").submit();
@@ -22,7 +47,7 @@
             }
             if(delT==2)
             {
-                $("#deliveryPay").text("60");
+                $("#deliveryPay").text(delp3);
                 $("#feePay").text("0");
                 $("#frm-orderForm-deliveryMailType" ).val(0);
                 jQuery("input[name='paymentType2']").each(function() {
@@ -39,43 +64,45 @@
                 $("#deliveryPay").text("0");
                 if($("#frm-orderForm-deliveryMailType" ).val() == 1)
                 {
-                    $("#deliveryPay").text(135);
+                    $("#deliveryPay").text(delp1);
                 }
                 
                 if($("#frm-orderForm-deliveryMailType" ).val() == 2)
                 {
-                    $("#deliveryPay").text(160);
+                    $("#deliveryPay").text(delp2);
                 }
             }
 
-            var total = parseFloat($("#totalPrice").text()) +  parseFloat($("#deliveryPay").text()) + parseFloat($("#feePay").text());
-             $("#totalOrderPrice").text(total.toFixed(2)); 
+            var total = getFloatPrice($("#totalPrice").text()) +  getFloatPrice($("#deliveryPay").text()) + getFloatPrice($("#feePay").text());
+             $("#totalOrderPrice").text(total.formatMoney(2, ',', ' ')); 
         });
 
         $("#frm-orderForm-deliveryMailType").change(function() {
             $("#deliveryPay").text("0");
                 if($("#frm-orderForm-deliveryMailType" ).val() == 1)
                 {
-                    $("#deliveryPay").text(135);
+                    $("#deliveryPay").text(delp1);
                 }
                 
                 if($("#frm-orderForm-deliveryMailType" ).val() == 2)
                 {
-                    $("#deliveryPay").text(160);
+                    $("#deliveryPay").text(delp2);
                 }
+            var total = getFloatPrice($("#totalPrice").text()) +  getFloatPrice($("#deliveryPay").text()) + getFloatPrice($("#feePay").text());
+             $("#totalOrderPrice").text(total.formatMoney(2, ',', ' ')); 
         });
 
          $("input[name='paymentType2']").click(function() {
             delT = this.value;
             if(delT==3)
             {
-                if((parseFloat($("#totalPrice").text()) +  parseFloat($("#deliveryPay").text()) + 50) > 5000)
+                if((getFloatPrice($("#totalPrice").text()) +  getFloatPrice($("#deliveryPay").text()) + feePay1) > {$feePayLimit})
                 {
-                     $("#feePay").text("63");
+                     $("#feePay").text(feePay2);
                 }
                 else
                 {
-                    $("#feePay").text("50");
+                    $("#feePay").text(feePay1);
                 }
             }
             else
@@ -83,8 +110,8 @@
                 $("#feePay").text("0");
             }
             
-            var total = parseFloat($("#totalPrice").text()) +  parseFloat($("#deliveryPay").text()) + parseFloat($("#feePay").text());
-             $("#totalOrderPrice").text(total.toFixed(2)); 
+            var total = getFloatPrice($("#totalPrice").text()) +  getFloatPrice($("#deliveryPay").text()) + getFloatPrice($("#feePay").text());
+             $("#totalOrderPrice").text(total.formatMoney(2, ',', ' ')); 
         });
     });
 </script>

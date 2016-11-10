@@ -6,11 +6,13 @@ use App\Model,
     Nette\Application\UI\Form,
     Nette,
     Nette\Application\UI\Multiplier,
-    Nette\Utils\Html;
+    Nette\Utils\Html,
+    Tracy\Debugger;
 
 
 class OrderPresenter extends PrivatePresenter
 {
+ 
     /** @inject @var \App\Model\Categories */
     public $categories;
 
@@ -80,13 +82,14 @@ class OrderPresenter extends PrivatePresenter
 
             $this->template->totalPrice =  $totalOrderPrice;
             $this->template->orderCurrency = $orderCurrency;
-            $this->template->delp1 = 135;
-            $this->template->delp1 = 160;
-            $this->template->delp1 = 60;
-            $this->template->feePay = 50;
-            if($totalOrderPrice > 5000)
+            $this->template->feePayLimit = \App\Model\Orders::DOBIRKA_LIMIT;
+            $this->template->delp1 = \App\Model\Orders::BALIK_NA_POSTU;
+            $this->template->delp2 = \App\Model\Orders::BALIK_DO_RUKY;
+            $this->template->delp3 = \App\Model\Orders::ODBER_V_MISTE;
+            $this->template->feePay1 = \App\Model\Orders::DOBIRKA_1;
+            if($totalOrderPrice > \App\Model\Orders::DOBIRKA_LIMIT)
             {
-                $this->template->feePay = 63;
+                $this->template->feePay2 = \App\Model\Orders::DOBIRKA_2;
             }
             
             $this->template->deliveryPay = 0;
@@ -111,12 +114,8 @@ class OrderPresenter extends PrivatePresenter
         $form = new Nette\Application\UI\Form;
         //Způsob odběru
         $form->addGroup('Způsob odběru')->setOption('container', Html::el('div')->class("col-lg-6"));
-        $deliveryType = [
-            '1' => 'Osobně',
-            '2' => 'Osobní vyzvednutí v místě',
-            '3' => 'Česká pošta',
-            ];
-        $form->addRadioList('deliveryType', '', $deliveryType)
+        
+        $form->addRadioList('deliveryType', '', $this->orders->deliveryType)
             ->setDefaultValue('3')
             ->setAttribute('class', 'radio-button')
             ->addCondition(Form::IS_IN, array(1, 2))
@@ -135,30 +134,13 @@ class OrderPresenter extends PrivatePresenter
                 ->toggle('delivery_area')
                 ->toggle('delivery_mail_type');
 
-        $deliveryMailTypes = [
-            '1' => 'Balík na poštu 135,- Kč',
-            '2' => 'Balík do ruky  160,- Kč',
-
-        ];
-
-        $form->addSelect('deliveryMailType', 'Typ balíku', $deliveryMailTypes)
+        $form->addSelect('deliveryMailType', 'Typ balíku', $this->orders->deliveryMailTypes)
             ->setPrompt('Zvolte typ balíku')
             ->setOption('id', 'delivery_mail_type')
             ->addConditionOn($form['deliveryType'], Form::EQUAL, 3)
                         ->setRequired('Druh balíku musí být vybrán');
 
-        $deliveryPlaces = [
-            '1' => 'Ostrava',
-            '2' => 'Frýdek-Místek',
-            '3' => 'Nový Jičín',
-            '4' => 'Olomouc',
-            '5' => 'Hranice',
-            '6' => 'Rožnov pod Radhoštěm',
-            '7' => 'Vsetín',
-
-        ];
-
-        $form->addSelect('deliveryPlace', 'Místa vyzvednutí', $deliveryPlaces)
+        $form->addSelect('deliveryPlace', 'Místa vyzvednutí', $this->orders->deliveryPlaces)
             ->setPrompt('Zvolte místo vyzvednutí')
             ->setOption('id', 'deliveryPlace')
             ->addConditionOn($form['deliveryType'], Form::EQUAL, 2)
@@ -166,19 +148,13 @@ class OrderPresenter extends PrivatePresenter
 
         //Způsob platby
         $form->addGroup('Způsob platby')->setOption('container', Html::el('div')->class("col-lg-6"));
-        $paymentType1 = [
-            '1' => 'Hotově',
-            '2' => 'Převodem na účet',
-            ];
-        $form->addRadioList('paymentType1', '', $paymentType1)
+        
+        $form->addRadioList('paymentType1', '', $this->orders->paymentType1)
             ->setDefaultValue('2')
             ->setAttribute('class', 'radio-button')
             ->setOption('id', 'paymentType1');
-        $paymentType2 = [
-            '2' => 'Převodem na účet',
-            '3' => 'Dobírka',
-            ];
-        $form->addRadioList('paymentType2', '', $paymentType2)
+       
+        $form->addRadioList('paymentType2', '', $this->orders->paymentType2)
             ->setDefaultValue('2')
             ->setAttribute('class', 'radio-button')
             ->setOption('id', 'paymentType2');
@@ -237,7 +213,7 @@ class OrderPresenter extends PrivatePresenter
         //Fakturační údaje
         $form->addGroup('Fakturační údaje')->setOption('container', Html::el('div')->class("col-lg-12 margin-top-30"));
             $form->addCheckbox('invoiceIsOpen', 'Chci zadat fakturační údaje pro doklady')
-                    ->setOmitted(TRUE)
+                    ->setOmitted(FALSE)
                     ->setAttribute('class', 'radio-button')
                     ->addCondition($form::EQUAL, TRUE)
                         ->toggle(\App\Model\Orders::COLUMN_INVOICE_LABEL)
@@ -302,19 +278,185 @@ class OrderPresenter extends PrivatePresenter
         return $form;
 
     }
-    //jmeno, prijmeni,tel, email, doplnujici info
-    //adresa doruceni
-    //adresa fakturacni , check box
-    //platba na ucet, hotove
-    //doprava
-    //doprava ...balik, osobni, misto
 
     public function validateOrderForm($form)
     {
     }
 
     public function orderFormSucceeded($form, $values) {
-            $values = $form->getValues(TRUE);
-            $this->flashMessage('Objednávky ještě nejsou v provozu!', 'error');
+        $values = $form->getValues(TRUE);
+        Debugger::barDump($values);
+        $ret = $this->createOrder($values); 
+
+        if($this->getSession('basket') != null && $ret > 0)
+        {
+ //             unset($this->getSession('basket')->itemsBasket);
+            $this->redirect('Order:sum');
+        }
+        else
+        {
+            $this->presenter->flashMessage('Něco se porouchalo.', 'error');
+        }
+    }
+
+    private function createOrder($values)
+    {
+        $orderData = array();
+
+        $orderData[\App\Model\Orders::COLUMN_STATE] = 0;
+        $orderData[\App\Model\Orders::COLUMN_USER_STATE] = 0;
+        $orderData[\App\Model\Orders::COLUMN_DATE] = new \DateTime();
+        if($this->getUser()->isLoggedIn())
+        {
+             $id = $this->getUser()->getIdentity()->getData()[\App\Model\Authenticator::COLUMN_ID];
+             $orderData[\App\Model\Orders::COLUMN_USER_ID] = $id;
+        }
+       
+        //zpusob dopravy
+        $orderData[\App\Model\Orders::COLUMN_ZP_O] = $values['deliveryType'];
+        if($values['deliveryType']==2)
+        {
+            $orderData[\App\Model\Orders::COLUMN_ZP_M] = $values['deliveryPlace']*-1;
+        }
+
+        if($values['deliveryType']==3)
+        {
+            $orderData[\App\Model\Orders::COLUMN_ZP_M] = $values['deliveryMailType'];
+        }
+
+        //zpusob platby
+        if($values['deliveryType']==3)
+        {
+             $orderData[\App\Model\Orders::COLUMN_ZP_P] = $values['paymentType2'];
+        }
+        else
+        {
+             $orderData[\App\Model\Orders::COLUMN_ZP_P] = $values['paymentType1'];
+        }
+
+        //zakladni udaje
+        $orderData[\App\Model\Orders::COLUMN_FIRST_NAME] = $values[\App\Model\Orders::COLUMN_FIRST_NAME];
+        $orderData[\App\Model\Orders::COLUMN_LAST_NAME] = $values[\App\Model\Orders::COLUMN_LAST_NAME];
+        $orderData[\App\Model\Orders::COLUMN_EMAIL] = $values[\App\Model\Orders::COLUMN_EMAIL];
+        $orderData[\App\Model\Orders::COLUMN_PHONE] = $values[\App\Model\Orders::COLUMN_PHONE];
+
+        //adresa
+        if($values['deliveryType']==3)
+        {
+            $orderData[\App\Model\Orders::COLUMN_DELIVERY_LABEL] = $values[\App\Model\Orders::COLUMN_DELIVERY_LABEL];
+            $orderData[\App\Model\Orders::COLUMN_DELIVERY_ADD] = $values[\App\Model\Orders::COLUMN_DELIVERY_ADD];
+            $orderData[\App\Model\Orders::COLUMN_STREET] = $values[\App\Model\Orders::COLUMN_STREET];
+            $orderData[\App\Model\Orders::COLUMN_TOWN] = $values[\App\Model\Orders::COLUMN_TOWN];
+            $orderData[\App\Model\Orders::COLUMN_PSC] = $values[\App\Model\Orders::COLUMN_PSC];
+        }
+
+        //fakturacni adresa
+        if($values['invoiceIsOpen'])
+        {
+            $orderData[\App\Model\Orders::COLUMN_INVOICE_LABEL] = $values[\App\Model\Orders::COLUMN_INVOICE_LABEL];
+            $orderData[\App\Model\Orders::COLUMN_INVOICE_ICO] = $values[\App\Model\Orders::COLUMN_INVOICE_ICO];
+            $orderData[\App\Model\Orders::COLUMN_INVOICE_DIC] = $values[\App\Model\Orders::COLUMN_INVOICE_DIC];
+            $orderData[\App\Model\Orders::COLUMN_INVOICE_STREET] = $values[\App\Model\Orders::COLUMN_INVOICE_STREET];
+            $orderData[\App\Model\Orders::COLUMN_INVOICE_TOWN] = $values[\App\Model\Orders::COLUMN_INVOICE_TOWN];
+            $orderData[\App\Model\Orders::COLUMN_INVOICE_PSC] = $values[\App\Model\Orders::COLUMN_INVOICE_PSC];
+        }
+
+        //description
+        $orderData[\App\Model\Orders::COLUMN_DESCRIPTION] = $values[\App\Model\Orders::COLUMN_DESCRIPTION];
+        return $this->addOrderItems($orderData);
+    }
+
+    private function addOrderItems($orderData)
+    {
+        $session = $this->getSession('basket');
+    
+        if($session->itemsBasket != null)
+        {
+            $keys = array();
+            foreach ($session->itemsBasket as $key => $item)
+            {
+               $keys[]= $key;
+            }
+
+            $goodsDB = $this->goods->getGooods($keys);
+            $items = array();
+            $totalPrice = 0;
+            $totalPriceVat = 0;
+            foreach ($goodsDB as $goodDB)
+            {
+                if($goodDB->state == 'Z')
+                {
+                    $item = array();
+                    $good = $goodDB->toArray();
+                    $item[\App\Model\OrderItems::COLUMN_TYPE] = 1;
+                    $item[\App\Model\OrderItems::COLUMN_GOOD_ID] = $goodDB->id;
+                    $item[\App\Model\OrderItems::COLUMN_LABEL] = $goodDB->label;
+                    $item[\App\Model\OrderItems::COLUMN_VAT] = $goodDB->vat;
+                    $item[\App\Model\OrderItems::COLUMN_CURRENCY] = $goodDB->currency;
+                    $item[\App\Model\OrderItems::COLUMN_UNIT] = $goodDB->unit;
+                    $item[\App\Model\OrderItems::COLUMN_QUANTITY] = $session->itemsBasket[$goodDB->id];
+
+                    //cena dle prihlaseneho uzivatele
+                    $isVIP = false;
+
+                    if($this->getUser()->getIdentity()!=null && $this->getUser()->isLoggedIn())
+                    {
+                        $vipData = $this->getUser()->getIdentity()->getData()['vip_date'];
+                        
+                        if(date("Y-m-d") <= $vipData)
+                        {
+                            $isVIP = true;
+                        }
+                    }
+                
+                    if ($this->getUser()->isLoggedIn()&&($this->getUser()->isInRole('partner') || $isVIP))
+                    {
+                        $item[\App\Model\OrderItems::COLUMN_PRICE] = $goodDB->d_price;
+                        $item[\App\Model\OrderItems::COLUMN_PRICE_VAT] = $goodDB->d_price_vat;
+                    }
+                    else
+                    {
+                        $item[\App\Model\OrderItems::COLUMN_PRICE] = $goodDB->price;
+                        $item[\App\Model\OrderItems::COLUMN_PRICE_VAT] = $goodDB->price_vat;
+                    }
+
+                    $items[] = $item;
+                    $totalPrice += $item[\App\Model\OrderItems::COLUMN_PRICE]* $item[\App\Model\OrderItems::COLUMN_QUANTITY];
+                    $totalPriceVat += $item[\App\Model\OrderItems::COLUMN_PRICE_VAT]* $item[\App\Model\OrderItems::COLUMN_QUANTITY];
+                }
+            }
+            //Celkova cena objednavky bez dopravy a platby
+            $orderData[\App\Model\Orders::COLUMN_TOTAL_PRICE] = $totalPrice;
+            $orderData[\App\Model\Orders::COLUMN_TOTAL_PRICE_VAT] = $totalPriceVat;
+            //Doprava a platba
+
+            if($orderData[\App\Model\Orders::COLUMN_ZP_O] == 3)
+            {
+               if($orderData[\App\Model\Orders::COLUMN_ZP_M]==1)
+               {
+
+               }
+               else
+               {
+
+               }
+            }
+
+            if($orderData[\App\Model\Orders::COLUMN_ZP_O] == 2)
+            {
+                //3 posta, 2 odber v miste
+            }
+
+            if($orderData[\App\Model\Orders::COLUMN_ZP_P] == 3)
+            {
+                //dobirka spocitat cenu
+            }
+      
+            Debugger::barDump($orderData);
+            Debugger::barDump($items);
+            return 0;
+        }
+         
+        return 0;
     }
 }
