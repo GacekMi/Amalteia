@@ -59,6 +59,11 @@ class Orders extends Nette\Object{
     public $paymentType1 = ['1' => 'Hotově', '2' => 'Převodem na účet'];
     public $paymentType2 = ['2' => 'Převodem na účet', '3' => 'Dobírka'];
 
+    public $state = ['1' => 'Vytvořeno', '2' => 'Přijato', '3' => 'Připraveno', '4' => 'Odesláno'];
+    public $userState = ['1' => 'Vytvořeno', '2' => 'Přijato', '3' => 'Připraveno', '4' => 'Odesláno'];
+    public $paymentType = ['1' => 'Hotově', '2' => 'Převodem na účet', '3' => 'Dobírka']; 
+    public $deliveryPlacesA = ['1' => 'Balík na poštu ', '2' => 'Balík do ruky  ', '-1' => 'Ostrava','-2' => 'Frýdek-Místek','-3' => 'Nový Jičín','-4' => 'Olomouc','-5' => 'Hranice','-6' => 'Rožnov pod Radhoštěm','-7' => 'Vsetín'];
+
     public function __construct(Nette\Database\Context $database, Nette\Localization\ITranslator $translator) {
         $this->database = $database;
         $this->translator = $translator;

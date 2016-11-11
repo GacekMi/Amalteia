@@ -1,0 +1,83 @@
+{block content}
+
+
+<div class="container reg-page">
+		<h2>Detail objednávky</h2>
+        </br>
+        <div class="row">
+                 <div class="col-md-6">
+                    <h5 class="text-info">Kontaktní údaje</h5>
+                    <address class="order-margin-left">
+                        <strong>{$orderData->first_name} {$orderData->last_name}</strong><br>
+                        <abbr title="Telefon">T:</abbr> {$orderData->phone}<br>
+                        <a href="mailto:{$orderData->email}">{$orderData->email}</a>
+                    </address>
+                </div>
+                <div class="col-md-6">
+                 <h5 class="text-info">Způsob odběru a platby</h5>
+                </div>
+        </div>
+        <hr>
+        <div class="row">
+                <div class="col-md-6">
+                    <h5 class="text-info">Doručovací údaje</h5>
+                    <address  class="order-margin-left">
+                        <strong>{$orderData->delivery_label}</strong><br>
+                        {$orderData->delivery_add}<br>
+                        {$orderData->street}<br>
+                        {$orderData->town}, {$orderData->psc}<br>
+                    </address>
+                </div>
+                <div class="col-md-6">
+                    <h5 class="text-info">Fakturační údaje</h5>
+                    <address class="order-margin-left">
+                         <strong>{$orderData->invoice_label}</strong><br>
+                        {$orderData->invoice_street}<br>
+                        <abbr title="IČ">IČ:</abbr> {$orderData->invoice_ico}<br>
+                        <abbr title="DIČ">DIČ:</abbr> {$orderData->invoice_dic}<br>
+                        {$orderData->invoice_town}, {$orderData->invoice_psc}<br>
+                    </address>
+                 </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <h5 class="text-info">Poznámka</h5>
+                <div class="order-margin-left">
+                    {$orderData->description}
+                </div>
+            </div>
+        </div>
+        </br>
+        <hr>
+        <table class="table table-striped"> 
+            <thead> 
+                <tr> 
+                    <th>Zbozi</th> 
+                    <th>Název</th> 
+                    <th class="align-right">Cena</th> 
+                    <th class="align-right">Cena s DPH</th> 
+                    <th class="align-center">DPH</th> 
+                    <th class="align-center">Měna</th> 
+                    <th class="align-center">Jednotka</th> 
+                    <th class="align-center">Počet</th> 
+                    <!--<th>Typ</th> -->
+                </tr> 
+            </thead> 
+            <tbody> 
+                {foreach $orderItemsData as $item}
+                    <tr> 
+                        <th scope="row">{$item->good_id}</th> 
+                        <td><a n:href="Good:detail  $item->good_id">{$item->label}</a></td> 
+                        <td class="align-right">{$item->price}</td>
+                        <td class="align-right">{$item->price_vat}</td>
+                        <td class="align-center">{$goodsObject->vat[$item->vat]}</td>
+                        <td class="align-center">{$goodsObject->currency[$item->currency]}</td>
+                        <td class="align-center">{$goodsObject->unit[$item->unit]}</td>
+                        <td class="align-center">{$item->quantity}</td>
+                        <!--<td>{$item->type}</td>-->
+                    </tr>
+                {/foreach}
+            </tbody> 
+     </table>
+</div>

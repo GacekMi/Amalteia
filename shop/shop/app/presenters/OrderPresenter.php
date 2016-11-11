@@ -7,7 +7,7 @@ use App\Model,
     Nette,
     Nette\Application\UI\Multiplier,
     Nette\Utils\Html,
-    Tracy\Debugger;
+    App\Controls\Grido\MyGrid;
 
 
 class OrderPresenter extends PrivatePresenter
@@ -24,6 +24,9 @@ class OrderPresenter extends PrivatePresenter
 
     /** @inject @var \App\Model\OrderItems */
     public $orderItems;
+
+    /** @var \Nette\Database\Context @inject */
+    public $database;
 
     public function beforeRender()
     {
@@ -87,9 +90,10 @@ class OrderPresenter extends PrivatePresenter
             $this->template->delp2 = \App\Model\Orders::BALIK_DO_RUKY;
             $this->template->delp3 = \App\Model\Orders::ODBER_V_MISTE;
             $this->template->feePay1 = \App\Model\Orders::DOBIRKA_1;
+            $this->template->feePay2 = \App\Model\Orders::DOBIRKA_2;
             if($totalOrderPrice > \App\Model\Orders::DOBIRKA_LIMIT)
             {
-                $this->template->feePay2 = \App\Model\Orders::DOBIRKA_2;
+                
             }
             
             $this->template->deliveryPay = 0;
@@ -303,8 +307,8 @@ class OrderPresenter extends PrivatePresenter
     {
         $orderData = array();
 
-        $orderData[\App\Model\Orders::COLUMN_STATE] = 0;
-        $orderData[\App\Model\Orders::COLUMN_USER_STATE] = 0;
+        $orderData[\App\Model\Orders::COLUMN_STATE] = 1;
+        $orderData[\App\Model\Orders::COLUMN_USER_STATE] = 1;
         $orderData[\App\Model\Orders::COLUMN_DATE] = new \DateTime();
         if($this->getUser()->isLoggedIn())
         {
@@ -465,5 +469,118 @@ class OrderPresenter extends PrivatePresenter
         }
          
         return 0;
+    }
+
+    
+    protected function createComponentGridOrder($name) {
+        $id = $this->getParameter('id');
+
+        $grid = new MyGrid($this, $name);
+        $grid->model = $this->database->table(\App\Model\Orders::TABLE_NAME);
+
+        $grid->translator->setLang('cs');
+        $grid->addColumnText(\App\Model\Orders::COLUMN_ID, 'ID')
+                ->setSortable()
+                ->setFilterText()
+                ->setSuggestion();
+        $grid->addColumnText(\App\Model\Orders::COLUMN_FIRST_NAME, 'Jméno')
+                ->setSortable()
+                ->setFilterText()
+                ->setSuggestion();
+        $grid->addColumnText(\App\Model\Orders::COLUMN_LAST_NAME, 'Přijmení')
+                ->setSortable()
+                ->setFilterText()
+                ->setSuggestion();
+        $grid->addColumnText(\App\Model\Orders::COLUMN_PHONE, 'Telefon')
+                ->setSortable()
+                ->setFilterText()
+                ->setSuggestion();
+        $grid->addColumnText(\App\Model\Orders::COLUMN_EMAIL, 'Email')
+                ->setSortable()
+                ->setFilterText()
+                ->setSuggestion();
+        $grid->addColumnText(\App\Model\Orders::COLUMN_DATE, 'Datum')
+                ->setSortable()
+                ->setFilterText()
+                ->setSuggestion();
+        $grid->addColumnText(\App\Model\Orders::COLUMN_TOTAL_PRICE_VAT, 'Celkem')
+                ->setSortable()
+                ->setFilterText()
+                ->setSuggestion();
+
+
+        $grid->addColumnText(\App\Model\Orders::COLUMN_STATE, 'Stav')
+                        ->setSortable()
+                        ->setReplacement($this->orders->state)
+                ->cellPrototype->class[] = 'center';
+        $grid->addFilterSelect(\App\Model\Orders::COLUMN_STATE, 'Stav', $this->orders->state);
+
+        $grid->addColumnText(\App\Model\Orders::COLUMN_USER_STATE, 'U-Stav')
+                        ->setSortable()
+                        ->setReplacement($this->orders->userState)
+                ->cellPrototype->class[] = 'center';
+        $grid->addFilterSelect(\App\Model\Orders::COLUMN_USER_STATE, 'U-Stav', $this->orders->userState);
+
+        $grid->addColumnText(\App\Model\Orders::COLUMN_ZP_O, 'ZPO')
+                        ->setSortable()
+                        ->setReplacement($this->orders->deliveryType)
+                ->cellPrototype->class[] = 'center';
+        $grid->addFilterSelect(\App\Model\Orders::COLUMN_ZP_O, 'ZPO', $this->orders->deliveryType);
+
+        $grid->addColumnText(\App\Model\Orders::COLUMN_ZP_M, 'ZPM')
+                        ->setSortable()
+                        ->setReplacement($this->orders->deliveryPlacesA)
+                ->cellPrototype->class[] = 'center';
+        $grid->addFilterSelect(\App\Model\Orders::COLUMN_ZP_M, 'ZPM', $this->orders->deliveryPlacesA);
+
+        $grid->addColumnText(\App\Model\Orders::COLUMN_ZP_P, 'ZPP')
+                        ->setSortable()
+                        ->setReplacement($this->orders->paymentType)
+                ->cellPrototype->class[] = 'center';
+        $grid->addFilterSelect(\App\Model\Orders::COLUMN_ZP_P, 'ZPP', $this->orders->paymentType);
+       
+        $grid->filterRenderType = \Grido\Components\Filters\Filter::RENDER_INNER;
+
+        $grid->addActionHref('goEdit', 'Detail');
+          
+        $grid->addActionHref('delete', 'Smazat');
+        
+        $grid->setExport();
+    }
+    // Akce gridu
+    public function handleOperations($operation, $id) {
+        if ($id) {
+            $row = implode(', ', $id);
+            $this->flashMessage("Provádím akce '$operation' pro řádky s  id: $row...", 'info');
+        } else {
+            $this->flashMessage('Nejsou vybrány žádné řádky.', 'error');
+        }
+        $this->flashMessage('Nejsou vybrány žádné řádky.', 'error');
+        $this->redirect($operation, array('id' => $id));
+    }
+
+    public function actionGoEdit($id) {
+        $this->redirect('Order:edit', $id);
+    }
+
+    public function actionDelete() {
+         $this->flashMessage("Akce není v tuto chvíli podporována.", 'error');
+         $this->redirect('list');
+      /*  $id = $this->getParameter('id');
+        $good = $this->goods->get($id);
+        $data = $good->toArray();
+        
+       // $this->goods->delete($id);
+        $this->flashMessage("Akce '$this->action' pro řádek s id: $id byla provedena.", 'success');
+        $this->redirect('list');*/
+    }
+
+    public function renderEdit($id) {
+        $order = $this->orders->get($id);
+        $this->template->orderData = $order;
+        $orderItems = $this->orderItems->getByOrder($id);
+        $this->template->orderItemsData = $orderItems;
+        $this->template->goodsObject = $this->goods;
+        
     }
 }

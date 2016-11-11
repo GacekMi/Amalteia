@@ -42,6 +42,10 @@ class OrderItems extends Nette\Object{
         return $this->database->table(self::TABLE_NAME)->get($key);
     }
 
+    public function getByOrder($orderId){
+         return $this->database->table(self::TABLE_NAME)->where(self::COLUMN_ORDER_ID, $orderId);
+    }
+
 	 public function delete($key) {
         return $this->database->table(self::TABLE_NAME)->where('id', $key)->delete();
     }
