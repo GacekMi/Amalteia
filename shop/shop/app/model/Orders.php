@@ -80,7 +80,15 @@ class Orders extends Nette\Object{
         return $this->database->table(self::TABLE_NAME);
     }
 
-	public function create(array $values) {
-        return $this->database->table(self::TABLE_NAME)->insert($values);
+	public function create(array $values, array $items) {
+        $this->database->beginTransaction();
+        $orderId = $this->database->table(self::TABLE_NAME)->insert($values);
+        foreach ($items as $item) {
+            $item[\App\Model\OrderItems::COLUMN_ORDER_ID] = $orderId;
+            $this->database->table(\App\Model\OrderItems::TABLE_NAME)->insert($item);
+        }
+
+        $this->database->commit();
+        return $orderId;
     }	
 }

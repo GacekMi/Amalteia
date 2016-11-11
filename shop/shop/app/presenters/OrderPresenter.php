@@ -285,13 +285,13 @@ class OrderPresenter extends PrivatePresenter
 
     public function orderFormSucceeded($form, $values) {
         $values = $form->getValues(TRUE);
-        Debugger::barDump($values);
         $ret = $this->createOrder($values); 
-
-        if($this->getSession('basket') != null && $ret > 0)
+        if($this->getSession('basket') != null && $ret != FALSE)
         {
- //             unset($this->getSession('basket')->itemsBasket);
-            $this->redirect('Order:sum');
+            unset($this->getSession('basket')->itemsBasket);
+            $this->presenter->flashMessage('Objednávka přijata.', 'success');
+            $this->redirect('Gallery:default');
+            //$this->redirect('Order:sum');
         }
         else
         {
@@ -434,27 +434,34 @@ class OrderPresenter extends PrivatePresenter
             {
                if($orderData[\App\Model\Orders::COLUMN_ZP_M]==1)
                {
-
+                   //balik na postu
+                   $orderData[\App\Model\Orders::COLUMN_DELIVERY_PAY] =  \App\Model\Orders::BALIK_NA_POSTU;
                }
                else
                {
-
+                    //balik do ruky
+                    $orderData[\App\Model\Orders::COLUMN_DELIVERY_PAY] =  \App\Model\Orders::BALIK_DO_RUKY;
                }
             }
 
             if($orderData[\App\Model\Orders::COLUMN_ZP_O] == 2)
             {
-                //3 posta, 2 odber v miste
+                //2 odber v miste
+                $orderData[\App\Model\Orders::COLUMN_DELIVERY_PAY] =  \App\Model\Orders::ODBER_V_MISTE;
             }
 
             if($orderData[\App\Model\Orders::COLUMN_ZP_P] == 3)
             {
                 //dobirka spocitat cenu
+                $orderData[\App\Model\Orders::COLUMN_FEE_PAY] =  \App\Model\Orders::DOBIRKA_1;
+                $tot = $orderData[\App\Model\Orders::COLUMN_TOTAL_PRICE_VAT] + $orderData[\App\Model\Orders::COLUMN_DELIVERY_PAY] + $orderData[\App\Model\Orders::COLUMN_FEE_PAY];
+                if($tot > \App\Model\Orders::DOBIRKA_LIMIT)
+                {
+                    $orderData[\App\Model\Orders::COLUMN_FEE_PAY] =  \App\Model\Orders::DOBIRKA_2;
+                }
             }
-      
-            Debugger::barDump($orderData);
-            Debugger::barDump($items);
-            return 0;
+
+            return $this->orders->create($orderData, $items);
         }
          
         return 0;
