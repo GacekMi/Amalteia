@@ -78,7 +78,11 @@ class Orders extends Nette\Object{
     }
 
 	 public function delete($key) {
-        return $this->database->table(self::TABLE_NAME)->where('id', $key)->delete();
+        $this->database->beginTransaction(); 
+        $this->database->table(\App\Model\OrderItems::TABLE_NAME)->where(\App\Model\OrderItems::COLUMN_ORDER_ID, $key)->delete();
+        $retVal =  $this->database->table(self::TABLE_NAME)->where('id', $key)->delete();
+        $this->database->commit();
+        return $retVal;
     }
 
     public function getList() {

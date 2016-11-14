@@ -564,15 +564,10 @@ class OrderPresenter extends PrivatePresenter
     }
 
     public function actionDelete() {
-         $this->flashMessage("Akce není v tuto chvíli podporována.", 'error');
-         $this->redirect('list');
-      /*  $id = $this->getParameter('id');
-        $good = $this->goods->get($id);
-        $data = $good->toArray();
-        
-       // $this->goods->delete($id);
+        $id = $this->getParameter('id');
+        $this->orders->delete($id);
         $this->flashMessage("Akce '$this->action' pro řádek s id: $id byla provedena.", 'success');
-        $this->redirect('list');*/
+        $this->redirect('list');
     }
 
     public function renderEdit($id) {
@@ -581,6 +576,7 @@ class OrderPresenter extends PrivatePresenter
         $orderItems = $this->orderItems->getByOrder($id);
         $this->template->orderItemsData = $orderItems;
         $this->template->goodsObject = $this->goods;
+        $this->template->ordersObject = $this->orders;
         
     }
 }

@@ -2,19 +2,41 @@
 
 
 <div class="container reg-page">
-		<h2>Detail objednávky</h2>
         </br>
+          <div class="row" style="margin-bottom: 20px;">
+                <div class="col-md-8">
+                    <h2>Detail objednávky</h2>
+                </div>
+                <div class="col-md-4 align-right">
+                     <a n:href="Order:list" class="btn btn-default" role="button">Zpět na seznam >></a>
+                </div>
+            </div>
         <div class="row">
                  <div class="col-md-6">
                     <h5 class="text-info">Kontaktní údaje</h5>
                     <address class="order-margin-left">
                         <strong>{$orderData->first_name} {$orderData->last_name}</strong><br>
                         <abbr title="Telefon">T:</abbr> {$orderData->phone}<br>
-                        <a href="mailto:{$orderData->email}">{$orderData->email}</a>
+                        <a href="mailto:{$orderData->email}">{$orderData->email}</a><br>
+                        <br>
+                        <abbr>Stav: </abbr><strong>{$ordersObject->state[$orderData->state]}</strong><br>
+                        <abbr>Stav pro uživatele: </abbr><strong>{$ordersObject->userState[$orderData->user_state]}</strong><br>
                     </address>
                 </div>
                 <div class="col-md-6">
                  <h5 class="text-info">Způsob odběru a platby</h5>
+                    <address  class="order-margin-left">
+                        {if $orderData->zp_o == 1}
+                             <abbr>Doprava a platba: </abbr>{$ordersObject->deliveryType[$orderData->zp_o]} / {$ordersObject->paymentType[$orderData->zp_p]}<br>
+                        {else}
+                             <abbr>Doprava a platba: </abbr>{$ordersObject->deliveryType[$orderData->zp_o]} - {$ordersObject->deliveryPlacesA[$orderData->zp_m]} / {$ordersObject->paymentType[$orderData->zp_p]}<br>
+                        {/if}
+                        
+                        <abbr>Cena dopravy: </abbr>{$orderData->delivery_pay} Kč<br>
+                        <abbr>Cena platby: </abbr>{$orderData->fee_pay} Kč<br>
+                        <abbr>Cena celkem: </abbr> <strong>{$orderData->total_price} Kč</strong><br>
+                        <abbr>Cena celkem s DPH: </abbr> <strong>{$orderData->total_price_vat} Kč</strong><br>
+                    </address>
                 </div>
         </div>
         <hr>
@@ -39,6 +61,7 @@
                     </address>
                  </div>
         </div>
+        
         <hr>
         <div class="row">
             <div class="col-md-12">
@@ -49,6 +72,7 @@
             </div>
         </div>
         </br>
+        
         <hr>
         <table class="table table-striped"> 
             <thead> 
@@ -80,4 +104,9 @@
                 {/foreach}
             </tbody> 
      </table>
+     <div class="row" style="margin-top: 20px;">
+                <div class="col-md-12 align-right">
+                     <a n:href="Order:list" class="btn btn-default" role="button">Zpět na seznam >></a>
+                </div>
+            </div>
 </div>
