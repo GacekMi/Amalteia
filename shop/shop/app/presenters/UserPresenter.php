@@ -355,12 +355,14 @@ class UserPresenter extends PrivatePresenter
 
         $roles = array(
             'user' => 'Uživatel',
+            'partner' => 'Partner',
             'office' => 'Pracovník kanceláře',
         );
 
         if ($this->user->isInRole('admin')) {
             $roles = array(
                 'user' => 'Uživatel',
+                'partner' => 'Partner',
                 'office' => 'Pracovník kanceláře',
                 'admin' => 'Administrátor',
             );
