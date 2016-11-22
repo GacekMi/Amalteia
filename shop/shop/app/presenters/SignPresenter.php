@@ -45,7 +45,7 @@ class SignPresenter extends BasePresenter
         $form->addCheckbox('remember', $this->translator->translate("ui.signMessage.remeberLogin"));
 
         $form->addSubmit('send', $this->translator->translate("ui.signMessage.loginButton"));
-        $form->addReCaptcha('captcha', NULL, $this->translator->translate("ui.signMessage.reCaptchaMessage"));
+        //$form->addReCaptcha('captcha', NULL, $this->translator->translate("ui.signMessage.reCaptchaMessage"));
         $form['send']->getControlPrototype()->class('btn btn-success');
         $renderer = $form->getRenderer();
         $renderer->wrappers['controls']['container'] = 'div';
@@ -118,7 +118,7 @@ class SignPresenter extends BasePresenter
                 ->setOmitted(TRUE)
                 ->setRequired($this->translator->translate("ui.signMessage.agreeTermsConMsg"));
         $form->addSubmit('send', $this->translator->translate("ui.signMessage.registerButton"));
-        $form->addReCaptcha('captcha', NULL, $this->translator->translate("ui.signMessage.reCaptchaMessage"));
+        //$form->addReCaptcha('captcha', NULL, $this->translator->translate("ui.signMessage.reCaptchaMessage"));
         $form['send']->getControlPrototype()->class('btn btn-success');
         $renderer = $form->getRenderer();
         $renderer->wrappers['controls']['container'] = 'div';
