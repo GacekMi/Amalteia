@@ -577,6 +577,38 @@ class OrderPresenter extends PrivatePresenter
         $this->template->orderItemsData = $orderItems;
         $this->template->goodsObject = $this->goods;
         $this->template->ordersObject = $this->orders;
+        $data = $order->toArray();
+        $this['changeStateOrderForm']->setDefaults($data);
+    }
+
+    protected function createComponentChangeStateOrderForm() {
+        $form = new Nette\Application\UI\Form;
+
+        $form->addSelect(\App\Model\Orders::COLUMN_STATE, Html::el('span')->setText('Stav objednávky:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->orders->state)
+            ->setPrompt('Zvolte stav objednávky')
+            ->addRule(Form::FILLED, 'Vyplňte stav objednávky');
+        $form->addSelect(\App\Model\Orders::COLUMN_USER_STATE, Html::el('span')->setText('Uživatelský stav objednávky:')->addHtml(Html::el('span')->class('form-required')->setHtml('*')), $this->orders->userState)
+            ->setPrompt('Zvolte uživatelský stav objednávky')
+            ->addRule(Form::FILLED, 'Vyplňte uživatelský stav objednávky');
+
+        $form->addSubmit('send', 'Změnit stav');
+        $form['send']->getControlPrototype()->class('btn btn-success');
+        $renderer = $form->getRenderer();
+        $renderer->wrappers['controls']['container'] = 'span';
+        $renderer->wrappers['pair']['container'] = Html::el('span')->class('form-line');
+        $renderer->wrappers['label']['container'] = NULL;
+        $renderer->wrappers['control']['container'] = NULL;
+        $form->addProtection($this->translator->translate("ui.signMessage.protectionMessage"));
         
+        $form->onSuccess[] = array($this, 'changeStateOrderFormSucceeded');
+        return $form;
+    }
+
+    public function changeStateOrderFormSucceeded($form, $values) {
+        $values = $form->getValues(TRUE);
+        $id = $this->getParameter('id');
+        $this->orders->update($id, $values);
+        $this->flashMessage($this->translator->translate("ui.signMessage.changeSaved"), 'success');
+        $this->redirect('Order:list');
     }
 }

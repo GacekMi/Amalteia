@@ -84,6 +84,13 @@ footer {
 }
 
 
+/* anti spam */
+
+.userCode {
+    display: none;
+}
+
+
 /* detail zbozi */
 
 .good-label-block h1 {

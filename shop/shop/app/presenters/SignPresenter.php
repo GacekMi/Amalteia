@@ -7,7 +7,8 @@ use Nette,
     Nette\Application\UI\Form,
     Nette\Mail\Message,
     Nette\Mail\SendmailMailer,
-    Nette\Utils\Html;
+    Nette\Utils\Html,
+            Tracy\Debugger;
 
 
 class SignPresenter extends BasePresenter
@@ -36,6 +37,8 @@ class SignPresenter extends BasePresenter
      */
     protected function createComponentSignInForm() {
         $form = new Nette\Application\UI\Form;
+        $form->addHidden('userID');
+        $form->addText('userCode', '');
         $form->addText('username', Html::el('span')->setText($this->translator->translate("ui.signMessage.userName"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
                 ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.userNameMsg"));
 
@@ -47,6 +50,7 @@ class SignPresenter extends BasePresenter
         $form->addSubmit('send', $this->translator->translate("ui.signMessage.loginButton"));
         //$form->addReCaptcha('captcha', NULL, $this->translator->translate("ui.signMessage.reCaptchaMessage"));
         $form['send']->getControlPrototype()->class('btn btn-success');
+        $form['userCode']->getControlPrototype()->class('userCode');
         $renderer = $form->getRenderer();
         $renderer->wrappers['controls']['container'] = 'div';
         $renderer->wrappers['pair']['container'] = Html::el('div')->class('form-line');
@@ -58,19 +62,26 @@ class SignPresenter extends BasePresenter
     }
 
     public function signInFormSucceeded($form, $values) {
-        if ($values->remember) {
-            $this->getUser()->setExpiration('14 days', FALSE);
-        } else {
-            $this->getUser()->setExpiration('20 minutes', TRUE);
-        }
-
-        try {
-            $this->getUser()->login($values->username, $values->password);
-            $this->user->getAuthenticator()->saveLoginDateTime($this->user->id);
-            $this->restoreRequest($this->backlink);
+        if($values->userID != null || strlen($values->userCode) > 0 )
+        {
             $this->redirect('Gallery:Default');
-        } catch (Nette\Security\AuthenticationException $e) {
-            $form->addError($e->getMessage());
+        }
+        else
+        {
+            if ($values->remember) {
+                $this->getUser()->setExpiration('14 days', FALSE);
+            } else {
+                $this->getUser()->setExpiration('20 minutes', TRUE);
+            }
+
+            try {
+                $this->getUser()->login($values->username, $values->password);
+                $this->user->getAuthenticator()->saveLoginDateTime($this->user->id);
+                $this->restoreRequest($this->backlink);
+                $this->redirect('Gallery:Default');
+            } catch (Nette\Security\AuthenticationException $e) {
+                $form->addError($e->getMessage());
+            }
         }
     }
 
@@ -82,7 +93,8 @@ class SignPresenter extends BasePresenter
      */
     protected function createComponentRegForm() {
         $form = new Nette\Application\UI\Form;
-
+        $form->addHidden('userID');
+        $form->addText('userCode', '');
         $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-6"));
         $form->addText(\App\Model\Authenticator::COLUMN_PARTNER_ID, Html::el('span')->setText($this->translator->translate("ui.signMessage.partnerId"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
                 ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.partnerIdMsg"));        
@@ -120,6 +132,7 @@ class SignPresenter extends BasePresenter
         $form->addSubmit('send', $this->translator->translate("ui.signMessage.registerButton"));
         //$form->addReCaptcha('captcha', NULL, $this->translator->translate("ui.signMessage.reCaptchaMessage"));
         $form['send']->getControlPrototype()->class('btn btn-success');
+        $form['userCode']->getControlPrototype()->class('userCode');
         $renderer = $form->getRenderer();
         $renderer->wrappers['controls']['container'] = 'div';
         $renderer->wrappers['pair']['container'] = Html::el('div')->class('form-line');
@@ -163,6 +176,12 @@ class SignPresenter extends BasePresenter
     }
 
     public function regFormSucceeded($form, $values) {
+         if($values->userID != null || strlen($values->userCode) > 0 )
+        {
+            $this->redirect('Gallery:Default');
+        }
+        else
+        {
             $values = $form->getValues(TRUE);
             $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = \DateTime::createFromFormat('d.m.yy', $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE]);            
             $username = $values[\App\Model\Authenticator::COLUMN_FIRST_NAME];
@@ -170,6 +189,7 @@ class SignPresenter extends BasePresenter
             $this->authenticator->createUser($values, $template, $this->translator->getLocale());
             $this->flashMessage($this->translator->translate("ui.signMessage.userCreated", ['name' => $username]), 'success');
             $this->redirect('default');
+        }
     }
 
     public function actionOut() {
