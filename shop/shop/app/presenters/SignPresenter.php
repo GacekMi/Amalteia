@@ -176,13 +176,15 @@ class SignPresenter extends BasePresenter
     }
 
     public function regFormSucceeded($form, $values) {
-         if($values->userID != null || strlen($values->userCode) > 0 )
+        if($values->userID != null || strlen($values->userCode) > 0 )
         {
             $this->redirect('Gallery:Default');
         }
         else
         {
             $values = $form->getValues(TRUE);
+            unset($values['userID']);
+            unset($values['userCode']);
             $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = \DateTime::createFromFormat('d.m.yy', $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE]);            
             $username = $values[\App\Model\Authenticator::COLUMN_FIRST_NAME];
             $template = $this->createTemplate();
