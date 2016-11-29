@@ -75,7 +75,7 @@ class UserPresenter extends PrivatePresenter
                 ->setSortable()
                 ->setFilterText()
                 ->setSuggestion();
-        $grid->addColumnText(\App\Model\Authenticator::COLUMN_PARTNER_ID, $this->translator->translate("ui.signMessage.partnerId"))
+        $grid->addColumnText(\App\Model\Authenticator::COLUMN_PARTNER_ID, 'Ref. ID')
                 ->setSortable()
                 ->setFilterText()
                 ->setSuggestion();
@@ -87,7 +87,7 @@ class UserPresenter extends PrivatePresenter
                 ->setSortable()
                 ->setFilterText()
                 ->setSuggestion();
-        $grid->addColumnEmail(\App\Model\Authenticator::COLUMN_EMAIL, $this->translator->translate("ui.signMessage.email"))
+        $grid->addColumnEmail(\App\Model\Authenticator::COLUMN_EMAIL, 'Email')
                 ->setSortable()
                 ->setFilterText();
         $grid->getColumn(\App\Model\Authenticator::COLUMN_EMAIL)->cellPrototype->class[] = 'center';
@@ -95,12 +95,14 @@ class UserPresenter extends PrivatePresenter
                 ->setSortable()
                 ->setFilterText();
         $grid->getColumn(\App\Model\Authenticator::COLUMN_PHONE)->cellPrototype->class[] = 'center';
-        $grid->addColumnDate(\App\Model\Authenticator::COLUMN_BIRTH_DATE, $this->translator->translate("ui.signMessage.birthDay"), \Grido\Components\Columns\Date::FORMAT_DATE)
+        $grid->addColumnDate(\App\Model\Authenticator::COLUMN_BIRTH_DATE, 'Dat. nar.', \Grido\Components\Columns\Date::FORMAT_DATE)
                 ->setSortable()
                 ->setFilterDateRange()
                 ->setCondition([$this, 'secondCDateFilterCondition']);
+       // $grid->getColumn(\App\Model\Authenticator::COLUMN_BIRTH_DATE)->headerPrototype->style = 'width: 100px';
+      //  $grid->getColumn(\App\Model\Authenticator::COLUMN_BIRTH_DATE)->cellPrototype->style = 'width: 100px';
 
-        $grid->addColumnDate(\App\Model\Authenticator::COLUMN_VIP_DATE, $this->translator->translate("ui.signMessage.vip"), \Grido\Components\Columns\Date::FORMAT_DATE)
+        $grid->addColumnDate(\App\Model\Authenticator::COLUMN_VIP_DATE, 'VIP', \Grido\Components\Columns\Date::FORMAT_DATE)
                 ->setSortable()
                 ->setFilterDateRange()
                 ->setCondition([$this, 'secondCDateFilterCondition']);
@@ -108,13 +110,14 @@ class UserPresenter extends PrivatePresenter
 
         $grid->addColumnText(\App\Model\Authenticator::COLUMN_TOKEN_TYPE, 'Typ tokenu')
                         ->setSortable()
-                        ->setReplacement(array(0 => 'Není', 1 => 'CR'))
+                        ->setReplacement(array(0 => 'Není', 1 => 'Aktivace'))
                 ->cellPrototype->class[] = 'center';
 
         $grid->addFilterSelect(\App\Model\Authenticator::COLUMN_TOKEN_TYPE, 'Typ tokenu', array(
             '' => '',
             0 => 'Není',
-            1 => 'CR'
+            1 => 'Aktivace',
+            2 => 'Heslo'
         ));
 
         $grid->addColumnText(\App\Model\Authenticator::COLUMN_ROLE, 'Role')
@@ -128,7 +131,7 @@ class UserPresenter extends PrivatePresenter
                 ->setCondition([$this, 'lastloginFilterCondition']);
         $grid->getColumn(\App\Model\Authenticator::COLUMN_REGISTERED)->cellPrototype->class[] = 'center';
 
-        $grid->addColumnDate(\App\Model\Authenticator::COLUMN_LAST_LOGIN, 'Naposledy přihlášen', \Grido\Components\Columns\Date::FORMAT_DATETIME)
+        $grid->addColumnDate(\App\Model\Authenticator::COLUMN_LAST_LOGIN, 'Přihlášen', \Grido\Components\Columns\Date::FORMAT_DATETIME)
                 ->setSortable()
                 ->setFilterDate()
                 ->setCondition([$this, 'lastloginFilterCondition']);
@@ -145,7 +148,7 @@ class UserPresenter extends PrivatePresenter
             1 => 'Aktivní'
         ));
 
-        $grid->filterRenderType = \Grido\Components\Filters\Filter::RENDER_INNER;
+        $grid->filterRenderType = \Grido\Components\Filters\Filter::RENDER_OUTER;
 
         //pozustatek y bajsu kdyz je potreba presmerovat a nekoho proradit jako kartoteka a zaznamu v ni se meni vlastnik tak se pouzije toto
         if ($isSelect) {
