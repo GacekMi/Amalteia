@@ -95,8 +95,14 @@
 }
 
 .grido .filter.outer .items {
-    width: 85%;
+    width: 100;
     float: left;
+}
+
+.grido .filter.outer .buttons {
+    float: right;
+    margin-bottom: 10px;
+    margin-right: 10px;
 }
 
 .grido .filter.outer .items>span {
