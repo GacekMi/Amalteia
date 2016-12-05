@@ -206,7 +206,12 @@ class BasketPresenter extends PrivatePresenter
 
         $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-6"));
         $form->addText(\App\Model\Authenticator::COLUMN_PARTNER_ID, Html::el('span')->setText($this->translator->translate("ui.signMessage.partnerId"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
-                ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.partnerIdMsg"));        
+                ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.partnerIdMsg"));     
+
+        $form[\App\Model\Authenticator::COLUMN_PARTNER_ID]->getControlPrototype()->setAttribute('data-toggle', 'popover');
+        $form[\App\Model\Authenticator::COLUMN_PARTNER_ID]->getControlPrototype()->setAttribute('title', 'Referenční ID doporučitele');
+        $form[\App\Model\Authenticator::COLUMN_PARTNER_ID]->getControlPrototype()->setAttribute('data-content', 'Je uvedeno na létáčku popřípadě vám jej sdělí váš doporučitel. V případě že, neznáte doporučitele a nemáte letáček, uveďťe prosím jako referenční číslo 936000000.');
+
         $form->addText(\App\Model\Authenticator::COLUMN_FIRST_NAME, Html::el('span')->setText($this->translator->translate("ui.signMessage.firstName"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
                 ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.firstNameMsg"));
         $form->addText(\App\Model\Authenticator::COLUMN_LAST_NAME, Html::el('span')->setText($this->translator->translate("ui.signMessage.lastName"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
