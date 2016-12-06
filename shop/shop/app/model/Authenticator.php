@@ -29,6 +29,7 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
 	COLUMN_LAST_LOGIN = 'last_login',
 	COLUMN_REGISTERED = 'registered',
 	COLUMN_ROLE = 'role',
+    COLUMN_ACCOUNT = 'account',
     AGREE_TERM_CON = 'agree_terms_con';
 	
 	/** @var Nette\Database\Context */
@@ -166,6 +167,7 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
     public function createUser(array $values, $template, $lang) {
         $values[self::COLUMN_PASSWORD_HASH] = Passwords::hash($values[self::COLUMN_PASSWORD_HASH]);
         $values[self::COLUMN_STATE] = 0;
+        $values[self::COLUMN_ACCOUNT] = 0.0;
         $values[self::COLUMN_ROLE] = 'user';
         $values[self::COLUMN_REGISTERED] = new \DateTime();
         //Doplneni tokenu a odeslani emailu

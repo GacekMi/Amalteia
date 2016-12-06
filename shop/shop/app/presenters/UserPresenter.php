@@ -148,6 +148,10 @@ class UserPresenter extends PrivatePresenter
             1 => 'Aktivní'
         ));
 
+       $grid->addColumnText(\App\Model\Authenticator::COLUMN_ACCOUNT, 'KONTO')
+                ->setSortable()
+                ->setFilterText();
+
         $grid->filterRenderType = \Grido\Components\Filters\Filter::RENDER_OUTER;
 
         //pozustatek y bajsu kdyz je potreba presmerovat a nekoho proradit jako kartoteka a zaznamu v ni se meni vlastnik tak se pouzije toto
@@ -383,7 +387,8 @@ class UserPresenter extends PrivatePresenter
 
         $form->addRadioList(\App\Model\Authenticator::COLUMN_STATE, 'Stav:', $state)->setAttribute('class', 'radio')->addRule(Form::FILLED, 'Vyberte stav')->getSeparatorPrototype()->setName(NULL);
 
-
+        $form->addText(\App\Model\Authenticator::COLUMN_ACCOUNT, 'Stav konta')
+                ->setRequired(false);
 
         $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-12"));
         $form->addSubmit('send', $this->translator->translate("ui.signMessage.changeButton"));
