@@ -138,7 +138,7 @@ class ProfilePresenter extends PrivatePresenter
 
      public function profileFormSucceeded($form, $values) {
             $values = $form->getValues(TRUE);
-            $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = \DateTime::createFromFormat('d.m.yy', $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE]);   
+            $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = \DateTime::createFromFormat('d.m.Y', $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE]);   
             $id = $this->getUser()->getIdentity()->getData()['id'];
             
             $this->authenticator->update($id, $values);

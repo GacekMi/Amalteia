@@ -440,8 +440,8 @@ class UserPresenter extends PrivatePresenter
 
      public function profileFormSucceeded($form, $values) {
             $values = $form->getValues(TRUE);
-            $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = \DateTime::createFromFormat('d.m.yy', $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE]); 
-            $values[\App\Model\Authenticator::COLUMN_VIP_DATE] = \DateTime::createFromFormat('d.m.yy', $values[\App\Model\Authenticator::COLUMN_VIP_DATE]);   
+            $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE] = \DateTime::createFromFormat('d.m.Y', $values[\App\Model\Authenticator::COLUMN_BIRTH_DATE]); 
+            $values[\App\Model\Authenticator::COLUMN_VIP_DATE] = \DateTime::createFromFormat('d.m.Y', $values[\App\Model\Authenticator::COLUMN_VIP_DATE]);   
             $id = $this->getParameter('id');
             $values[\App\Model\Authenticator::COLUMN_ROLE] = implode(",", $values[\App\Model\Authenticator::COLUMN_ROLE]);
             $this->authenticator->update($id, $values);
