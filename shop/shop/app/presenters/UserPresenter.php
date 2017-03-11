@@ -69,7 +69,7 @@ class UserPresenter extends PrivatePresenter
 
         $grid = new MyGrid($this, $name);
         $grid->model = $this->database->table(\App\Model\Authenticator::TABLE_NAME);
-
+        $grid->setDefaultSort(array(\App\Model\Authenticator::COLUMN_REGISTERED => 'DESC'));
         $grid->translator->setLang('cs');
         $grid->addColumnText(\App\Model\Authenticator::COLUMN_ID, $this->translator->translate("ui.signMessage.id"))
                 ->setSortable()

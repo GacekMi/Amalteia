@@ -477,7 +477,7 @@ class OrderPresenter extends PrivatePresenter
 
         $grid = new MyGrid($this, $name);
         $grid->model = $this->database->table(\App\Model\Orders::TABLE_NAME);
-
+        $grid->setDefaultSort(array(\App\Model\Orders::COLUMN_DATE => 'DESC'));
         $grid->translator->setLang('cs');
         $grid->addColumnText(\App\Model\Orders::COLUMN_ID, 'ID')
                 ->setSortable()
