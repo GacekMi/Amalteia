@@ -1,158 +1,188 @@
 /* GLOBAL STYLES
 -------------------------------------------------- */
+
+
 /* Padding below the footer and lighter body text */
 
 body {
-  padding-bottom: 40px;
-  color: #5a5a5a;
+    padding-bottom: 40px;
+    color: #5a5a5a;
 }
 
-footer a{
-  color: #56121B;
+footer a {
+    color: #56121B;
 }
 
-footer a:hover{
-  color: #56121B;
+footer a:hover {
+    color: #56121B;
 }
 
-
-.dropdown-menu .active a{
-  background-color: #D53F22;
+.dropdown-menu .active a {
+    background-color: #D53F22;
 }
 
-.dropdown-menu .active a:hover{
-  background-color: #D53F22;
+.dropdown-menu .active a:hover {
+    background-color: #D53F22;
 }
+
 
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */
 
+
 /* Special class on .container surrounding .navbar, used for positioning it into place. */
+
 .navbar-wrapper {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 20;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 20;
 }
 
+
 /* Flip around the padding for proper display in narrow viewports */
-.navbar-wrapper > .container {
-  padding-right: 0;
-  padding-left: 0;
+
+.navbar-wrapper>.container {
+    padding-right: 0;
+    padding-left: 0;
 }
+
 .navbar-wrapper .navbar {
-  padding-right: 15px;
-  padding-left: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
+
 .navbar-wrapper .navbar .container {
-  width: auto;
+    width: auto;
 }
 
 
 /* CUSTOMIZE THE CAROUSEL
 -------------------------------------------------- */
 
-.btn-gallery{
-  margin-right: 30px;
+.btn-gallery {
+    margin-right: 30px;
 }
+
 
 /* Carousel base class */
+
 .carousel {
-  height: 500px;
-  margin-bottom: 60px;
-}
-/* Since positioning the image, we need to help out the caption */
-.carousel-caption {
-  min-width: 100%;
-  z-index: 10;
-  background: black; /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(0deg, rgba(0, 0, 0, 0.8) , rgba(0, 0, 0, 0)); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(0deg, rgba(0, 0, 0, 0.8) , rgba(0, 0, 0, 0));/* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(0deg, rgba(0, 0, 0, 0.8) , rgba(0, 0, 0, 0)); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.8) , rgba(0, 0, 0, 0)); /* Standard syntax */
-  margin-left: auto;
-  margin-right: auto;
-  right: 0;
-  left: 0;
-  bottom: 0px;
+    height: 500px;
+    margin-bottom: 60px;
 }
 
-.carousel-indicators{
-  bottom: 0px;
+
+/* Since positioning the image, we need to help out the caption */
+
+.carousel-caption {
+    min-width: 100%;
+    z-index: 10;
+    background: black;
+    /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+    /* Standard syntax */
+    margin-left: auto;
+    margin-right: auto;
+    right: 0;
+    left: 0;
+    bottom: 0px;
 }
+
+.carousel-indicators {
+    bottom: 0px;
+}
+
 
 /* Declare heights because of positioning of img element */
+
 .carousel .item {
-  height: 500px;
-  background-color: #777;
+    height: 500px;
+    background-color: #777;
 }
 
-.first-slide{
-   min-width: 100%;
-   height: 500px;
-   background-size: cover;
-   background-image: url("/www/images/slide1.jpg");
-   background-position: center 65%;
+.first-slide {
+    min-width: 100%;
+    height: 500px;
+    background-size: cover;
+    background-image: url("/www/images/slide1.jpg");
+    background-position: center 65%;
 }
 
-.second-slide{
-   min-width: 100%;
-   height: 500px;
-   background-size: cover;
-   background-image: url("/www/images/slide2.jpg");
-   background-position: center center;
+.second-slide {
+    min-width: 100%;
+    height: 500px;
+    background-size: cover;
+    background-image: url("/www/images/slide2.jpg");
+    background-position: center center;
 }
 
-.third-slide{
-   min-width: 100%;
-   height: 500px;
-   background-size: cover;
-   background-image: url("/www/images/slide2.jpg");
+.third-slide {
+    min-width: 100%;
+    height: 500px;
+    background-size: cover;
+    background-image: url("/www/images/slide2.jpg");
 }
- 
+
+
 /* MARKETING CONTENT
 -------------------------------------------------- */
 
+
 /* Center align the text within the three columns below the carousel */
+
 .marketing .col-lg-4 {
-  margin-bottom: 20px;
-  text-align: center;
+    margin-bottom: 20px;
+    text-align: center;
 }
+
 .marketing h2 {
-  font-weight: normal;
+    font-weight: normal;
 }
+
 .marketing .col-lg-4 p {
-  margin-right: 10px;
-  margin-left: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .marketing .company_contact {
-  margin-top: 150px;
-  margin-left: 50px;
+    margin-top: 150px;
+    margin-left: 50px;
 }
 
 .content {
-  margin-top: 150px;
-  margin-left: 50px;
+    margin-top: 150px;
+    margin-left: 50px;
 }
+
 
 /* Featurettes
 ------------------------- */
 
 .featurette-divider {
-  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+    margin-bottom: 80px;
+    /* Space out the Bootstrap <hr> more */
+    margin-top: 30px;
 }
+
 
 /* Thin out the marketing headings */
+
 .featurette-heading {
-  font-weight: 300;
-  line-height: 1;
-  letter-spacing: -1px;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -1px;
 }
 
-.lead{
-  font-size: 18px;
+.lead {
+    font-size: 18px;
 }
 
 .btn-gold {
@@ -169,11 +199,11 @@ footer a:hover{
     border-color: #6A0F3A;
 }
 
-.faqHeader{
-  font-size: 25px;
-  font-weight: normal;
-  margin-top: 30px;
-  margin-bottom: 10px;
+.faqHeader {
+    font-size: 25px;
+    font-weight: normal;
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
 
 .eu-cookies {
@@ -190,7 +220,7 @@ footer a:hover{
     z-index: 1000;
 }
 
-.eu_cookies .text_area{
+.eu_cookies .text_area {
     display: inline-block;
     vertical-align: middle;
     font-size: 16px;
@@ -200,7 +230,7 @@ footer a:hover{
     text-align: left;
 }
 
-.eu_cookies .button_area{
+.eu_cookies .button_area {
     display: inline-block;
     vertical-align: middle;
     white-space: nowrap;
@@ -213,42 +243,40 @@ footer a:hover{
     border: none;
 }
 
+
 /* RESPONSIVE CSS
 -------------------------------------------------- */
 
 @media (min-width: 768px) {
-  /* Navbar positioning foo */
-  .navbar-wrapper {
-    margin-top: 20px;
-  }
-  .navbar-wrapper .container {
-    padding-right: 15px;
-    padding-left: 15px;
-  }
-  .navbar-wrapper .navbar {
-    padding-right: 0;
-    padding-left: 0;
-  }
-
-  /* The navbar becomes detached from the top, so we round the corners */
-  .navbar-wrapper .navbar {
-    border-radius: 4px;
-  }
-
-  /* Bump up size of carousel content */
-  .carousel-caption p {
-    margin-bottom: 20px;
-    font-size: 21px;
-    line-height: 1.4;
-  }
-
-  .featurette-heading {
-    font-size: 50px;
-  }
+    /* Navbar positioning foo */
+    .navbar-wrapper {
+        margin-top: 20px;
+    }
+    .navbar-wrapper .container {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+    .navbar-wrapper .navbar {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    /* The navbar becomes detached from the top, so we round the corners */
+    .navbar-wrapper .navbar {
+        border-radius: 4px;
+    }
+    /* Bump up size of carousel content */
+    .carousel-caption p {
+        margin-bottom: 20px;
+        font-size: 21px;
+        line-height: 1.4;
+    }
+    .featurette-heading {
+        font-size: 50px;
+    }
 }
 
 @media (min-width: 992px) {
-  .featurette-heading {
-    margin-top: 0px;
-  }
+    .featurette-heading {
+        margin-top: 0px;
+    }
 }
