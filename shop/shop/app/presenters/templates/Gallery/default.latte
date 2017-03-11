@@ -28,9 +28,9 @@
                             <div class="row">
                                 <h1>Finanční zdraví</h1>
                                 <ul>
-                                    {foreach $fin as $key => $item}
-                                        <li><a n:href="Good:default $key"> {$item}</a></li>
-                                    {/foreach}
+                                    {for $i = 1; $i < count($fin)+1; $i++}
+                                         <li><a n:href="Good:default $fin[$i]->id"> {$fin[$i]->label}</a></li>
+                                    {/for}
                                 </ul>
                             </div>
                         </div>
@@ -38,9 +38,9 @@
                             <div class="row">
                                  <h1>Tělesné zdraví</h1>
                                  <ul>
-                                    {foreach $tel as $key => $item}
-                                        <li><a n:href="Good:default $key"> {$item}</a></li>
-                                    {/foreach}
+                                    {for $i = 1; $i < count($tel)+1; $i++}
+                                         <li><a n:href="Good:default $tel[$i]->id"> {$tel[$i]->label}</a></li>
+                                    {/for}
                                 </ul>
                             </div>
                         </div>
@@ -48,9 +48,9 @@
                             <div class="row">
                                  <h1>Psychické zdraví</h1>
                                  <ul>
-                                    {foreach $psy as $key => $item}
-                                        <li><a n:href="Good:default $key"> {$item}</a></li>
-                                    {/foreach}
+                                    {for $i = 1; $i < count($psy)+1; $i++}
+                                         <li><a n:href="Good:default $psy[$i]->id"> {$psy[$i]->label}</a></li>
+                                    {/for}
                                 </ul>
                             </div>
                         </div>

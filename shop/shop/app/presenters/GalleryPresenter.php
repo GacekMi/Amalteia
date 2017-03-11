@@ -65,13 +65,13 @@ class GalleryPresenter extends BasePresenter
         {
             switch ($cat->sub_id) {
                 case 0:
-                    $fin[$cat->id]=$cat->label;
+                    $fin[$cat->ord]=$cat;
                     break;
                 case 1:
-                    $tel[$cat->id]=$cat->label;
+                    $tel[$cat->ord]=$cat;
                     break;
                 case 2:
-                    $psy[$cat->id]=$cat->label;
+                    $psy[$cat->ord]=$cat;
                     break;
             }
         }
