@@ -210,7 +210,7 @@ class BasketPresenter extends PrivatePresenter
 
         $form[\App\Model\Authenticator::COLUMN_PARTNER_ID]->getControlPrototype()->setAttribute('data-toggle', 'popover');
         $form[\App\Model\Authenticator::COLUMN_PARTNER_ID]->getControlPrototype()->setAttribute('title', 'Referenční ID doporučitele');
-        $form[\App\Model\Authenticator::COLUMN_PARTNER_ID]->getControlPrototype()->setAttribute('data-content', 'Je uvedeno na létáčku popřípadě vám jej sdělí váš doporučitel. V případě že, neznáte doporučitele a nemáte letáček, uveďťe prosím jako referenční číslo 936000000.');
+        $form[\App\Model\Authenticator::COLUMN_PARTNER_ID]->getControlPrototype()->setAttribute('data-content', 'Je uvedeno na létáčku popřípadě vám jej sdělí váš doporučitel. V případě že, neznáte doporučitele a nemáte letáček, uveďťe prosím jako referenční číslo 369000000.');
 
         $form->addText(\App\Model\Authenticator::COLUMN_FIRST_NAME, Html::el('span')->setText($this->translator->translate("ui.signMessage.firstName"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
                 ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.firstNameMsg"));
@@ -264,7 +264,7 @@ class BasketPresenter extends PrivatePresenter
         //$agree = $values[\App\Model\Authenticator::AGREE_TERM_CON];
 
         $id = $values[\App\Model\Authenticator::COLUMN_PARTNER_ID];
-        if($id > 936000000 || $id < 936000000)
+        if($id > 369000000 || $id < 369000000)
         {
             $partnerID = $this->authenticator->get($id);
             if ($partnerID == null)

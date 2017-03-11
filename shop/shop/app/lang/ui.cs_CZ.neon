@@ -64,6 +64,7 @@ signMessage:
     loginButton: "Přihlásit"
     partnerId: "Referenční ID"
     myId: "Moje ID"
+    myIdMsg: "ID musí být zadáno"
     partnerIdMsg: "Zadejte číslo vašeho partnera"
     firstName: "Jméno"
     firstNameMsg: "Zadejte vaše jméno"

@@ -337,7 +337,9 @@ class UserPresenter extends PrivatePresenter
         $form = new Nette\Application\UI\Form;
         $form->addGroup()->setOption('container', Html::el('div')->class("col-lg-6"));
         $form->addText(\App\Model\Authenticator::COLUMN_PARTNER_ID, Html::el('span')->setText($this->translator->translate("ui.signMessage.partnerId"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
-                ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.partnerIdMsg"));        
+                ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.partnerIdMsg"));   
+        $form->addText(\App\Model\Authenticator::COLUMN_ID, Html::el('span')->setText($this->translator->translate("ui.signMessage.myId"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
+                ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.myIdMsg"));       
         $form->addText(\App\Model\Authenticator::COLUMN_FIRST_NAME, Html::el('span')->setText($this->translator->translate("ui.signMessage.firstName"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
                 ->addRule(Form::FILLED, $this->translator->translate("ui.signMessage.firstNameMsg"));
         $form->addText(\App\Model\Authenticator::COLUMN_LAST_NAME, Html::el('span')->setText($this->translator->translate("ui.signMessage.lastName"))->addHtml(Html::el('span')->class('form-required')->setHtml('*')))
@@ -411,7 +413,7 @@ class UserPresenter extends PrivatePresenter
         $id = $this->getParameter('id');
 
         $idPar = $values[\App\Model\Authenticator::COLUMN_PARTNER_ID];
-        if($idPar > 936000000 || $idPar < 936000000)
+        if($idPar > 369000000 || $idPar < 369000000)
         {
             $partnerID = $this->authenticator->get($idPar);
             if ($partnerID == null)
