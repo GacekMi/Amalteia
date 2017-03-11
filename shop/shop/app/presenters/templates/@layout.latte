@@ -120,14 +120,16 @@
       </footer>
     <!--</div>-->
 
-	<div class="eu-cookies" n:if="empty($_COOKIE[eu-cookies])">
-	    <span class="text_area">
-		    {_ui.cookiesInfo} 
-		</span>
-		<span class="button_area"> 
-			<button>{_ui.cookiesAgree}</button>
-			<a href="https://www.google.com/policies/technologies/cookies/">{_ui.cookiesNextInfo}</a>
-		</span>
+	<div class="eu-cookies text-center" n:if="empty($_COOKIE[eu-cookies])">
+		<div style="margin-top: 20px;">
+				<span class="text_area">
+						{_ui.cookiesInfo} 
+				</span>
+				<span class="button_area"> 
+					<button>{_ui.cookiesAgree}</button>
+					<a href="https://www.google.com/policies/technologies/cookies/">{_ui.cookiesNextInfo}</a>
+				</span>
+			</div>
 	</div>
 	<noscript><style>.eu-cookies { display:none }</style></noscript>
 
