@@ -293,7 +293,7 @@ class OrderPresenter extends PrivatePresenter
         if($this->getSession('basket') != null && $ret != FALSE)
         {
             unset($this->getSession('basket')->itemsBasket);
-            $this->presenter->flashMessage('Objednávka přijata.', 'success');
+            $this->presenter->flashMessage('Vážený zákazníku, děkujeme za Vaši objednávku. Informace s platebními údaji Vám co nejdříve odešleme na Vámi uvedenou e-mailovou adresu. Zkontrolujte si zda Vám potřebné informace nebyly doručeny do hromadné pošty či spamu. O dodání zboží Vás budeme informovat. Váš AMALTEIA tým.', 'success');
             $this->redirect('Gallery:default');
             //$this->redirect('Order:sum');
         }
