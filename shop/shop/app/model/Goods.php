@@ -50,7 +50,7 @@ class Goods extends Nette\Object{
     public $unit = array('0' => 'ks', '1' => 'balení');
     public $flag = array('0'=> 'Nic', 'N' => 'Novinka', 'S' => 'Sleva', 'A' => 'Akce', 'P' => 'Poslední kus');
     public $transport = array('0' => 'Obyčejná', '1' => 'Nadrozměrná', '2' => 'Zdarma');
-    public $vat = array('1' => '15%', '2' => '21%');
+    public $vat = array('0' => '0%', '1' => '15%', '2' => '21%', '3' => '10%');
     public $currency = array('0' => 'Kč', '1' => 'EUR');
 
 	public function fillGridCategory()
