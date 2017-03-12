@@ -53,6 +53,19 @@ class GalleryPresenter extends BasePresenter
         $this->fillCategory();
     }
 
+    public function renderDefault()
+    {
+        $session =  $session = $this->getSession('mwt');
+        if($session->modalWindowType != null)
+        {
+            $this->template->modalWindowType = $session->modalWindowType;
+        }
+        else
+        {
+            $this->template->modalWindowType = 0;
+        }
+    }
+
      private function fillCategory()
     {
         $this->getMembership();

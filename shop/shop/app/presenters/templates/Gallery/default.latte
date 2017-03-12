@@ -106,10 +106,36 @@
         </div>
 </div>
 
+<div class="modal fade" id="orderFinishedModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Objednávka dokončena</h4>
+      </div>
+      <div class="modal-body">
+        <p>Vážený zákazníku, děkujeme za Vaši objednávku. Informace s platebními údaji Vám co nejdříve odešleme na Vámi uvedenou e-mailovou adresu. Zkontrolujte si zda Vám potřebné informace nebyly doručeny do hromadné pošty či spamu. O dodání zboží Vás budeme informovat. Váš AMALTEIA tým.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 {block addscripts}
     <script>
         $('.carousel').carousel({
         interval: false
         })
+    </script>
+    <script type="text/javascript">
+         $(document).ready(function() {
+             if({$modalWindowType}==1)
+             {
+                 $('#orderFinishedModal').modal('show');
+             }
+         });
     </script>
 {/block}
