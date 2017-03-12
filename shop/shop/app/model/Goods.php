@@ -45,7 +45,7 @@ class Goods extends Nette\Object{
     public $categories;
 
 	public $state = array('Z' => 'Zobrazeno','N' => 'Nezobrazeno','S' => 'Staženo');
-    public $availability = array('S' => 'Skladem','C' => 'Do 14 dnů','D' => 'U dodavatele','X' => 'Nedostupné','N' => 'Na dotaz');
+    public $availability = array('S' => 'Skladem','C' => 'Do 14 dnů','D' => 'U dodavatele','X' => 'Nedostupné','N' => 'Na dotaz', 'Z' => 'Do vyprodání zásob');
     public $discontType = array('0' => 'Procenta', '1' => 'Pevná částka', '2' => 'Není');
     public $unit = array('0' => 'ks', '1' => 'balení');
     public $flag = array('0'=> 'Nic', 'N' => 'Novinka', 'S' => 'Sleva', 'A' => 'Akce', 'P' => 'Poslední kus');
