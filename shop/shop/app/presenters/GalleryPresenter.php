@@ -59,6 +59,7 @@ class GalleryPresenter extends BasePresenter
         if($session->modalWindowType != null)
         {
             $this->template->modalWindowType = $session->modalWindowType;
+            $session->modalWindowType = 0;
         }
         else
         {

@@ -518,6 +518,7 @@ form .error {
     margin-right: auto;
     margin-left: auto;
     width: 100%;
+    position: static;
 }
 
 .carousel-indicators li {
