@@ -56,12 +56,12 @@ class Orders extends Nette\Object{
     public $deliveryType = ['1' => 'Osobně', '2' => 'Osobní vyzvednutí v místě','3' => 'Česká pošta'];
     public $deliveryMailTypes = ['1' => 'Balík na poštu '.self::BALIK_NA_POSTU.',- Kč', '2' => 'Balík do ruky  '.self::BALIK_DO_RUKY.',- Kč'];
     public $deliveryPlaces = ['1' => 'Ostrava','2' => 'Frýdek-Místek','3' => 'Nový Jičín','4' => 'Olomouc','5' => 'Hranice','6' => 'Rožnov pod Radhoštěm','7' => 'Vsetín'];
-    public $paymentType1 = ['1' => 'Hotově', '2' => 'Převodem na účet'];
+    public $paymentType1 = ['1' => 'Za kredity', '2' => 'Převodem na účet'];
     public $paymentType2 = ['2' => 'Převodem na účet', '3' => 'Dobírka'];
 
     public $state = ['1' => 'Vytvořeno', '2' => 'Přijato', '3' => 'Čeká na zaplacení', '4' => 'Odesláno', '5' => 'Odesláno na dobírku', '6' => 'Připraveno k odběru', '7' => 'Vyřízeno', '8' => 'Storno'];
     public $userState = ['1' => 'Objednávka vytvořena', '2' => 'Objednávka přijata', '3' => 'Čeká na zaplacení', '4' => 'Odesláno', '5' => 'Odesláno na dobírku', '6' => 'Připraveno k odběru', '7' => 'Objednávka vyřízena', '8' => 'Storno'];
-    public $paymentType = ['1' => 'Hotově', '2' => 'Převodem na účet', '3' => 'Dobírka']; 
+    public $paymentType = ['1' => 'Za kredity', '2' => 'Převodem na účet', '3' => 'Dobírka']; 
     public $deliveryPlacesA = ['1' => 'Balík na poštu ', '2' => 'Balík do ruky  ', '-1' => 'Ostrava','-2' => 'Frýdek-Místek','-3' => 'Nový Jičín','-4' => 'Olomouc','-5' => 'Hranice','-6' => 'Rožnov pod Radhoštěm','-7' => 'Vsetín'];
 
     public function __construct(Nette\Database\Context $database, Nette\Localization\ITranslator $translator) {
