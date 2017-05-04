@@ -153,7 +153,7 @@ class Authenticator extends Nette\Object implements Security\IAuthenticator {
 
     //Reset hesla officem
     public function resetUserPassword($key) {
-        $resetPass = $this->generatePassword(8);
+        $resetPass = $this->generateToken(8);
         $res = $this->database->table(self::TABLE_NAME)->where('id', $key)->update(array(
             self::COLUMN_PASSWORD_HASH => Passwords::hash($resetPass),
         ));
